@@ -647,5 +647,161 @@ nav ul li a:hover {
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     margin-bottom: 20px;
-  }
+}
+
+/* Responsive Media Queries for Hero Section */
+@media screen and (max-width: 1200px) {
+    .hero h1 {
+        font-size: 90px;
+        letter-spacing: 3px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .hero h1 {
+        font-size: 70px;
+        letter-spacing: 2px;
+    }
+    
+    .ask-button {
+        width: 95%;
+        font-size: 15px;
+        padding: 12px 20px;
+    }
+    
+    .hero p {
+        font-size: 16px;
+        max-width: 500px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .hero h1 {
+        font-size: 50px;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+    }
+    
+    .ask-button {
+        width: 95%;
+        font-size: 14px;
+        padding: 10px 15px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .ask-button .arrow {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+    
+    .hero p {
+        font-size: 15px;
+        max-width: 400px;
+        margin-bottom: 25px;
+    }
+    
+    header {
+        padding: 15px 30px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    nav ul {
+        gap: 15px;
+    }
+    
+    nav ul li a {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .hero h1 {
+        font-size: 35px;
+        letter-spacing: 0px;
+        margin-bottom: 10px;
+    }
+    
+    .ask-button {
+        width: 98%;
+        font-size: 13px;
+        padding: 8px 12px;
+        margin-bottom: 15px;
+    }
+    
+    .ask-button .arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .hero p {
+        font-size: 14px;
+        max-width: 300px;
+        margin-bottom: 20px;
+        line-height: 1.4;
+    }
+    
+    .primary-btn {
+        font-size: 12px;
+        padding: 10px 20px;
+    }
+    
+    header {
+        padding: 10px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .logo {
+        font-size: 18px;
+    }
+    
+    nav ul {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    nav ul li a {
+        font-size: 12px;
+    }
+    
+    .try-btn {
+        padding: 6px 15px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .hero h1 {
+        font-size: 28px;
+        margin-bottom: 8px;
+    }
+    
+    .ask-button {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+    
+    .ask-button .arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+    
+    .hero p {
+        font-size: 13px;
+        max-width: 280px;
+    }
+    
+    .primary-btn {
+        font-size: 11px;
+        padding: 8px 16px;
+    }
+}
   
