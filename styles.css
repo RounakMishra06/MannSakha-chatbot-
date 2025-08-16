@@ -1034,79 +1034,70 @@ button:active {
     box-shadow: 0 0 10px rgba(245, 197, 24, 0.3);
 }
 
-/* Footer Styles */
-.footer {
-    padding: 30px 0;
+
+/* Main footer container */
+footer {
     width: 100%;
+    padding: 25px 5%; /* Use percentage for responsive side padding */
     background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px); /* Modern frosted glass effect */
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
+    
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between; /* Distributes items evenly */
     align-items: center;
-    flex-direction: row;
-    gap: 100px;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    gap: 20px; /* Space between items when they wrap */
+    box-sizing: border-box;
 }
 
+.logo {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #2c3e50; /* A stronger, more professional color */
+}
+
+/* New copyright text styling */
+.copyright {
+    font-size: 0.9em;
+    color: #34495e;
+    margin: 0; /* Resets default paragraph margin */
+}
+
+/* Social media links container */
 .socials {
+    list-style: none;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    list-style-type: none;
-    color: white;
+    gap: 25px; /* Increased space for easier clicking */
+    padding: 0;
+    margin: 0;
 }
 
 .socials li a {
-    font-size: larger;
-    color: white;
+    font-size: 1.5em; /* Larger icons */
+    color: #34495e;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transform transition */
 }
 
 .socials li a:hover {
-    color: #F5C518;
+    color: #F5C518; /* Your specified hover color */
+    transform: translateY(-3px); 
 }
 
-.footer-1 {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+[data-theme="dark"] footer {
+    background: rgba(18, 18, 18, 0.3); /* Darker, sleek background */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
 }
 
-.quick-links {
-    list-style-type: none;
-}
-
-.quick-links li a {
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s ease;
-}
-
-.quick-links li a:hover {
-    color: #F5C518;
-}
-
-/* Enhanced footer for dark mode */
-[data-theme="dark"] .footer {
-    background: rgba(0, 0, 0, 0.3);
-}
-
+[data-theme="dark"] .logo,
+[data-theme="dark"] .copyright,
 [data-theme="dark"] .socials li a {
-    color: var(--text-secondary);
+    color: #ecf0f1; /* A soft white for better readability in dark mode */
 }
 
 [data-theme="dark"] .socials li a:hover {
-    color: var(--accent-secondary);
-}
-
-[data-theme="dark"] .quick-links li a {
-    color: var(--text-secondary);
-}
-
-[data-theme="dark"] .quick-links li a:hover {
-    color: var(--accent-secondary);
+    color: #F5C518; 
 }
 
 /* Responsive Design - Mobile First Approach */
