@@ -1054,13 +1054,13 @@ footer {
 .logo {
     font-size: 1.6em;
     font-weight: 700;
-    color: #2c3e50; /* A stronger, more professional color */
+    color:#ecf0f1; /* A stronger, more professional color */
 }
 
 /* New copyright text styling */
 .copyright {
     font-size: 0.9em;
-    color: #34495e;
+    color: #ecf0f1;
     margin: 0; /* Resets default paragraph margin */
 }
 
@@ -1075,7 +1075,7 @@ footer {
 
 .socials li a {
     font-size: 1.5em; /* Larger icons */
-    color: #34495e;
+    color: #ecf0f1;
     text-decoration: none;
     transition: color 0.3s ease, transform 0.3s ease; /* Added transform transition */
 }
