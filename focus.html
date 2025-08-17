@@ -1,508 +1,563 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pomodoro Focus Timer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Pomodoro Focus Timer | MannSakha</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #5d5fef;
+            --primary-light: #e0e1ff;
+            --primary-dark: #4b4dbf;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --error-color: #ff5252;
+            --success-color: #4caf50;
+            --warning-color: #ff9800;
+            --break-color: #4caf50;
+            --break-light: #e8f5e9;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #7f81ff;
+            --primary-light: #2a2b4a;
+            --primary-dark: #6b6dff;
+            --text-primary: #f5f5f5;
+            --text-secondary: #cccccc;
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --break-light: #1b5e20;
+        }
+
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 15px;
-            background: linear-gradient(135deg, #2d5a5f, #3b7a7f, #4a9b9f, #5bbbbf);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        /* Animated background elements */
-        .bg-particles {
-            position: fixed;
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--bg-primary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
+            z-index: 100;
+            padding: 1rem 0;
         }
 
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        /* Header Styles */
+        .logo a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
         }
 
-        /* Background Music Section */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-info button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 500;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .user-info button:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+        }
+
+        /* Toast Styles */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--error-color);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .toast-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 0;
+        }
+
+        /* Music Controls */
         .music-section {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            border-radius: 20px;
-            padding: 20px 30px;
-            width: 100%;
-            max-width: 900px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .music-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
             font-weight: 500;
-            color: #b4e0e1;
         }
 
         .music-controls {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 1rem;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
         .music-select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            padding: 8px 15px;
-            color: white;
-            font-size: 0.9rem;
-            cursor: pointer;
-            min-width: 150px;
-        }
-
-        .music-select:focus {
-            outline: none;
-            border-color: #7dd3d8;
-            box-shadow: 0 0 10px rgba(125, 211, 216, 0.3);
-        }
-
-        .music-select option {
-            background: #2d5a5f;
-            color: white;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--bg-secondary);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            min-width: 180px;
+            flex: 1;
         }
 
         .music-btn {
-            padding: 8px 16px;
-            background: rgba(255, 255, 255, 0.1);
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 0.5rem;
+            transition: all 0.3s ease;
         }
 
         .music-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
+            background-color: var(--primary-dark);
         }
 
         .volume-control {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .volume-control i {
+            color: var(--text-secondary);
         }
 
         .volume-slider {
-            width: 80px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
+            width: 100%;
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
             outline: none;
-            cursor: pointer;
         }
 
         .volume-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            background: #7dd3d8;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
+            background: var(--primary-color);
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .volume-slider::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            background: #7dd3d8;
-            border-radius: 50%;
-            cursor: pointer;
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Timer Container */
+        .timer-container {
+            background-color: var(--bg-primary);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .timer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-btn {
+            background: none;
             border: none;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 30px 40px;
-            width: 100%;
-            max-width: 900px;
-            height: fit-content;
-            max-height: 90vh;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            transform: translateY(0);
-            transition: all 0.3s ease;
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            grid-template-rows: auto auto auto auto auto;
-            gap: 25px 40px;
-            align-items: center;
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, rgba(91, 187, 191, 0.4), rgba(180, 220, 220, 0.4));
-            border-radius: 26px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .container:hover::before {
-            opacity: 1;
-        }
-
-        .header-row {
-            grid-column: 1 / -1;
-            grid-row: 1;
+            color: var(--primary-color);
+            font-weight: 500;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: relative;
-            width: 100%;
+            gap: 0.5rem;
         }
 
-    .back-btn {
-         position: absolute;
-         left: 0;
-         padding: 10px 20px;       
-         background: rgba(255, 255, 255, 0.12);
-         color: white;
-         border: none;
-         border-radius: 25px;
-        font-weight: 500;
-         font-size: 0.9rem;
-         cursor: pointer;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .timer-title {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-align: center;
+            flex: 1;
         }
 
-        h1 {
-            font-size: 2rem;
-            margin: 0;
-            font-weight: 300;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.5px;
-            position: relative;
-        }
-
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, #5bbbbf, #7dd3d8);
-            border-radius: 1px;
-        }
-
-        
-        .settings-panel {
-            grid-column: 1;
-            grid-row: 3 / 5;
+        /* Timer Settings */
+        .settings-row {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-self: start;
-            width: 200px;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .setting-group {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            flex: 1;
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
         }
 
         .setting-label {
-            font-size: 0.9rem;
-            color: #b4e0e1;
-            margin-bottom: 12px;
-            font-weight: 500;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
         }
 
         .time-input-group {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 0.5rem;
         }
 
         .time-input {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: var(--bg-primary);
+            border: 1px solid var(--bg-secondary);
             border-radius: 8px;
-            padding: 8px 12px;
-            color: white;
-            font-size: 1rem;
-            width: 60px;
+            padding: 0.5rem;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            width: 80px;
             text-align: center;
         }
 
-        .time-input:focus {
-            outline: none;
-            border-color: #7dd3d8;
-            box-shadow: 0 0 10px rgba(125, 211, 216, 0.3);
-        }
-
         .unit-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
-        /* Timer Circle */
-        .timer-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            grid-column: 2;
-            grid-row: 3;
-        }
-
-        .timer-circle-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .timer-circle-progress {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 4px solid transparent;
-            border-top-color: #7dd3d8;
-            transform: rotate(-90deg);
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(125, 211, 216, 0.3);
-        }
-
-        .timer-circle-progress.break-mode {
-            border-top-color: #a1ffa1;
-            box-shadow: 0 0 20px rgba(161, 255, 161, 0.3);
-        }
-
-        .timer-content {
+        /* Timer Display */
+        .timer-display-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .timer-circle {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timer-circle.break-mode {
+            background-color: var(--break-light);
+        }
+
+        .timer-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            clip: rect(0, 250px, 250px, 125px);
+            transform: rotate(-90deg);
+        }
+
+        .timer-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            clip: rect(0, 125px, 250px, 0);
+            background-color: var(--primary-color);
+            transform: rotate(0deg);
+            transition: transform 0.3s linear;
+        }
+
+        .timer-progress-bar.break-mode {
+            background-color: var(--break-color);
+        }
+
+        .timer-content {
+            position: relative;
             z-index: 1;
+            text-align: center;
         }
 
         .timer-mode {
-            font-size: 1rem;
-            color: #b4e0e1;
-            font-weight: 500;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .timer-mode.break-mode {
-            color: #c8e6c9;
+            color: var(--break-color);
         }
 
         .timer-display {
             font-size: 3rem;
-            font-weight: 200;
-            color: white;
+            font-weight: 600;
+            color: var(--text-primary);
             font-family: 'Courier New', monospace;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        /* Stats and Controls */
-        .stats-and-controls {
-            grid-column: 3;
-            grid-row: 3 / 5;
+        /* Stats */
+        .stats-row {
             display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-self: start;
-            width: 200px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .stat-item {
-            text-align: center;
-            padding: 15px 10px;
-            background: rgba(255, 255, 255, 0.08);
+            flex: 1;
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
         }
 
         .stat-value {
-            font-size: 1.4rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            color: #7dd3d8;
-            display: block;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value.break-stat {
+            color: var(--break-color);
         }
 
         .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
-            margin-top: 4px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
 
-        .controls {
+        /* Controls */
+        .controls-row {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 1.5rem;
         }
 
-        button {
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.12);
-            color: white;
+        .main-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             border: none;
-            border-radius: 25px;
-            font-weight: 500;
-            font-size: 0.9rem;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+        .control-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
         }
 
-        button:hover::before {
-            left: 100%;
+        .control-btn:active {
+            transform: scale(0.95);
         }
 
-        button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        .control-btn.break-btn {
+            background-color: var(--break-color);
         }
 
-        button:active {
-            transform: translateY(0);
+        .control-btn.break-btn:hover {
+            background-color: #3d8b40;
         }
 
-        button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .primary-btn {
-            background: rgba(125, 211, 216, 0.2);
-            border-color: rgba(125, 211, 216, 0.3);
-        }
-
-        .primary-btn:hover {
-            background: rgba(125, 211, 216, 0.3);
-        }
-
-        /* Main controls */
-        .main-controls {
-            grid-column: 2;
-            grid-row: 4;
+        .secondary-controls {
             display: flex;
-            gap: 15px;
             justify-content: center;
+            gap: 1rem;
         }
 
-        .main-btn {
-            padding: 15px 30px;
-            font-size: 1rem;
-            border-radius: 30px;
-            min-width: 120px;
+        .secondary-btn {
+            background-color: var(--bg-secondary);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
         }
 
-        /* Status messages */
+        .secondary-btn:hover {
+            background-color: var(--bg-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Status Message */
         .status-message {
-            grid-column: 1 / -1;
-            grid-row: 5;
+            text-align: center;
             font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 8px;
             opacity: 0;
-            transition: all 0.5s ease;
             transform: translateY(10px);
-            margin: 0;
+            transition: all 0.5s ease;
         }
 
         .status-message.show {
@@ -511,207 +566,222 @@
         }
 
         .status-message.focus {
-            color: #7dd3d8;
-            text-shadow: 0 0 15px rgba(125, 211, 216, 0.5);
+            background-color: var(--primary-light);
+            color: var(--primary-color);
         }
 
         .status-message.break {
-            color: #a1ffa1;
-            text-shadow: 0 0 15px rgba(161, 255, 161, 0.5);
+            background-color: #e8f5e9;
+            color: var(--break-color);
         }
 
         .status-message.complete {
-            color: #ffd700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            background-color: #fff8e1;
+            color: #ff8f00;
         }
 
-        /* Responsive design */
+        [data-theme="dark"] .status-message.focus {
+            background-color: #2a2b4a;
+        }
+
+        [data-theme="dark"] .status-message.break {
+            background-color: #1b5e20;
+        }
+
+        [data-theme="dark"] .status-message.complete {
+            background-color: #5d4037;
+        }
+
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            .music-section {
-                padding: 15px 20px;
-                margin-bottom: 15px;
+            .settings-row {
+                flex-direction: column;
+            }
+
+            .stats-row {
+                flex-direction: column;
+            }
+
+            .timer-circle {
+                width: 200px;
+                height: 200px;
+            }
+
+            .main-controls {
+                gap: 1rem;
+            }
+
+            .control-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .secondary-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .timer-title {
+                font-size: 1.5rem;
+            }
+
+            .timer-circle {
+                width: 180px;
+                height: 180px;
+            }
+
+            .timer-display {
+                font-size: 2.5rem;
             }
 
             .music-controls {
                 flex-direction: column;
-                gap: 10px;
             }
 
-            .music-select {
-                min-width: 120px;
-            }
-
-            .container {
-                max-width: 500px;
-                padding: 25px 20px;
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto auto auto auto;
-                gap: 20px;
-            }
-            
-            .settings-panel,
-            .stats-and-controls {
-                grid-column: 1;
-                width: 100%;
-                max-width: 400px;
-                justify-self: center;
-            }
-            
-            .settings-panel {
-                grid-row: 3;
-                flex-direction: row;
-                gap: 15px;
-            }
-            
-            .setting-group {
-                flex: 1;
-                padding: 15px;
-            }
-            
-            .timer-container {
-                grid-column: 1;
-                grid-row: 4;
-                width: 240px;
-                height: 240px;
-            }
-            
-            .timer-display {
-                font-size: 2.5rem;
-            }
-            
-            .main-controls {
-                grid-column: 1;
-                grid-row: 5;
-            }
-            
-            .stats-and-controls {
-                grid-row: 6;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .controls {
-                flex-direction: row;
-                justify-content: center;
-            }
-            
-            .status-message {
-                grid-row: 7;
+            .volume-control {
+                min-width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <div class="bg-particles"></div>
-    
-    <!-- Background Music Section -->
-    <div class="music-section">
-        <div class="music-header">
-            <i class="fas fa-music"></i>
-            Background Music
-        </div>
-        <div class="music-controls">
-            <select id="music-select" class="music-select">
-                <option value="">Select Music</option>
-                <option value="lofi-chill.mp3">Lofi Chill</option>
-                <option value="nature-sounds.mp3">Nature Sounds</option>
-                <option value="coffee-shop.mp3">Coffee Shop</option>
-                <option value="rain-sounds.mp3">Rain Sounds</option>
-                <option value="piano-ambient.mp3">Piano Ambient</option>
-                <option value="white-noise.mp3">White Noise</option>
-            </select>
-            
-            <button id="music-play-btn" class="music-btn">
-                <i class="fas fa-play"></i> Play
+    <header>
+        <div class="container header-container">
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
             </button>
-            
-            <div class="volume-control">
-                <i class="fas fa-volume-down" style="font-size: 0.8rem;"></i>
-                <input type="range" id="music-volume" class="volume-slider" min="0" max="100" value="30">
-                <i class="fas fa-volume-up" style="font-size: 0.8rem;"></i>
-            </div>
         </div>
-    </div>
+    </header>
 
-    <div class="container">
-        <div class="header-row">
-            <button class="back-btn" onclick="history.back()">
-                <i class="fas fa-arrow-left"></i> Back
-            </button>
-            <h1><i class="fas fa-clock"></i> Pomodoro Focus Timer</h1>
-        </div>
-        
-        <div class="settings-panel">
-            <div class="setting-group">
-                <div class="setting-label">Focus Time</div>
-                <div class="time-input-group">
-                    <input type="number" id="focus-minutes" class="time-input" value="25" min="1" max="60">
-                    <span class="unit-label">min</span>
+    <main>
+        <div class="container">
+            <!-- Music Controls -->
+            <section class="music-section">
+                <div class="music-header">
+                    <i class="fas fa-music"></i>
+                    <span>Background Music</span>
                 </div>
-            </div>
-            
-            <div class="setting-group">
-                <div class="setting-label">Break Time</div>
-                <div class="time-input-group">
-                    <input type="number" id="break-minutes" class="time-input" value="5" min="1" max="30">
-                    <span class="unit-label">min</span>
+                <div class="music-controls">
+                    <select id="music-select" class="music-select">
+                        <option value="">Select Music</option>
+                        <option value="lofi-chill.mp3">Lofi Chill</option>
+                        <option value="nature-sounds.mp3">Nature Sounds</option>
+                        <option value="coffee-shop.mp3">Coffee Shop</option>
+                        <option value="rain-sounds.mp3">Rain Sounds</option>
+                        <option value="piano-ambient.mp3">Piano Ambient</option>
+                        <option value="white-noise.mp3">White Noise</option>
+                    </select>
+                    
+                    <button id="music-play-btn" class="music-btn">
+                        <i class="fas fa-play"></i> Play
+                    </button>
+                    
+                    <div class="volume-control">
+                        <i class="fas fa-volume-down"></i>
+                        <input type="range" id="music-volume" class="volume-slider" min="0" max="100" value="30">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="timer-container">
-            <div class="timer-circle-bg"></div>
-            <div class="timer-circle-progress" id="timer-progress"></div>
-            <div class="timer-content">
-                <div class="timer-mode" id="timer-mode">FOCUS</div>
-                <div class="timer-display" id="timer-display">25:00</div>
-            </div>
-        </div>
-        
-        <div class="stats-and-controls">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <span class="stat-value" id="pomodoros-count">0</span>
-                    <div class="stat-label">Pomodoros</div>
+            </section>
+
+            <!-- Timer Container -->
+            <section class="timer-container">
+                <div class="timer-header">
+                    <button class="back-btn" onclick="history.back()">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                    <h1 class="timer-title">Pomodoro Focus Timer</h1>
+                    <div></div> <!-- Empty div for spacing -->
                 </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="session-time">0h</span>
-                    <div class="stat-label">Session</div>
+
+                <!-- Timer Settings -->
+                <div class="settings-row">
+                    <div class="setting-group">
+                        <label class="setting-label">Focus Time</label>
+                        <div class="time-input-group">
+                            <input type="number" id="focus-minutes" class="time-input" value="25" min="1" max="60">
+                            <span class="unit-label">minutes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <label class="setting-label">Break Time</label>
+                        <div class="time-input-group">
+                            <input type="number" id="break-minutes" class="time-input" value="5" min="1" max="30">
+                            <span class="unit-label">minutes</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="focus-streak">0</span>
-                    <div class="stat-label">Streak</div>
+
+                <!-- Timer Display -->
+                <div class="timer-display-container">
+                    <div class="timer-circle" id="timer-circle">
+                        <div class="timer-progress">
+                            <div class="timer-progress-bar" id="timer-progress-bar"></div>
+                        </div>
+                        <div class="timer-content">
+                            <div class="timer-mode" id="timer-mode">FOCUS</div>
+                            <div class="timer-display" id="timer-display">25:00</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="breaks-taken">0</span>
-                    <div class="stat-label">Breaks</div>
+
+                <!-- Stats -->
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value" id="pomodoros-count">0</div>
+                        <div class="stat-label">Pomodoros</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="session-time">0h</div>
+                        <div class="stat-label">Session</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="focus-streak">0</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value break-stat" id="breaks-taken">0</div>
+                        <div class="stat-label">Breaks</div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="controls">
-                <button id="reset-stats">
-                    <i class="fas fa-chart-bar"></i> Reset Stats
-                </button>
-                <button id="skip-timer">
-                    <i class="fas fa-forward"></i> Skip
-                </button>
-            </div>
+
+                <!-- Controls -->
+                <div class="controls-row">
+                    <div class="main-controls">
+                        <button id="start-pause-btn" class="control-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button id="reset-btn" class="control-btn">
+                            <i class="fas fa-stop"></i>
+                        </button>
+                        <button id="skip-btn" class="control-btn break-btn">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="secondary-controls">
+                        <button id="reset-stats-btn" class="secondary-btn">
+                            <i class="fas fa-chart-bar"></i> Reset Stats
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status Message -->
+                <div class="status-message" id="status-message">
+                    Ready to focus? Click Start to begin your Pomodoro session!
+                </div>
+            </section>
         </div>
-        
-        <div class="main-controls">
-            <button id="start-pause-btn" class="main-btn primary-btn">
-                <i class="fas fa-play"></i> Start
-            </button>
-            <button id="reset-btn" class="main-btn">
-                <i class="fas fa-stop"></i> Reset
-            </button>
-        </div>
-        
-        <div class="status-message" id="status-message">
-            Ready to focus? Click Start to begin your Pomodoro session!
-        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle toast-icon"></i>
+        <span class="toast-message">Toast message here</span>
     </div>
 
     <!-- Audio elements -->
@@ -719,7 +789,7 @@
         <!-- Gentle bell sound for timer completion -->
         <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg">
         <!-- Fallback to a simple beep -->
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURgxK+zkC8zAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBUdFjfJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBUdFjfJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBUdFjfJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBUdFjfJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBURynjJGnmEcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmQbBUR==" type="audio/wav">
+        <source src="data:audio/wav;base64,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" type="audio/wav">
     </audio>
 
     <!-- Background music audio element -->
@@ -744,17 +814,19 @@
         
         // Music state
         let isMusicPlaying = false;
+        let currentTheme = localStorage.getItem("theme") || "auto";
         
         // DOM Elements
         const focusInput = document.getElementById('focus-minutes');
         const breakInput = document.getElementById('break-minutes');
         const timerDisplay = document.getElementById('timer-display');
-        const timerMode = document.getElementById('timer-mode');
-        const timerProgress = document.getElementById('timer-progress');
+        const timerModeEl = document.getElementById('timer-mode');
+        const timerProgressBar = document.getElementById('timer-progress-bar');
+        const timerCircle = document.getElementById('timer-circle');
         const startPauseBtn = document.getElementById('start-pause-btn');
         const resetBtn = document.getElementById('reset-btn');
-        const skipBtn = document.getElementById('skip-timer');
-        const resetStatsBtn = document.getElementById('reset-stats');
+        const skipBtn = document.getElementById('skip-btn');
+        const resetStatsBtn = document.getElementById('reset-stats-btn');
         const statusMessage = document.getElementById('status-message');
         const alarmSound = document.getElementById('alarm-sound');
         
@@ -770,19 +842,93 @@
         const focusStreakEl = document.getElementById('focus-streak');
         const breaksTakenEl = document.getElementById('breaks-taken');
 
-        // Create floating particles
-        function createParticles() {
-            const particles = document.querySelector('.bg-particles');
-            for (let i = 0; i < 15; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                particles.appendChild(particle);
+        // Theme Management
+        function getSystemTheme() {
+            return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        function setTheme(theme) {
+            let actualTheme = theme === "auto" ? getSystemTheme() : theme;
+            currentTheme = theme;
+            document.documentElement.setAttribute("data-theme", actualTheme);
+            localStorage.setItem("theme", theme);
+            
+            const toggleBtn = document.querySelector(".theme-toggle");
+            if (toggleBtn) {
+                const icon = toggleBtn.querySelector("i");
+                const text = toggleBtn.querySelector("span");
+                
+                if (actualTheme === "dark") {
+                    icon.className = "fas fa-sun";
+                    text.textContent = theme === "auto" ? "Auto" : "Light";
+                } else {
+                    icon.className = "fas fa-moon";
+                    text.textContent = theme === "auto" ? "Auto" : "Dark";
+                }
             }
         }
+
+        function toggleTheme() {
+            let newTheme;
+            if (currentTheme === "light") {
+                newTheme = "dark";
+            } else if (currentTheme === "dark") {
+                newTheme = "auto";
+            } else {
+                newTheme = "light";
+            }
+            setTheme(newTheme);
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById("mainNav");
+            navMenu.classList.toggle("active");
+        }
+
+        // Toast Notification
+        function showToast(message, type = "success") {
+            const toast = document.getElementById("toast");
+            const toastIcon = toast.querySelector(".toast-icon");
+            const toastMessage = toast.querySelector(".toast-message");
+
+            toastMessage.textContent = message;
+            toast.className = "toast show";
+            toast.classList.add(type);
+
+            switch (type) {
+                case "success":
+                    toastIcon.className = "fas fa-check-circle toast-icon";
+                    break;
+                case "error":
+                    toastIcon.className = "fas fa-exclamation-circle toast-icon";
+                    break;
+                case "warning":
+                    toastIcon.className = "fas fa-exclamation-triangle toast-icon";
+                    break;
+                default:
+                    toastIcon.className = "fas fa-info-circle toast-icon";
+            }
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 5000);
+        }
+
+        // User Authentication (simplified for this page)
+        // function logout() {
+        //     localStorage.removeItem("loggedInUser");
+        //     window.location.href = "login.html";
+        // }
+
+        // function checkAuthState() {
+        //     const user = JSON.parse(localStorage.getItem("loggedInUser"));
+        //     if (!user && window.location.pathname.split("/").pop() !== "login.html") {
+        //         window.location.href = "login.html";
+        //     } else if (user) {
+        //         document.getElementById("userEmail").textContent = user.email;
+        //     }
+        // }
 
         // Play gentle alarm sound
         function playAlarm() {
@@ -859,7 +1005,7 @@
         }
 
         // Initialize
-        createParticles();
+        setTheme(currentTheme);
         updateDisplay();
         updateStats();
         showStatusMessage('Ready to focus? Click Start to begin your Pomodoro session!', 'focus');
@@ -871,7 +1017,7 @@
             }
             
             isRunning = true;
-            startPauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+            startPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             
             timerInterval = setInterval(() => {
                 timeRemaining--;
@@ -887,7 +1033,7 @@
         function pauseTimer() {
             isRunning = false;
             clearInterval(timerInterval);
-            startPauseBtn.innerHTML = '<i class="fas fa-play"></i> Resume';
+            startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         }
 
         function resetTimer() {
@@ -902,7 +1048,7 @@
                 totalTime = timeRemaining;
             }
             
-            startPauseBtn.innerHTML = '<i class="fas fa-play"></i> Start';
+            startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             updateDisplay();
             updateProgress();
             
@@ -927,9 +1073,10 @@
                 isBreakMode = false;
                 timeRemaining = parseInt(focusInput.value) * 60;
                 totalTime = timeRemaining;
-                timerMode.textContent = 'FOCUS';
-                timerMode.classList.remove('break-mode');
-                timerProgress.classList.remove('break-mode');
+                timerModeEl.textContent = 'FOCUS';
+                timerModeEl.classList.remove('break-mode');
+                timerProgressBar.classList.remove('break-mode');
+                timerCircle.classList.remove('break-mode');
                 showStatusMessage('Break complete! Time to focus again.', 'focus');
             } else {
                 // Focus completed, switch to break
@@ -938,13 +1085,14 @@
                 isBreakMode = true;
                 timeRemaining = parseInt(breakInput.value) * 60;
                 totalTime = timeRemaining;
-                timerMode.textContent = 'BREAK';
-                timerMode.classList.add('break-mode');
-                timerProgress.classList.add('break-mode');
+                timerModeEl.textContent = 'BREAK';
+                timerModeEl.classList.add('break-mode');
+                timerProgressBar.classList.add('break-mode');
+                timerCircle.classList.add('break-mode');
                 showStatusMessage('🎉 Focus session complete! Time for a well-deserved break.', 'break');
             }
             
-            startPauseBtn.innerHTML = '<i class="fas fa-play"></i> Start';
+            startPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             updateDisplay();
             updateProgress();
             updateStats();
@@ -958,10 +1106,11 @@
 
         function updateProgress() {
             const progress = ((totalTime - timeRemaining) / totalTime) * 360;
-            timerProgress.style.transform = `rotate(${progress - 90}deg)`;
             
-            if (progress >= 360) {
-                timerProgress.style.transform = 'rotate(270deg)';
+            if (progress <= 180) {
+                timerProgressBar.style.transform = `rotate(${progress}deg)`;
+            } else {
+                timerProgressBar.style.transform = `rotate(${progress}deg)`;
             }
         }
 
@@ -986,8 +1135,7 @@
 
         function showStatusMessage(message, type) {
             statusMessage.textContent = message;
-            statusMessage.className = `status-message ${type}`;
-            statusMessage.classList.add('show');
+            statusMessage.className = `status-message ${type} show`;
             
             setTimeout(() => {
                 statusMessage.classList.remove('show');

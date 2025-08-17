@@ -607,8 +607,8 @@ function shareInsight() {
 }
 
 // Meditation Audio Player
-let currentAudio = null;
-let isPlaying = false;
+// let currentAudio = null;
+// let isPlaying = false;
 
 function playMeditation(type) {
   // Stop any currently playing audio
@@ -900,4 +900,34 @@ if (history.scrollRestoration) {
 // Also ensure no anchor is in the URL
 if (window.location.hash) {
   window.location.hash = "";
+}
+
+// Meditation Audio Player
+let currentAudio = null;
+let isPlaying = false;
+let currentAudioType = null;
+
+function playMeditation(type) {
+    // Redirect to the specific meditation page
+    switch(type) {
+        case 'stress':
+            window.location.href = 'stress-relief.html';
+            break;
+        case 'focus':
+            window.location.href = 'focus.html';
+            break;
+        case 'sleep':
+            window.location.href = 'sleep.html';
+            break;
+    }
+}
+
+function updatePlayButton(type, playing) {
+    const card = document.querySelector(`.meditation-card[href="${type}.html"]`);
+    if (card) {
+        const playBtn = card.querySelector(".play-btn i");
+        if (playBtn) {
+            playBtn.className = playing ? "fas fa-pause" : "fas fa-play";
+        }
+    }
 }
