@@ -8,6 +8,99 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css">
+    <style>
+        /* Section */
+.info-section {
+  padding: 80px 20px;
+  background: #fff;
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+}
+
+.info-section h2 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  color: #ff6b00;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.info-section p {
+  max-width: 750px;
+  margin: 0 auto 15px;
+  font-size: 1.1rem;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #ff7f50;
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* Service Cards */
+.services-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 50px;
+}
+
+.service-card {
+  background: linear-gradient(135deg, #ffd59e, #ffb347);
+  border-radius: 15px;
+  padding: 25px 20px;
+  width: 260px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.4s, background 0.4s, box-shadow 0.4s;
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.service-card:hover {
+  background: linear-gradient(135deg, #fff2e6, #ffe0b3);
+  transform: translateY(-10px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+.service-card h3 {
+  margin: 20px 0 10px;
+  font-size: 1.4rem;
+  color: #ff6b00;
+}
+
+.service-card p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.service-icon img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  transition: transform 0.4s;
+}
+
+.service-card:hover .service-icon img {
+  transform: scale(1.2);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media screen and (max-width: 900px) {
+  .services-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -103,19 +196,40 @@
         </section>
 
         <!-- Services Section -->
-        <section id="services" class="info-section">
-            <div class="section-content">
-                <div class="decorative-circle circle-1"></div>
-                <div class="decorative-circle circle-2"></div>
-                <h2>Services</h2>
-                <p><strong>MannSakha</strong> offers AI-powered tools to help you stay balanced and productive. From <strong>mood tracking</strong> to <strong>journaling</strong> and <strong>guided meditation</strong>, each service is designed to improve mental clarity and reduce stress in your daily routine.</p>
-                <p>Our services are flexible and adapt to your lifestyle — whether you're a student, a professional, or someone looking to create more calm in your day.</p>
-                <p class="highlight">Explore how we can make your life easier and your mind lighter.</p>
-                <div class="section-icon">
-                    <i class="fas fa-hands-helping"></i>
-                </div>
-            </div>
-        </section>
+       <section id="services" class="info-section">
+  <div class="section-content">
+    <h2>Services</h2>
+    <p><strong>MannSakha</strong> offers AI-powered tools to help you stay balanced and productive. From <strong>mood tracking</strong> to <strong>journaling</strong> and <strong>guided meditation</strong>, each service is designed to improve mental clarity and reduce stress.</p>
+    <p class="highlight">Explore how we can make your life easier and your mind lighter.</p>
+
+    <!-- Service Cards -->
+    <div class="services-container">
+      <div class="service-card" style="animation-delay: 0.2s;">
+        <div class="service-icon">
+          <img src="https://media.giphy.com/media/3o7aCTfyhYawdOXcFW/giphy.gif" alt="Mood Tracking GIF" />
+        </div>
+        <h3>Mood Tracking</h3>
+        <p>Monitor your emotions daily and gain insights to maintain mental balance.</p>
+      </div>
+
+      <div class="service-card" style="animation-delay: 0.4s;">
+        <div class="service-icon">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGVxNTllYjg3Zjk2b29lZDRiZXJjeTU4bTBlbDkwcml1Z2R3bTg1NSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/FdARqiVNxkCFKMjh1m/giphy.gif" alt="Journaling GIF" />
+        </div>
+        <h3>Journaling</h3>
+        <p>Reflect on your thoughts and emotions to enhance self-awareness and mindfulness.</p>
+      </div>
+
+      <div class="service-card" style="animation-delay: 0.6s;">
+        <div class="service-icon">
+          <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2liZ2x3ZG1weWp4OHJxajcwcHB6YW5rZ3huZnNnazB2cDZxcmtwcyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/sWtMPFhrzwazgNfs67/giphy.gif" alt="Guided Meditation GIF" />
+        </div>
+        <h3>Guided Meditation</h3>
+        <p>Relax and de-stress with our guided sessions, improving focus and mental clarity.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
         <!-- Mood Tracking and Journaling Section -->
         <section id="mood-tracking" class="feature-section">
