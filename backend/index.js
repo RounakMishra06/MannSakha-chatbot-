@@ -4,22 +4,25 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import session from "express-session";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
+import connectDB from "./config/db.js";
+import newsletterRoutes from "./routes/newsletter.js";
 import User from "./models/User.js";
 
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 3050;
 
-// For __dirname in ES modules
+// __dirname fix for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// ---------------- CONNECT DATABASE ----------------
+connectDB();
 
 // ---------------- MIDDLEWARE ----------------
 app.use(cors());
@@ -34,26 +37,20 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ---------------- MONGODB CONNECTION ----------------
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("✅ MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
-
 // ---------------- STATIC FILES ----------------
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/signup.html"));
 });
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/login.html"));
+});
+app.get("/newsletter", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/newsletter.html"));
 });
 
 // ---------------- PASSPORT SETUP ----------------
@@ -81,7 +78,7 @@ passport.use(
           user = await User.create({
             name: profile.displayName,
             email: profile.emails[0].value,
-            password: null, // Google handles authentication
+            password: null,
             gender: "Not specified",
             dob: null,
           });
@@ -93,6 +90,9 @@ passport.use(
     }
   )
 );
+
+// ---------------- NEWSLETTER ROUTES ----------------
+app.use("/api/newsletter", newsletterRoutes);
 
 // ---------------- AUTH ROUTES ----------------
 
@@ -148,7 +148,7 @@ app.post("/api/login", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
-    
+
     const isMatch = await bcrypt.compare(password, user.password || "");
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
@@ -162,13 +162,13 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// Google login route
+// Google login
 app.get(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-// Google callback route
+// Google callback
 app.get(
   "/api/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/login.html" }),
@@ -176,6 +176,11 @@ app.get(
     res.redirect("/index.html");
   }
 );
+
+// Health check
+app.get("/api/health", (req, res) => {
+  res.json({ ok: true, time: new Date().toISOString() });
+});
 
 // ---------------- GEMINI API ----------------
 async function listGeminiModels(apiKey) {
@@ -212,7 +217,8 @@ app.post("/api/gemini", async (req, res) => {
     }
 
     const selectedModel = "models/gemini-1.5-flash";
-    const prompt = "Just give me the text response to the following input: " + message;
+    const prompt =
+      "Just give me the text response to the following input: " + message;
 
     const geminiResponse = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/${selectedModel}:generateContent?key=${apiKey}`,
@@ -244,7 +250,9 @@ app.post("/api/gemini", async (req, res) => {
     if (reply) {
       res.json({ reply: reply.trim() });
     } else {
-      res.status(500).json({ reply: "Unexpected Gemini API response structure" });
+      res
+        .status(500)
+        .json({ reply: "Unexpected Gemini API response structure" });
     }
   } catch (error) {
     console.error("❌ Gemini API Request Failed:", error);

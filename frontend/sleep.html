@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindful Breathing</title>
+    <title>Sleep & Relaxation Meditation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -18,7 +18,7 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #000000, #760505, #9e0808, #000000);
+                    background: linear-gradient(135deg, #000000, #760505, #9e0808, #000000);
             color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -44,11 +44,23 @@
             animation: float 20s infinite linear;
         }
 
+        .star {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: twinkle 4s infinite ease-in-out;
+        }
+
         @keyframes float {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         .container {
@@ -74,7 +86,7 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, rgb(123, 8, 8), rgb(209, 8, 8));
+            background: linear-gradient(45deg, rgba(186, 11, 11, 0.8), rgb(138, 8, 8));
             border-radius: 26px;
             z-index: -1;
             opacity: 0;
@@ -103,11 +115,11 @@
             transform: translateX(-50%);
             width: 60px;
             height: 2px;
-            background: linear-gradient(90deg, #5bbbbf, #7dd3d8);
+            background: linear-gradient(90deg, #4a8dfc, #7dbbf8);
             border-radius: 1px;
         }
 
-        .breathing-container {
+        .meditation-container {
             position: relative;
             width: 280px;
             height: 280px;
@@ -117,7 +129,7 @@
             justify-content: center;
         }
 
-        .circle-outer {
+        .moon-outer {
             position: absolute;
             width: 100%;
             height: 100%;
@@ -126,7 +138,7 @@
             animation: rotate 30s linear infinite;
         }
 
-        .circle-outer::before {
+        .moon-outer::before {
             content: '';
             position: absolute;
             top: -3px;
@@ -134,9 +146,9 @@
             transform: translateX(-50%);
             width: 6px;
             height: 6px;
-            background: #7dd3d8;
+            background: #7dbbf8;
             border-radius: 50%;
-            box-shadow: 0 0 10px #7dd3d8;
+            box-shadow: 0 0 10px #7dbbf8;
         }
 
         @keyframes rotate {
@@ -144,19 +156,19 @@
             to { transform: rotate(360deg); }
         }
 
-        .circle {
+        .moon {
             width: 200px;
             height: 200px;
             background: radial-gradient(
                 circle at 30% 30%, 
-                rgba(255,255,255,0.25), 
-                rgba(255,255,255,0.05),
+                rgba(255,255,255,0.5), 
+                rgba(255,255,255,0.2),
                 transparent
             );
             border-radius: 50%;
-            animation: breathe 8s ease-in-out infinite;
+            animation: pulse 8s ease-in-out infinite;
             box-shadow: 
-                0 0 40px rgba(125, 211, 216, 0.4),
+                0 0 40px rgba(125, 187, 248, 0.4),
                 inset 0 0 30px rgba(255,255,255,0.1),
                 0 10px 20px rgba(0, 0, 0, 0.2);
             position: relative;
@@ -165,34 +177,41 @@
             justify-content: center;
         }
 
-        .circle::before {
+        .moon::before {
             content: '';
             position: absolute;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 50%;
-            animation: innerPulse 4s ease-in-out infinite;
+            top: 50px;
+            left: 30px;
         }
 
-        @keyframes breathe {
+        .moon::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 50%;
+            top: 80px;
+            right: 40px;
+        }
+
+        @keyframes pulse {
             0%, 100% { 
                 transform: scale(1);
-                box-shadow: 0 0 40px rgba(125, 211, 216, 0.4),
+                box-shadow: 0 0 40px rgba(125, 187, 248, 0.4),
                            inset 0 0 30px rgba(255,255,255,0.1),
                            0 10px 20px rgba(0, 0, 0, 0.2);
             }
             50% { 
-                transform: scale(1.3);
-                box-shadow: 0 0 60px rgba(125, 211, 216, 0.6),
+                transform: scale(1.1);
+                box-shadow: 0 0 60px rgba(125, 187, 248, 0.6),
                            inset 0 0 40px rgba(255,255,255,0.2),
                            0 15px 30px rgba(0, 0, 0, 0.3);
             }
-        }
-
-        @keyframes innerPulse {
-            0%, 100% { opacity: 0.3; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
         }
 
         .instructions {
@@ -213,8 +232,8 @@
             font-weight: 200;
             letter-spacing: 2px;
             margin: 15px 0;
-            color: #b4e0e1;
-            text-shadow: 0 0 20px rgba(180, 224, 225, 0.6);
+            color: #b4d0f1;
+            text-shadow: 0 0 20px rgba(180, 208, 241, 0.6);
             font-family: 'Courier New', monospace;
         }
 
@@ -237,7 +256,7 @@
         .stat-value {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #7dd3d8;
+            color: #7dbbf8;
             display: block;
         }
 
@@ -343,11 +362,11 @@
         .progress-bar {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #5bbbbf, #7dd3d8, #9fe5e9);
+            background: linear-gradient(90deg, #4a8dfc, #7dbbf8, #9fd5f9);
             border-radius: 4px;
             transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            box-shadow: 0 0 10px rgba(125, 211, 216, 0.6);
+            box-shadow: 0 0 10px rgba(125, 187, 248, 0.6);
         }
 
         .progress-bar::after {
@@ -378,6 +397,32 @@
             transform: translateY(0);
         }
 
+        .volume-control {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .volume-slider {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #7dbbf8;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(125, 187, 248, 0.6);
+        }
+
         /* Responsive design */
         @media (max-width: 480px) {
             .container {
@@ -388,12 +433,12 @@
                 font-size: 1.8rem;
             }
 
-            .breathing-container {
+            .meditation-container {
                 width: 240px;
                 height: 240px;
             }
 
-            .circle {
+            .moon {
                 width: 160px;
                 height: 160px;
             }
@@ -419,18 +464,18 @@
     </style>
 </head>
 <body>
-    <div class="bg-particles"></div>
+    <div class="bg-particles" id="bg-particles"></div>
     
     <div class="container">
-        <h1>Mindful Breathing</h1>
+        <h1>Sleep & Relaxation</h1>
         
-        <div class="breathing-container">
-            <div class="circle-outer"></div>
-            <div class="circle"></div>
+        <div class="meditation-container">
+            <div class="moon-outer"></div>
+            <div class="moon"></div>
         </div>
         
-        <div class="instructions" id="instruction-text">Breathe In...</div>
-        <div class="timer" id="timer">05:00</div>
+        <div class="instructions" id="instruction-text">Relax and breathe deeply...</div>
+        <div class="timer" id="timer">15:00</div>
         
         <div class="stats-row">
             <div class="stat-item">
@@ -447,8 +492,13 @@
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         
+        <div class="volume-control">
+            <i class="fas fa-volume-up"></i>
+            <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
         <div class="session-complete" id="session-complete">
-            ✨ Excellent! Session completed ✨
+            ✨ Sleep well! Session completed ✨
         </div>
         
         <div class="controls">
@@ -465,12 +515,12 @@
     </div>
 
     <audio id="bg-sound" loop>
-        <source src="calm-music.mp3" type="audio/mpeg">
+        <source src="nature-sounds.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         // Configuration
-        const totalDuration = 5 * 60; 
+        const totalDuration = 15 * 60; // 15 minutes in seconds
         let remainingTime = totalDuration;
         let timerInterval;
         let breathInterval;
@@ -488,18 +538,30 @@
         const playBtn = document.getElementById("play-sound");
         const muteBtn = document.getElementById("mute-sound");
         const restartBtn = document.getElementById("restart-timer");
+        const volumeSlider = document.getElementById("volume-slider");
+        const bgParticles = document.getElementById("bg-particles");
 
-        // Create floating particles
+        // Create floating particles and stars
         function createParticles() {
-            const particles = document.querySelector('.bg-particles');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 15; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
                 particle.style.width = particle.style.height = (Math.random() * 4 + 2) + 'px';
                 particle.style.animationDelay = Math.random() * 20 + 's';
                 particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                particles.appendChild(particle);
+                bgParticles.appendChild(particle);
+            }
+            
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
+                star.style.animationDelay = Math.random() * 4 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                bgParticles.appendChild(star);
             }
         }
 
@@ -509,6 +571,14 @@
         startTimer();
         updateStats();
 
+        // Set initial volume
+        sound.volume = volumeSlider.value;
+        
+        // Volume control
+        volumeSlider.addEventListener('input', () => {
+            sound.volume = volumeSlider.value;
+        });
+
         // Breathing animation
         function startBreathingAnimation() {
             let inhale = true;
@@ -516,8 +586,8 @@
             updateStats();
             
             breathInterval = setInterval(() => {
-                instructionText.textContent = inhale ? "Breathe In..." : "Breathe Out...";
-                instructionText.style.color = inhale ? "#b4e0e1" : "#c8e6c9";
+                instructionText.textContent = inhale ? "Breathe In Deeply..." : "Exhale Slowly...";
+                instructionText.style.color = inhale ? "#b4d0f1" : "#c8e6c9";
                 
                 if (!inhale) {
                     breathCount++;
@@ -542,7 +612,7 @@
                 } else {
                     clearInterval(timerInterval);
                     sessionComplete.classList.add("show");
-                    instructionText.textContent = "Well done!";
+                    instructionText.textContent = "Time for sleep...";
                     instructionText.style.color = "#a1ffa1";
                     sessionNumber++;
                     updateStats();
@@ -585,7 +655,7 @@
             clearInterval(breathInterval);
             startBreathingAnimation();
             startTimer();
-            instructionText.style.color = "#b4e0e1";
+            instructionText.style.color = "#b4d0f1";
         });
 
         // Audio event listeners
