@@ -368,6 +368,7 @@ nav ul li a:hover {
 
 /* Hero Section */
 .hero {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -376,7 +377,9 @@ nav ul li a:hover {
     text-align: center;
     position: relative;
     overflow: hidden;
-    padding-top: 80px;
+    padding-top: 100px;
+    padding-bottom: 120px;
+    overflow: visible;
 }
 
 .hero-content {
@@ -388,12 +391,13 @@ nav ul li a:hover {
 
 .hero-pattern {
     position: absolute;
+    inset: 0;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: radial-gradient(circle at 30% 50%, rgba(128, 0, 32, 0.1) 0%, rgba(18, 18, 18, 0.8) 70%);
-    z-index: 1;
+    z-index: -1;
 }
 
 .main-title {
@@ -471,48 +475,90 @@ nav ul li a:hover {
 }
 
 .cta-buttons {
+    margin-top: 2rem;
     display: flex;
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+/* Common button base */
 .primary-btn, .secondary-btn {
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 30px;
-    transition: all 0.3s;
-    min-width: 200px;
-    text-align: center;
+  padding: 12px 28px;
+  border-radius: 12px;  /* thoda zyada curve for premium feel */
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: 0.5px;
 }
 
+/* Primary Button (MannSakha+) */
 .primary-btn {
-    background: var(--gradient-secondary);
-    color: var(--text-primary);
-    border: none;
+  background: linear-gradient(135deg, #b22222, #e63946); /* maroon → lighter red */
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 15px rgba(178, 34, 34, 0.4);
 }
-
 .primary-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px var(--shadow-color);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(230, 57, 70, 0.5);
 }
 
+/* Secondary Button (Explore Features) */
 .secondary-btn {
-    border: 2px solid var(--accent-primary);
-    color: var(--text-primary);
-    background: transparent;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid #fff;
+  color: #fff;
+  backdrop-filter: blur(5px); /* thoda premium glassy look */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #e63946;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
 }
 
-.secondary-btn:hover {
-    background: var(--accent-tertiary);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px var(--shadow-color);
+.teaser-card {
+  background: #111;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  max-width: 350px;
+  width: 90%;
+  position: relative;
+  color: #fff;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+  .teaser-card {
+    width: 95%;
+    padding: 1.2rem;
+    border-radius: 1rem;
+  }
+
+  .teaser-card h2 {
+    font-size: 1.1rem;
+  }
+
+  .teaser-card p {
+    font-size: 0.85rem;
+  }
+
+  .teaser-card button {
+    width: 100%;
+    padding: 0.8rem;
+  }
 }
 
 .scroll-indicator {
-    position: absolute;
+    margin-top: 2rem;
+    display: inline-block;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
@@ -521,7 +567,96 @@ nav ul li a:hover {
     color: var(--accent-secondary);
     cursor: pointer;
 }
+/* Modal Overlay */
+.teaser-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
 
+/* Bold Card Design */
+.teaser-card {
+  background: var(--card-bg);
+  padding: 2.5rem 2rem;
+  border-radius: 1.25rem;
+  width: 320px;
+  max-width: 90%;
+  text-align: center;
+  color: var(--text-primary);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  transform: translateY(25px);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+
+/* Show State */
+.teaser-modal.show .teaser-card {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Icon */
+/* Using site’s vibe: simple lock icon with pop-of-color */
+.teaser-card .icon {
+  font-size: 2.3rem;
+  margin-bottom: 1rem;
+  color: var(--accent-secondary);
+}
+
+/* Headline */
+.teaser-card h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+/* Subtext */
+.teaser-card p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Gradient Button */
+.teaser-card button {
+  background: var(--gradient-secondary);
+  color: var(--text-primary);
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.teaser-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* Close icon adjustments */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.close-btn:hover {
+  color: var(--accent-primary);
+}
+
+/* Dark mode tweak */
+body.dark-mode .teaser-card {
+  background: var(--black-tertiary);
+  color: var(--text-primary);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
         transform: translateY(0) translateX(-50%);
