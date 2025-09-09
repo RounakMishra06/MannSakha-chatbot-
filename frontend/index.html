@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-    <!-- Chart.js included at bottom -->
+    <!-- (Chart.js script is loaded at the bottom) -->
   </head>
   <body>
     <!-- Header -->
@@ -71,7 +71,9 @@
               <div class="chat-avatar"><i class="fas fa-robot"></i></div>
               <div class="chat-text">
                 <div class="chat-sender">MannSakha AI</div>
-                <div class="chat-content">Hi there! I'm your MannSakha AI companion. How can I help you today?</div>
+                <div class="chat-content">
+                  Hi there! I'm your MannSakha AI companion. How can I help you today?
+                </div>
                 <div class="chat-time">Just now</div>
               </div>
             </div>
@@ -174,7 +176,7 @@
           <div class="mood-log feature-card">
             <div class="card-header"><i class="fas fa-smile"></i><h3>Log Your Mood</h3></div>
 
-            <!-- FINAL mood-selector (merged, no conflict markers) -->
+            <!-- merged, conflict-free mood-selector -->
             <div class="mood-selector">
               <div class="mood-option" data-mood="happy" onclick="selectMood(this)"><span>😊</span><p>Happy</p></div>
               <div class="mood-option" data-mood="sad" onclick="selectMood(this)"><span>😢</span><p>Sad</p></div>
@@ -245,7 +247,7 @@
         </div>
       </section>
 
-      <!-- Meditation cards -->
+      <!-- Meditation -->
       <section id="meditation" class="feature-section">
         <div class="section-header">
           <h2><i class="fas fa-spa"></i> Guided Meditation</h2>
@@ -277,6 +279,59 @@
               <div class="meditation-meta"><span><i class="fas fa-clock"></i> 15 min</span><span><i class="fas fa-headphones"></i> Audio</span></div>
             </div>
             <div class="play-btn"><i class="fas fa-play"></i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gamification -->
+      <section id="gamification" class="feature-section">
+        <div class="section-header">
+          <h2><i class="fas fa-trophy"></i> Your Wellness Journey</h2>
+          <div class="section-underline"></div>
+        </div>
+        <div class="gamification-content">
+          <div class="stats-card">
+            <div class="stat-item">
+              <div class="stat-value" id="points">125</div>
+              <div class="stat-label">Points</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="streak">7</div>
+              <div class="stat-label">Day Streak</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="activities">12</div>
+              <div class="stat-label">Activities</div>
+            </div>
+          </div>
+
+          <div class="progress-container">
+            <div class="progress-header">
+              <h3>Daily Goal</h3>
+              <span>75% completed</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 75%"></div>
+            </div>
+            <button class="primary-btn" onclick="completeActivity()"><i class="fas fa-check-circle"></i> Complete Activity</button>
+          </div>
+
+          <div class="badges-container">
+            <h3>Your Achievements</h3>
+            <div class="badges-grid" id="badges">
+              <div class="badge earned">
+                <div class="badge-icon"><i class="fas fa-medal"></i></div>
+                <div class="badge-info"><h4>Beginner</h4><p>First week completed</p></div>
+              </div>
+              <div class="badge earned">
+                <div class="badge-icon"><i class="fas fa-heart"></i></div>
+                <div class="badge-info"><h4>Self-Care</h4><p>5 journal entries</p></div>
+              </div>
+              <div class="badge">
+                <div class="badge-icon"><i class="fas fa-fire"></i></div>
+                <div class="badge-info"><h4>Streak</h4><p>30 day streak</p></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -365,6 +420,7 @@
 
     <!-- Audio / Toast / Modal -->
     <audio id="meditationPlayer"></audio>
+
     <div id="toast" class="toast">
       <div class="toast-content">
         <i class="fas fa-check-circle toast-icon"></i>
