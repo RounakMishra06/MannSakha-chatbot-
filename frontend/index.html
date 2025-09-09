@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-    <!-- Chart.js (no CSS needed) -->
+    <!-- Chart.js included at bottom -->
   </head>
   <body>
     <!-- Header -->
@@ -71,9 +71,7 @@
               <div class="chat-avatar"><i class="fas fa-robot"></i></div>
               <div class="chat-text">
                 <div class="chat-sender">MannSakha AI</div>
-                <div class="chat-content">
-                  Hi there! I'm your MannSakha AI companion. How can I help you today?
-                </div>
+                <div class="chat-content">Hi there! I'm your MannSakha AI companion. How can I help you today?</div>
                 <div class="chat-time">Just now</div>
               </div>
             </div>
@@ -132,7 +130,6 @@
             <li>Mental health and productivity research</li>
             <li>Building scalable technology that makes a difference</li>
           </ul>
-          <p>We offer competitive compensation, flexible working arrangements, and the opportunity to work on products that genuinely improve people's lives.</p>
           <p class="highlight">Check our open positions and become part of our story.</p>
         </div>
       </section>
@@ -176,12 +173,23 @@
         <div class="feature-content">
           <div class="mood-log feature-card">
             <div class="card-header"><i class="fas fa-smile"></i><h3>Log Your Mood</h3></div>
+
+            <!-- FINAL mood-selector (merged, no conflict markers) -->
             <div class="mood-selector">
-              <div class="mood-option" data-mood="happy"   onclick="selectMood(this)"><span>😊</span><p>Happy</p></div>
-              <div class="mood-option" data-mood="sad"     onclick="selectMood(this)"><span>😢</span><p>Sad</p></div>
+              <div class="mood-option" data-mood="happy" onclick="selectMood(this)"><span>😊</span><p>Happy</p></div>
+              <div class="mood-option" data-mood="sad" onclick="selectMood(this)"><span>😢</span><p>Sad</p></div>
               <div class="mood-option" data-mood="anxious" onclick="selectMood(this)"><span>😟</span><p>Anxious</p></div>
-              <div class="mood-option" data-mood="calm"    onclick="selectMood(this)"><span>😌</span><p>Calm</p></div>
+              <div class="mood-option" data-mood="calm" onclick="selectMood(this)"><span>😌</span><p>Calm</p></div>
+              <div class="mood-option" data-mood="angry" onclick="selectMood(this)"><span>😡</span><p>Angry</p></div>
+              <div class="mood-option" data-mood="tired" onclick="selectMood(this)"><span>😴</span><p>Tired</p></div>
+              <div class="mood-option" data-mood="excited" onclick="selectMood(this)"><span>🤩</span><p>Excited</p></div>
+              <div class="mood-option" data-mood="confused" onclick="selectMood(this)"><span>😕</span><p>Confused</p></div>
+              <div class="mood-option" data-mood="loved" onclick="selectMood(this)"><span>😍</span><p>Loved</p></div>
+              <div class="mood-option" data-mood="unwell" onclick="selectMood(this)"><span>🤒</span><p>Unwell</p></div>
+              <div class="mood-option" data-mood="confident" onclick="selectMood(this)"><span>😎</span><p>Confident</p></div>
+              <div class="mood-option" data-mood="overwhelmed" onclick="selectMood(this)"><span>😭</span><p>Overwhelmed</p></div>
             </div>
+
             <div class="mood-intensity">
               <label>Intensity: <span id="intensityValue">5</span>/10</label>
               <input type="range" min="1" max="10" value="5" id="moodIntensity"/>
@@ -379,4 +387,5 @@
     <script src="script.js"></script>
   </body>
 </html>
+
 
