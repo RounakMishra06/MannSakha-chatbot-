@@ -1022,6 +1022,17 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 </script>
+<!-- Logout Confirmation Modal -->
+<div id="logoutModal" class="modal-overlay hidden">
+  <div class="modal">
+    <h2>Confirm Logout</h2>
+    <p>Are you sure you want to log out?</p>
+    <div class="modal-actions">
+      <button id="confirmLogout" class="btn confirm">Yes, Logout</button>
+      <button id="cancelLogout" class="btn cancel">Cancel</button>
+    </div>
+  </div>
+</div>
 
   </body>
 </html>

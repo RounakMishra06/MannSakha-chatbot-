@@ -272,12 +272,24 @@ function handleLogin(event) {
     }
 }
 
-// Logout functionality
+// Show confirmation modal instead of instant logout
 function logout() {
+  const modal = document.getElementById("logoutModal");
+  modal.classList.remove("hidden");
+
+  // Confirm
+  document.getElementById("confirmLogout").onclick = () => {
     if (auth.logout()) {
-        window.location.href = "login.html";
+      window.location.href = "login.html";
     }
+  };
+
+  // Cancel
+  document.getElementById("cancelLogout").onclick = () => {
+    modal.classList.add("hidden");
+  };
 }
+
 
 // Mobile Menu Toggle Function
 function toggleMobileMenu() {
