@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <style>
-     body {
+    body {
       font-family: 'Poppins', sans-serif;
       background: #330202;
       margin: 0;
@@ -20,7 +20,7 @@
 
     header {
       background: #4e0606;
-      color: white;
+      color: rgb(245, 162, 18);
       padding: 15px 30px;
       display: flex;
       align-items: center;
@@ -60,14 +60,6 @@
       margin-left: 10px;
     }
 
-    .signup-section {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-    }
-
     .signup-container {
       background: rgb(251, 251, 251);
       padding: 30px;
@@ -83,103 +75,6 @@
       color: #333;
     }
 
-    .form-group {
-      margin-bottom: 15px;
-      text-align: left;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 5px;
-      color: #555;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-    }
-
-    .signup-btn {
-      background: #690606;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      width: 100%;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-top: 10px;
-    }
-
-    .signup-btn:hover {
-      background: #a90b0b;
-    }
-
-    .divider {
-      margin: 20px 0;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      line-height: 0.1em;
-      color: #888;
-    }
-
-    .divider span {
-      background: white;
-      padding: 0 10px;
-    }
-
-    .google-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #fff;
-      border: 1px solid #dadce0;
-      border-radius: 15px;
-      padding: 10px 20px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #a81010;
-      cursor: pointer;
-      gap: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      transition: all 0.2s ease-in-out;
-      width: 100%;
-    }
-
-    .google-btn:hover {
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-      transform: translateY(-1px);
-    }
-
-    .google-btn img {
-      width: 20px;
-      height: 20px;
-    }
-
-    .login-link {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-
-    .login-link a {
-      color: #dcaf1b;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .login-link a:hover {
-      text-decoration: underline;
-    }
-
     .error-message {
       color: red;
       font-size: 14px;
@@ -191,7 +86,7 @@
       header {
         padding: 15px 20px;
       }
-      
+
       header nav ul {
         display: none;
         flex-direction: column;
@@ -203,25 +98,166 @@
         padding: 10px;
         z-index: 1000;
       }
-      
+
       header nav ul.show {
         display: flex;
       }
-      
+
       .signup-container {
         padding: 20px;
       }
+    }
+
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #0d0d0d;
+    }
+
+    .signup-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: transparent;
+      padding: 20px;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      /* transparent */
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 450px;
+      width: 100%;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      color: #fff;
+    }
+
+    .glass-card h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+      color: #ff8533;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #ff944d;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: #7c7c7c;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #ff6600;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff6600, #ff944d);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .signup-btn:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.7);
+    }
+
+    .google-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .google-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .divider {
+      margin: 20px 0;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+      position: relative;
+    }
+
+    .divider span {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0 10px;
+    }
+
+    .login-link {
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .login-link a {
+      color: #ff944d;
+      text-decoration: none;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 
 <body>
- <!-- Header -->
+  <!-- Header -->
   <header>
     <div class="logo">MannSakha AI</div>
     <nav>
       <ul>
-        <li><a href="index.html#home">HOME</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="index.html#about">ABOUT</a></li>
         <li><a href="index.html#services">SERVICES</a></li>
         <li><a href="index.html#careers">CAREERS</a></li>
@@ -241,130 +277,201 @@
     </div>
   </header>
 
-  <!-- Signup Section -->
-  <section class="signup-section">
-    <div class="signup-container">
-      <h2>Create Your Account</h2>
-      <p class="error-message" id="errorMessage"></p>
-      <form id="signupForm" onsubmit="handleSignup(event)">
-        <div class="form-group">
-          <label for="name">Full Name</label>
-          <input type="text" id="name" placeholder="Enter your full name" required>
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input  type="email" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Create a password" required>
-        </div>
-        <div class="form-group">
-          <label for="gender">Gender</label>
-          <select id="gender" required>
-            <option value="">Select Gender</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="dob">Date of Birth</label>
-          <input type="date" id="dob" required>
-        </div>
-        <button type="submit" class="signup-btn">Sign Up</button>
-      </form>
+  <canvas id="particles"></canvas>
+  <div class="content">
 
-      <div class="divider"><span>OR</span></div>
+    <script>
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-      <a href="/auth/google" style="text-decoration: none;">
-        <button type="button" class="google-btn">
-          <img src="googleLogo.jpg" alt="Google logo">
-          Continue with Google
-        </button>
-      </a>
+      let particlesArray = [];
+      const colors = ["#ff6600", "#ff8533", "#ff944d", "#ffaa66"];
 
-      <p class="login-link">Already have an account? <a href="login.html">Log In</a></p>
-    </div>
-  </section>
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 4 + 2; // size: 2px - 6px
+          this.speedX = Math.random() * 1 - 0.5;
+          this.speedY = Math.random() * 1 - 0.5;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
 
-  <script>
-    // Theme toggle functionality
-    function toggleTheme() {
-      const body = document.body;
-      const themeToggle = document.querySelector('.theme-toggle i');
-      
-      if (body.classList.contains('dark-theme')) {
-        body.classList.remove('dark-theme');
-        themeToggle.classList.remove('fa-sun');
-        themeToggle.classList.add('fa-moon');
-      } else {
-        body.classList.add('dark-theme');
-        themeToggle.classList.remove('fa-moon');
-        themeToggle.classList.add('fa-sun');
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
+
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+
+          // glow effect ✨
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 20;
+
+          ctx.fill();
+          ctx.shadowBlur = 0; // reset shadow
+        }
       }
-    }
 
-    // Mobile menu toggle functionality
-    function toggleMobileMenu() {
-      const navMenu = document.getElementById('navMenu');
-      navMenu.classList.toggle('show');
-    }
+      function init() {
+        particlesArray = [];
+        for (let i = 0; i < 105; i++) {  // reduced density (~30% less)
+          particlesArray.push(new Particle());
+        }
+      }
 
-    // Signup form handling
-    function handleSignup(event) {
-      event.preventDefault();
-      
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const gender = document.getElementById('gender').value;
-      const dob = document.getElementById('dob').value;
-      const errorMessage = document.getElementById('errorMessage');
-      
-      // Basic validation
-      if (!name || !email || !password || !gender || !dob) {
-        errorMessage.textContent = 'Please fill in all fields.';
-        return;
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
       }
-      
-      // Email validation
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        errorMessage.textContent = 'Please enter a valid email address.';
-        return;
+
+      init();
+      animate();
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
+      });
+
+    </script>
+
+    <!-- Signup Section -->
+    <section class="signup-section">
+      <div class="signup-container glass-card">
+        <h2>Create Your Account</h2>
+        <p class="error-message" id="errorMessage"></p>
+        <form id="signupForm" onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a password" required>
+          </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <select id="gender" required>
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" required>
+          </div>
+          <button type="submit" class="signup-btn">Sign Up</button>
+        </form>
+
+        <div class="divider"><span>OR</span></div>
+
+        <a href="/auth/google" style="text-decoration: none;">
+          <button type="button" class="google-btn">
+            <img src="googleLogo.jpg" alt="Google logo">
+            Continue with Google
+          </button>
+        </a>
+
+        <p class="login-link">Already have an account? <a href="login.html">Log In</a></p>
+      </div>
+    </section>
+
+    <script>
+      // Theme toggle functionality
+      function toggleTheme() {
+        const body = document.body;
+        const themeToggle = document.querySelector('.theme-toggle i');
+
+        if (body.classList.contains('dark-theme')) {
+          body.classList.remove('dark-theme');
+          themeToggle.classList.remove('fa-sun');
+          themeToggle.classList.add('fa-moon');
+        } else {
+          body.classList.add('dark-theme');
+          themeToggle.classList.remove('fa-moon');
+          themeToggle.classList.add('fa-sun');
+        }
       }
-      
-      // Password validation (at least 6 characters)
-      if (password.length < 6) {
-        errorMessage.textContent = 'Password must be at least 6 characters long.';
-        return;
+
+      // Mobile menu toggle functionality
+      function toggleMobileMenu() {
+        const navMenu = document.getElementById('navMenu');
+        navMenu.classList.toggle('show');
       }
-      
-      // If all validations pass
-      errorMessage.textContent = '';
-      alert('Sign up successful!'); // Replace with actual signup logic
-      
-      // Here you would typically send the data to your backend
-      // For example:
-      // fetch('/api/signup', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, email, password, gender, dob })
-      // })
-      // .then(response => response.json())
-      // .then(data => {
-      //   if (data.success) {
-      //     window.location.href = '/dashboard';
-      //   } else {
-      //     errorMessage.textContent = data.message;
-      //   }
-      // })
-      // .catch(error => {
-      //   errorMessage.textContent = 'An error occurred. Please try again.';
-      // });
-    }
-  </script>
+
+      // Signup form handling
+      function handleSignup(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const gender = document.getElementById('gender').value;
+        const dob = document.getElementById('dob').value;
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Basic validation
+        if (!name || !email || !password || !gender || !dob) {
+          errorMessage.textContent = 'Please fill in all fields.';
+          return;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorMessage.textContent = 'Please enter a valid email address.';
+          return;
+        }
+
+        // Password validation (at least 6 characters)
+        if (password.length < 6) {
+          errorMessage.textContent = 'Password must be at least 6 characters long.';
+          return;
+        }
+
+        // If all validations pass
+        errorMessage.textContent = '';
+        alert('Sign up successful!'); // Replace with actual signup logic
+
+        // Here you would typically send the data to your backend
+        // For example:
+        // fetch('/api/signup', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({ name, email, password, gender, dob })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //   if (data.success) {
+        //     window.location.href = '/dashboard';
+        //   } else {
+        //     errorMessage.textContent = data.message;
+        //   }
+        // })
+        // .catch(error => {
+        //   errorMessage.textContent = 'An error occurred. Please try again.';
+        // });
+      }
+    </script>
+  </div>
 </body>
 
 </html>
