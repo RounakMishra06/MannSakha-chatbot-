@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MannSakha AI</title>
+    <title>MannSakha - Your AI Companion for Mental Wellness</title>
     <link rel="stylesheet" href="styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -19,7 +19,6 @@
     />
   </head>
   <body>
-    <!-- Header -->
     <header>
       <div class="logo">MannSakha AI</div>
       <nav>
@@ -54,7 +53,6 @@
       </button>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero" id="home">
       <div class="hero-content">
         <h1 class="main-title">
@@ -77,10 +75,8 @@
       <div class="hero-pattern"></div>
     </section>
 
-    <!-- Main Content -->
     <div class="main-content">
-      <!-- AI Chatbot Section -->
-  <section id="chatbot" class="section">
+      <section id="chatbot" class="section">
         <div class="section-header">
             <h2><i class="fas fa-robot"></i> AI-Powered Chatbot</h2>
             <div class="section-underline"></div>
@@ -144,7 +140,6 @@
                 </div>
             </section>
 
-            <!-- Services Section -->
             <section id="services" class="neo-section">
                 <div class="floating-element element-1"></div>
                 <div class="floating-element element-2 pulse"></div>
@@ -175,7 +170,6 @@
                 </div>
             </section>
 
-            <!-- Careers Section -->
             <section id="careers" class="neo-section">
                 <div class="floating-element element-1 pulse"></div>
                 <div class="floating-element element-2"></div>
@@ -212,7 +206,6 @@
                 </div>
             </section>
 
-            <!-- Blog Section -->
             <section id="blog" class="neo-section">
                 <div class="floating-element element-1"></div>
                 <div class="floating-element element-2 pulse"></div>
@@ -255,7 +248,7 @@
                 </div>
             </section>
 
-             <script>
+           <script>
         // Add interactive effects
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.neo-section');
@@ -294,7 +287,6 @@
         });
     </script>
 
-      <!-- Mood Tracking and Journaling Section -->
       <section id="mood-tracking" class="feature-section">
         <div class="section-header">
           <h2><i class="fas fa-chart-line"></i> Mood Tracking & Journaling</h2>
@@ -456,7 +448,6 @@
         </div>
       </section>
 
-      <!-- Personalized Insights Section -->
       <section id="insights" class="feature-section">
         <div class="section-header">
           <h2><i class="fas fa-lightbulb"></i> Personalized Insights</h2>
@@ -486,14 +477,12 @@
         </div>
       </section>
 
-<!-- Guided Meditation Section -->
 <section id="meditation" class="feature-section">
   <div class="section-header">
     <h2><i class="fas fa-spa"></i> Guided Meditation</h2>
     <div class="section-underline"></div>
   </div>
   <div class="meditation-content">
-    <!-- Stress Relief Card -->
     <div class="meditation-card" onclick="redirectToMeditation('stress-relief.html')">
       <div class="meditation-icon stress">
         <i class="fas fa-wind"></i>
@@ -511,7 +500,6 @@
       </div>
     </div>
 
-    <!-- Focus Card -->
     <div class="meditation-card" onclick="redirectToMeditation('focus.html')">
       <div class="meditation-icon focus">
         <i class="fas fa-bullseye"></i>
@@ -531,7 +519,6 @@
       </div>
     </div>
 
-    <!-- Sleep Card -->
     <div class="meditation-card" onclick="redirectToMeditation('sleep.html')">
       <div class="meditation-icon sleep">
         <i class="fas fa-moon"></i>
@@ -558,7 +545,6 @@
   }
 </script>
 
-      <!-- Gamification Section -->
       <section id="gamification" class="feature-section">
         <div class="section-header">
           <h2><i class="fas fa-trophy"></i> Your Wellness Journey</h2>
@@ -629,7 +615,6 @@
       </section>
     </div>
 
-<!-- Newsletter Subscription Section -->
 <section class="newsletter-section">
   <div class="container">
     <h2>Stay Updated with MannSakha AI</h2>
@@ -649,7 +634,7 @@
 
     <div id="index-newsletter-message"></div>
 
-   
+    
   </div>
 </section>
 
@@ -819,7 +804,6 @@
     <footer class="footer">
   <div class="footer-container">
     <div class="footer-grid">
-      <!-- Brand Column -->
       <div class="footer-brand">
         <div class="footer-logo">
           <span class="logo-icon"></span>
@@ -839,7 +823,6 @@
         </div>
       </div>
 
-      <!-- Navigation Column -->
       <div class="footer-column">
         <h3 class="footer-heading">Navigation</h3>
         <ul class="footer-links">
@@ -851,7 +834,6 @@
         </ul>
       </div>
 
-      <!-- Resources Column -->
       <div class="footer-column">
         <h3 class="footer-heading">Resources</h3>
         <ul class="footer-links">
@@ -863,7 +845,6 @@
         </ul>
       </div>
 
-      <!-- Company Column -->
       <div class="footer-column">
         <h3 class="footer-heading">Company</h3>
         <ul class="footer-links">
@@ -876,7 +857,6 @@
       </div>
     </div>
 
-    <!-- Footer Bottom -->
     <div class="footer-bottom">
       <div class="footer-copyright">
         © <span id="current-year"></span> MannSakha AI. All rights reserved.
@@ -891,10 +871,8 @@
 </footer>
 
 
-    <!-- Audio Player (hidden) -->
     <audio id="meditationPlayer"></audio>
 
-    <!-- Toast Notification -->
     <div id="toast" class="toast">
       <div class="toast-content">
         <i class="fas fa-check-circle toast-icon"></i>
@@ -935,7 +913,6 @@
   }
 </script>
 
-<!-- Back to Top Button -->
 <button id="backToTopBtn" title="Go to top">↑</button>
 
 <style>
