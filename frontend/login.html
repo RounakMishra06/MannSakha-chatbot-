@@ -11,7 +11,7 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-       background: #330202;
+      background: #330202;
       margin: 0;
       display: flex;
       flex-direction: column;
@@ -20,7 +20,7 @@
 
     header {
       background: #4e0606;
-      color: white;
+      color: rgb(245, 162, 18);
       padding: 15px 30px;
       display: flex;
       align-items: center;
@@ -60,128 +60,160 @@
       margin-left: 10px;
     }
 
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #0d0d0d;
+    }
+
     .login-section {
-      flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 40px 20px;
+      min-height: 100vh;
+      background: transparent;
+      padding: 20px;
     }
 
-    .login-container {
-      background: white;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      width: 100%;
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      /* transparent */
+      border-radius: 16px;
+      padding: 40px;
       max-width: 400px;
+      width: 100%;
+      backdrop-filter: blur(12px);
+      /* frosted glass effect */
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
       text-align: center;
+      color: #fff;
     }
 
-    .login-container h2 {
+    .glass-card h2 {
       margin-bottom: 20px;
-      color: #333;
+      font-size: 1.8rem;
+      color: #ff8533;
     }
 
     .input-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       text-align: left;
     }
 
     .input-group label {
       display: block;
-      font-size: 14px;
-      margin-bottom: 5px;
-      color: #555;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #ff944d;
     }
 
     .input-group input {
       width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .input-group input:focus {
+      border-color: #ff6600;
+      background: rgba(255, 255, 255, 0.15);
     }
 
     .login-btn {
-      background: #690606;
-      color: white;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
       width: 100%;
-      font-size: 16px;
-      font-weight: 600;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #ff6600, #ff944d);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .login-btn:hover {
-      background: #a90b0b;
-    }
-
-    .divider {
-      margin: 20px 0;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-      line-height: 0.1em;
-      color: #888;
-    }
-
-    .divider span {
-      background: white;
-      padding: 0 10px;
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.7);
     }
 
     .google-btn {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
-      border: 1px solid #dadce0;
-      border-radius: 15px;
-      padding: 10px 20px;
-      font-size: 15px;
-      font-weight: 600;
-      color: #a81010;
-      cursor: pointer;
-      gap: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      transition: all 0.2s ease-in-out;
       width: 100%;
-    }
-
-    .google-btn:hover {
-      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-      transform: translateY(-1px);
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
     }
 
     .google-btn img {
       width: 20px;
       height: 20px;
+      margin-right: 10px;
     }
 
+    .google-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .divider {
+      position: relative;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      /* creates the line */
+      margin: 20px 0;
+    }
+
+    .divider span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* centers the span */
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0 10px;
+      z-index: 1;
+      /* brings it in front */
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+
     .signup-link {
-      color:#4e0606;
       margin-top: 15px;
-      font-size: 14px;
+      font-size: 0.9rem;
     }
 
     .signup-link a {
-      color: #dcaf1b;
+      color: #ff944d;
       text-decoration: none;
-      font-weight: bold;
     }
 
     .signup-link a:hover {
       text-decoration: underline;
-    }
-
-    .error-message {
-      color: red;
-      font-size: 14px;
-      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -192,7 +224,7 @@
     <div class="logo">MannSakha AI</div>
     <nav>
       <ul>
-        <li><a href="index.html#home">HOME</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="index.html#about">ABOUT</a></li>
         <li><a href="index.html#services">SERVICES</a></li>
         <li><a href="index.html#careers">CAREERS</a></li>
@@ -211,38 +243,108 @@
       </button>
     </div>
   </header>
+  <canvas id="particles"></canvas>
+  <div class="content">
 
-  <!-- Login Section -->
-  <section class="login-section">
-    <div class="login-container">
-      <h2>Login to MannSakha AI</h2>
-      <p class="error-message" id="errorMessage"></p>
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div class="input-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" placeholder="Enter your email" required>
-        </div>
-        <div class="input-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter your password" required>
-        </div>
-        <button type="submit" class="login-btn">Login</button>
-      </form>
+    <script>
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
-      <div class="divider"><span>OR</span></div>
+      let particlesArray = [];
+      const colors = ["#ff6600", "#ff8533", "#ff944d", "#ffaa66"];
 
-      <a href="/auth/google" style="text-decoration: none;">
-        <button type="button" class="google-btn">
-          <img src="googleLogo.jpg" alt="Google logo">
-          Continue with Google
-        </button>
-      </a>
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 4 + 2; // size: 2px - 6px
+          this.speedX = Math.random() * 1 - 0.5;
+          this.speedY = Math.random() * 1 - 0.5;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
 
-      <p class="signup-link">Don't have an account? <a href="signup.html">Sign Up</a></p>
-    </div>
-  </section>
+        update() {
+          this.x += this.speedX;
+          this.y += this.speedY;
+          if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+          if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+        }
 
-  <script src="script.js"></script>
+        draw() {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+
+          // glow effect ✨
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 20;
+
+          ctx.fill();
+          ctx.shadowBlur = 0; // reset shadow
+        }
+      }
+
+      function init() {
+        particlesArray = [];
+        for (let i = 0; i < 105; i++) {  // reduced density (~30% less)
+          particlesArray.push(new Particle());
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particlesArray.forEach(p => {
+          p.update();
+          p.draw();
+        });
+        requestAnimationFrame(animate);
+      }
+
+      init();
+      animate();
+
+      window.addEventListener("resize", () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        init();
+      });
+
+    </script>
+    <!-- Login Section -->
+    <section class="login-section">
+      <div class="login-container glass-card">
+        <h2>Login to MannSakha AI</h2>
+        <p class="error-message" id="errorMessage"></p>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+          </div>
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+          </div>
+          <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <div class="divider"><span>OR</span></div>
+
+        <a href="/auth/google" style="text-decoration: none;">
+          <button type="button" class="google-btn">
+            <img src="googleLogo.jpg" alt="Google logo">
+            Continue with Google
+          </button>
+        </a>
+
+        <p class="signup-link">Don't have an account? <a href="signup.html">Sign Up</a></p>
+      </div>
+    </section>
+
+
+    <script src="script.js"></script>
+  </div>
 </body>
 
 </html>
