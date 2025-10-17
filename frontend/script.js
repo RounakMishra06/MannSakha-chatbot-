@@ -360,14 +360,27 @@ async function sendMessage() {
     chatArea.scrollTop = chatArea.scrollHeight;
     
     try {
-        // Call the actual Gemini API through backend
-        const response = await fetch('/api/gemini', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ message: userInput })
-        });
+        // Try the new chat API endpoint first, fallback to gemini
+        let response;
+        try {
+            response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            });
+        } catch (error) {
+            // Fallback to gemini endpoint
+            console.log('Trying fallback endpoint...');
+            response = await fetch('/api/gemini', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: userInput })
+            });
+        }
         
         // Remove typing indicator
         chatArea.removeChild(typingIndicator);

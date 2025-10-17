@@ -1,56 +1,97 @@
-// Vercel API endpoint for chatbot
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// Vercel Serverless API endpoint for chatbot
+// This file handles the /api/gemini endpoint
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+let GoogleGenerativeAI;
+
+// Dynamic import for better compatibility
+async function getGeminiAI() {
+  if (!GoogleGenerativeAI && process.env.GEMINI_API_KEY) {
+    try {
+      const module = await import("@google/generative-ai");
+      GoogleGenerativeAI = module.GoogleGenerativeAI;
+      return new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    } catch (error) {
+      console.error('Failed to load Gemini AI:', error);
+      return null;
+    }
+  }
+  return null;
+}
 
 export default async function handler(req, res) {
-  // Enable CORS
+  // Enable CORS for all requests
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
+  // Handle preflight requests
   if (req.method === 'OPTIONS') {
     res.status(200).end();
     return;
   }
 
+  // Only allow POST requests
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ 
+      error: 'Method not allowed',
+      method: req.method,
+      timestamp: new Date().toISOString()
+    });
   }
 
+  // Log for debugging
+  console.log('API Request received:', {
+    method: req.method,
+    hasBody: !!req.body,
+    apiKey: process.env.GEMINI_API_KEY ? 'Present' : 'Missing'
+  });
+
   try {
-    const { message } = req.body;
+    const { message } = req.body || {};
 
-    if (!message) {
-      return res.status(400).json({ error: 'Message is required' });
+    if (!message || typeof message !== 'string') {
+      return res.status(400).json({ 
+        error: 'Message is required and must be a string',
+        received: typeof message
+      });
     }
 
-    // Check if API key is available
-    if (!process.env.GEMINI_API_KEY) {
-      console.error('GEMINI_API_KEY not found');
-      return getSmartFallback(message, res);
+    // Try to use Gemini API if available
+    const genAI = await getGeminiAI();
+    
+    if (genAI && process.env.GEMINI_API_KEY) {
+      try {
+        // Mental health context
+        const context = `You are MannSakha, a compassionate AI mental health support assistant. 
+        Provide empathetic, supportive responses to users seeking mental health guidance. 
+        Always be understanding, non-judgmental, and encourage professional help when needed.
+        Keep responses concise but caring (max 150 words).`;
+
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const result = await model.generateContent(`${context}\n\nUser: ${message}`);
+        const response = await result.response;
+        const text = response.text();
+
+        return res.status(200).json({ 
+          response: text,
+          timestamp: new Date().toISOString(),
+          source: 'gemini'
+        });
+      } catch (geminiError) {
+        console.error('Gemini API Error:', geminiError);
+        // Fall through to fallback
+      }
     }
 
-    // Mental health context
-    const context = `You are MannSakha, a compassionate AI mental health support assistant. 
-    Provide empathetic, supportive responses to users seeking mental health guidance. 
-    Always be understanding, non-judgmental, and encourage professional help when needed.
-    Keep responses concise but caring (max 150 words).`;
-
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const result = await model.generateContent(`${context}\n\nUser: ${message}`);
-    const response = await result.response;
-    const text = response.text();
-
-    return res.status(200).json({ 
-      response: text,
-      timestamp: new Date().toISOString(),
-      source: 'gemini'
-    });
+    // Use fallback response
+    return getSmartFallback(message, res);
 
   } catch (error) {
-    console.error('Gemini API Error:', error);
-    return getSmartFallback(req.body.message, res);
+    console.error('API Handler Error:', error);
+    return res.status(500).json({
+      error: 'Internal server error',
+      timestamp: new Date().toISOString()
+    });
   }
 }
 

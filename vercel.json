@@ -1,16 +1,19 @@
 {
   "version": 2,
-  "builds": [
+  "functions": {
+    "api/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
+  "routes": [
     {
-      "src": "api/**/*.js",
-      "use": "@vercel/node"
+      "src": "/api/chat",
+      "dest": "/api/chat.js"
     },
     {
-      "src": "frontend/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
+      "src": "/api/gemini", 
+      "dest": "/api/gemini.js"
+    },
     {
       "src": "/api/(.*)",
       "dest": "/api/$1"
@@ -19,8 +22,7 @@
       "src": "/(.*\\.(mp3|wav|ogg|m4a))",
       "dest": "/frontend/$1",
       "headers": {
-        "Cache-Control": "public, max-age=86400",
-        "Content-Type": "audio/mpeg"
+        "Cache-Control": "public, max-age=86400"
       }
     },
     {

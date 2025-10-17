@@ -64,29 +64,37 @@
             const resultDiv = document.getElementById('chatbot-result');
             resultDiv.innerHTML = 'Testing chatbot...';
             
-            try {
-                const response = await fetch('/api/gemini', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message })
-                });
-                
-                const data = await response.json();
-                
-                if (response.ok) {
-                    const source = data.fallback ? '(Fallback)' : '(AI)';
-                    resultDiv.innerHTML = `
-                        <div class="success">
-                            ✅ Chatbot Response ${source}:<br>
-                            <strong>${data.response}</strong>
-                        </div>
-                    `;
-                } else {
-                    resultDiv.innerHTML = `<div class="error">❌ Chatbot Error: ${data.error}</div>`;
+            // Test both endpoints
+            const endpoints = ['/api/chat', '/api/gemini'];
+            
+            for (const endpoint of endpoints) {
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        const source = data.source || (data.fallback ? 'fallback' : 'ai');
+                        resultDiv.innerHTML = `
+                            <div class="success">
+                                ✅ ${endpoint} Response (${source}):<br>
+                                <strong>${data.response}</strong><br>
+                                <small>Timestamp: ${data.timestamp}</small>
+                            </div>
+                        `;
+                        return; // Success, stop trying other endpoints
+                    }
+                } catch (error) {
+                    console.error(`${endpoint} failed:`, error);
                 }
-            } catch (error) {
-                resultDiv.innerHTML = `<div class="error">❌ Network Error: ${error.message}</div>`;
             }
+            
+            // If all endpoints failed
+            resultDiv.innerHTML = `<div class="error">❌ All API endpoints failed</div>`;
         }
 
         function testAudio(filename) {
