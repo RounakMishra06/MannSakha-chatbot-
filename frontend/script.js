@@ -360,38 +360,63 @@ async function sendMessage() {
     chatArea.scrollTop = chatArea.scrollHeight;
     
     try {
-        // Simulate API call with timeout
-        setTimeout(() => {
-            // Remove typing indicator
-            chatArea.removeChild(typingIndicator);
-            
-            // Add AI response
-            const aiResponses = [
-                "I understand how you're feeling. Have you tried taking a short break to clear your mind?",
-                "That's an interesting perspective. Could you tell me more about what's been on your mind lately?",
-                "Based on your previous entries, I notice you tend to feel this way when you're stressed. Maybe try some deep breathing exercises?",
-                "I'm here to listen. Remember that it's okay to feel this way sometimes.",
-                "Have you considered journaling about this? It might help you process your thoughts."
-            ];
-            
-            const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-            
-            const aiMessage = document.createElement("div");
-            aiMessage.className = "chat-bubble ai-message";
-            aiMessage.innerHTML = `
-                <div class="chat-avatar">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <div class="chat-text">
-                    <div class="chat-sender">MannSakha AI</div>
-                    <div class="chat-content">${randomResponse}</div>
-                    <div class="chat-time">Just now</div>
-                </div>
-            `;
-            chatArea.appendChild(aiMessage);
-            chatArea.scrollTop = chatArea.scrollHeight;
-        }, 1500);
+        // Call the actual Gemini API through backend
+        const response = await fetch('/api/gemini', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: userInput })
+        });
+        
+        // Remove typing indicator
+        chatArea.removeChild(typingIndicator);
+        
+        let aiResponseText;
+        if (response.ok) {
+            const data = await response.json();
+            aiResponseText = data.reply || "I'm having trouble understanding. Could you try rephrasing that?";
+        } else {
+            aiResponseText = "I'm experiencing some technical difficulties. Please try again in a moment.";
+        }
+        
+        // Add AI response
+        const aiMessage = document.createElement("div");
+        aiMessage.className = "chat-bubble ai-message";
+        aiMessage.innerHTML = `
+            <div class="chat-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="chat-text">
+                <div class="chat-sender">MannSakha AI</div>
+                <div class="chat-content">${aiResponseText}</div>
+                <div class="chat-time">Just now</div>
+            </div>
+        `;
+        chatArea.appendChild(aiMessage);
+        chatArea.scrollTop = chatArea.scrollHeight;
     } catch (error) {
+        // Remove typing indicator if it exists
+        if (typingIndicator.parentNode) {
+            chatArea.removeChild(typingIndicator);
+        }
+        
+        // Add error message
+        const errorMessage = document.createElement("div");
+        errorMessage.className = "chat-bubble ai-message";
+        errorMessage.innerHTML = `
+            <div class="chat-avatar">
+                <i class="fas fa-robot"></i>
+            </div>
+            <div class="chat-text">
+                <div class="chat-sender">MannSakha AI</div>
+                <div class="chat-content">I'm sorry, I'm having trouble connecting right now. Please try again later.</div>
+                <div class="chat-time">Just now</div>
+            </div>
+        `;
+        chatArea.appendChild(errorMessage);
+        chatArea.scrollTop = chatArea.scrollHeight;
+        
         showToast("Failed to get AI response", "error");
         console.error("Chat error:", error);
     }

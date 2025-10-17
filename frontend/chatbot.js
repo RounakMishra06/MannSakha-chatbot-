@@ -14,26 +14,26 @@ function addMessage(message, sender) {
     chatContainer.scrollTop = chatContainer.scrollHeight; // Auto-scroll to the bottom
 }
 
-// Function to make API call to Gemini API
+// Function to make API call to Gemini API through backend
 async function fetchBotResponse(userMessage) {
     try {
-        const response = await fetch('https://api.gemini.com/chat', {
+        const response = await fetch('/api/gemini', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer AIzaSyD3SDOH08G2zTR-m0McxQfL2UD5UZ8h9RU' // Replace with your actual API key
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ message: `User says: ${userMessage}` })
+            body: JSON.stringify({ message: userMessage })
         });
         
         if (!response.ok) {
-            throw new Error('API request failed');
+            throw new Error(`API request failed with status: ${response.status}`);
         }
 
         const data = await response.json();
         return data.reply || "I didn't understand that.";
     } catch (error) {
-        return "API failed";
+        console.error('Error calling Gemini API:', error);
+        return "Sorry, I'm having trouble connecting to the AI service. Please try again.";
     }
 }
 
