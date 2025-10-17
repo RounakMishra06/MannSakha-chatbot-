@@ -1,28 +1,27 @@
 {
   "version": 2,
-  "name": "mannsakha-chatbot",
   "builds": [
     {
-      "src": "backend/index.js",
+      "src": "api/**/*.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/index.js"
+      "dest": "/api/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "backend/index.js"
+      "src": "/(.*\\.(css|js|html|png|jpg|jpeg|gif|ico))",
+      "dest": "/frontend/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/frontend/index.html"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "functions": {
-    "backend/index.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }
