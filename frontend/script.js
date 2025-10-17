@@ -668,16 +668,24 @@ function playMeditation(type) {
     
     switch(type) {
         case "stress":
-            audioFile = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+            audioFile = "./calm-music.mp3";
             meditationName = "Stress Relief";
             break;
         case "focus":
-            audioFile = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3";
+            audioFile = "./nature-sounds.mp3";
             meditationName = "Focus & Clarity";
             break;
         case "sleep":
-            audioFile = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3";
+            audioFile = "./rain-sounds.mp3";
             meditationName = "Sleep & Relaxation";
+            break;
+        case "anxiety":
+            audioFile = "./piano-ambient.mp3";
+            meditationName = "Anxiety Relief";
+            break;
+        case "meditation":
+            audioFile = "./lofi-chill.mp3";
+            meditationName = "Guided Meditation";
             break;
         default:
             showToast("Invalid meditation type", "error");
@@ -688,6 +696,20 @@ function playMeditation(type) {
     
     // Create new audio element and play
     currentAudio = new Audio(audioFile);
+    
+    // Add error handling for audio
+    currentAudio.onerror = function() {
+        console.error(`Failed to load audio: ${audioFile}`);
+        showToast(`Unable to load ${meditationName} audio. Please check your connection.`, "error");
+        isPlaying = false;
+        updatePlayButton(type, false);
+        currentAudio = null;
+    };
+    
+    currentAudio.onloadstart = function() {
+        showToast(`Loading ${meditationName}...`, "info");
+    };
+    
     currentAudio.play()
         .then(() => {
             isPlaying = true;
@@ -699,12 +721,16 @@ function playMeditation(type) {
                 isPlaying = false;
                 updatePlayButton(type, false);
                 currentAudio = null;
-                showToast("Meditation completed", "success");
+                currentAudioType = null;
+                showToast(`${meditationName} completed`, "info");
             };
         })
-        .catch(error => {
-            showToast("Error playing meditation", "error");
-            console.error("Audio error:", error);
+        .catch((error) => {
+            console.error('Audio play error:', error);
+            showToast(`Unable to play ${meditationName}. Please try again.`, "error");
+            isPlaying = false;
+            updatePlayButton(type, false);
+            currentAudio = null;
         });
 }
 

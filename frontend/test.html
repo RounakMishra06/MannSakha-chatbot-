@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MannSakha API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 8px; }
+        button { padding: 10px 20px; margin: 10px 0; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .result { margin: 10px 0; padding: 10px; background: #f8f9fa; border-radius: 4px; }
+        .error { background: #ffe6e6; color: #d32f2f; }
+        .success { background: #e8f5e8; color: #2e7d32; }
+        audio { width: 100%; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>🧠 MannSakha Deployment Test</h1>
+    
+    <div class="test-section">
+        <h3>🚀 API Health Check</h3>
+        <button onclick="testHealthAPI()">Test API Health</button>
+        <div id="health-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>🤖 Chatbot API Test</h3>
+        <input type="text" id="test-message" placeholder="Enter test message" style="width: 70%; padding: 8px;">
+        <button onclick="testChatbotAPI()">Test Chatbot</button>
+        <div id="chatbot-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>🎵 Audio File Test</h3>
+        <button onclick="testAudio('calm-music.mp3')">Test Calm Music</button>
+        <button onclick="testAudio('nature-sounds.mp3')">Test Nature Sounds</button>
+        <button onclick="testAudio('rain-sounds.mp3')">Test Rain Sounds</button>
+        <div id="audio-result" class="result"></div>
+        <audio id="test-audio" controls style="display: none;"></audio>
+    </div>
+
+    <script>
+        async function testHealthAPI() {
+            const resultDiv = document.getElementById('health-result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('/api');
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div class="success">✅ API Health: ${data.message}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ API Error: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Network Error: ${error.message}</div>`;
+            }
+        }
+
+        async function testChatbotAPI() {
+            const message = document.getElementById('test-message').value || 'I am feeling stressed';
+            const resultDiv = document.getElementById('chatbot-result');
+            resultDiv.innerHTML = 'Testing chatbot...';
+            
+            try {
+                const response = await fetch('/api/gemini', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const source = data.fallback ? '(Fallback)' : '(AI)';
+                    resultDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Chatbot Response ${source}:<br>
+                            <strong>${data.response}</strong>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Chatbot Error: ${data.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Network Error: ${error.message}</div>`;
+            }
+        }
+
+        function testAudio(filename) {
+            const resultDiv = document.getElementById('audio-result');
+            const audioElement = document.getElementById('test-audio');
+            
+            resultDiv.innerHTML = `Testing ${filename}...`;
+            
+            audioElement.src = `./${filename}`;
+            audioElement.style.display = 'block';
+            
+            audioElement.onload = () => {
+                resultDiv.innerHTML = `<div class="success">✅ Audio loaded: ${filename}</div>`;
+            };
+            
+            audioElement.onerror = () => {
+                resultDiv.innerHTML = `<div class="error">❌ Audio failed to load: ${filename}</div>`;
+            };
+            
+            audioElement.oncanplay = () => {
+                resultDiv.innerHTML = `<div class="success">✅ Audio ready to play: ${filename}</div>`;
+            };
+        }
+
+        // Auto-test on page load
+        window.onload = () => {
+            testHealthAPI();
+        };
+    </script>
+</body>
+</html>

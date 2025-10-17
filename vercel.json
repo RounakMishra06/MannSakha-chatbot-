@@ -16,7 +16,15 @@
       "dest": "/api/$1"
     },
     {
-      "src": "/(.*\\.(css|js|html|png|jpg|jpeg|gif|ico))",
+      "src": "/(.*\\.(mp3|wav|ogg|m4a))",
+      "dest": "/frontend/$1",
+      "headers": {
+        "Cache-Control": "public, max-age=86400",
+        "Content-Type": "audio/mpeg"
+      }
+    },
+    {
+      "src": "/(.*\\.(css|js|html|png|jpg|jpeg|gif|ico|svg))",
       "dest": "/frontend/$1"
     },
     {
