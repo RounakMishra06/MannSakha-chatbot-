@@ -8,7 +8,7 @@
 <div align="center">
   <img src="https://media.giphy.com/media/26FPJGjhefSJuaRhu/giphy.gif" width="300" alt="Teamwork GIF"/>
 </div>
-
+ 
 ---
 
 ## 🌟 Our Pledge
