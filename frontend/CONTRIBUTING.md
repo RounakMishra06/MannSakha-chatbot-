@@ -2,7 +2,7 @@
 
 First off, thank you for considering contributing! Your help makes this project better.
 
-## Table of Contents
+## Table of Contents 
 
 - [Ways to Contribute](#ways-to-contribute)
 - [Finding Issues](#finding-issues)
