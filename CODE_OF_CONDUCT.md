@@ -3,7 +3,7 @@
 ![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red)    
 ![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)  
 ![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Active-blue.svg)  
-![PRs](https://img.shields.io/badge/PRs-Accepted-orange.svg) 
+![PRs](https://img.shields.io/badge/PRs-Accepted-orange.svg)  
 
 <div align="center">
   <img src="https://media.giphy.com/media/26FPJGjhefSJuaRhu/giphy.gif" width="300" alt="Teamwork GIF"/>
