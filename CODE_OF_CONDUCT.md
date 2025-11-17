@@ -1,6 +1,6 @@
 # 📜 Contributor Covenant Code of Conduct   
 
-![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red)    
+![Open Source Love](https://img.shields.io/badge/Open%20Source-%E2%9D%A4-red)     
 ![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)  
 ![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Active-blue.svg)   
 ![PRs](https://img.shields.io/badge/PRs-Accepted-orange.svg)  
