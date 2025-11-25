@@ -4,7 +4,7 @@
   <img  src="https://img.shields.io/github/stars/RounakMishra06/MannSakha-chatbot-?style=social" />
   <img src="https://img.shields.io/github/forks/RounakMishra06/MannSakha-chatbot-?style=social" />
   <img src="https://img.shields.io/github/issues/RounakMishra06/MannSakha-chatbot-" /> 
-  <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" />
+  <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" /> 
 </p>
  
 <!-- GSSoC Banner -->  
