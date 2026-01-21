@@ -1874,6 +1874,29 @@ textarea:focus {
   transform: translateY(-2px);
 }
 
+/* CTA Button */
+.cta-btn {
+  display: inline-block;
+  background-color: #ff5722; /* contrasting color */
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-btn:hover {
+  background-color: #e64a19;
+  transform: scale(1.05);
+}
+
+.cta-btn:active {
+  background-color: #d84315;
+}
+
 /* Footer */
 .footer {
   background-color: var(--black-primary);
