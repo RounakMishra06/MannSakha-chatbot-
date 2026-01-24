@@ -13,11 +13,10 @@ import connectDB from "./config/db.js";
 import newsletterRoutes from "./routes/newsletter.js";
 import User from "./models/User.js";
 import authRouter from "./routes/auth.route.js";
-import cookieParser from "cookie-parser";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3051;
-app.use(cookieParser());
+
 // Production security
 if (process.env.NODE_ENV === 'production') {
   app.set('trust proxy', 1);
@@ -29,7 +28,7 @@ const __dirname = path.dirname(__filename);
 
 // ---------------- CONNECT DATABASE ----------------
 connectDB();
-// app.use("/api/auth", authRouter);
+app.use("/api/auth", authRouter);
 // ---------------- MIDDLEWARE ----------------
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
@@ -568,3 +567,4 @@ app.post("/api/gemini", async (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
+
