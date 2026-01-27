@@ -1038,6 +1038,417 @@
 
   </div>
 
+  <!-- Floating Chatbot Widget -->
+  <div id="chatbot-widget-container" class="chatbot-widget-container">
+    <div id="chatbot-widget-toggle" class="chatbot-widget-toggle" title="Open MannSakha AI Chat" onclick="toggleChatbotWidget()">
+      <i class="fas fa-comments"></i>
+      <span class="widget-badge"></span>
+    </div>
+    <div id="chatbot-widget-panel" class="chatbot-widget-panel">
+      <div class="widget-header">
+        <div class="widget-title">
+          <i class="fas fa-robot"></i>
+          <span>MannSakha AI</span>
+        </div>
+        <button class="widget-close" onclick="toggleChatbotWidget()" title="Close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="widget-messages" id="widget-messages">
+        <div class="widget-message ai">
+          <div class="message-avatar">
+            <i class="fas fa-robot"></i>
+          </div>
+          <div class="message-content">Hi! How can I help you today?</div>
+        </div>
+      </div>
+      <div class="widget-input">
+        <input type="text" id="widget-input" placeholder="Type your message..." />
+        <button onclick="sendWidgetMessage()" class="widget-send-btn" title="Send">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Styles for Floating Chatbot Widget -->
+  <style>
+    /* Floating Chatbot Widget */
+    .chatbot-widget-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .chatbot-widget-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f5c542 0%, #ff914d 100%);
+      color: white;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 4px 12px rgba(245, 197, 66, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .chatbot-widget-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(245, 197, 66, 0.6);
+    }
+
+    .chatbot-widget-toggle:active {
+      transform: scale(0.95);
+    }
+
+    .widget-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 20px;
+      height: 20px;
+      background: #ff3333;
+      border-radius: 50%;
+      border: 2px solid white;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse-badge 2s infinite;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+      }
+    }
+
+    /* Widget Panel */
+    .chatbot-widget-panel {
+      position: absolute;
+      bottom: 80px;
+      right: 0;
+      width: 380px;
+      height: 500px;
+      background: linear-gradient(135deg, rgba(20, 20, 30, 0.98), rgba(25, 25, 35, 0.98));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(245, 197, 66, 0.1);
+      display: none;
+      flex-direction: column;
+      backdrop-filter: blur(10px);
+      animation: slideUp 0.3s ease-out;
+    }
+
+    .chatbot-widget-panel.active {
+      display: flex;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .widget-header {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(25, 25, 35, 0.5);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .widget-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #f5c542;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .widget-title i {
+      font-size: 20px;
+    }
+
+    .widget-close {
+      background: none;
+      border: none;
+      color: #999;
+      cursor: pointer;
+      font-size: 20px;
+      padding: 0;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .widget-close:hover {
+      color: #f5c542;
+      transform: rotate(90deg);
+    }
+
+    .widget-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .widget-messages::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .widget-messages::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .widget-messages::-webkit-scrollbar-thumb {
+      background: #f5c542;
+      border-radius: 2px;
+    }
+
+    .widget-message {
+      display: flex;
+      gap: 8px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .widget-message.ai {
+      justify-content: flex-start;
+    }
+
+    .widget-message.user {
+      justify-content: flex-end;
+    }
+
+    .message-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f5c542, #ff914d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .widget-message.user .message-avatar {
+      background: rgba(100, 100, 200, 0.6);
+    }
+
+    .message-content {
+      max-width: 70%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(30, 30, 40, 0.8);
+      color: #ddd;
+      font-size: 14px;
+      word-wrap: break-word;
+      line-height: 1.4;
+    }
+
+    .widget-message.user .message-content {
+      background: linear-gradient(135deg, rgba(245, 197, 66, 0.3), rgba(255, 145, 77, 0.3));
+      color: #f5c542;
+    }
+
+    .widget-input {
+      padding: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      gap: 8px;
+      background: rgba(25, 25, 35, 0.5);
+      border-radius: 0 0 16px 16px;
+    }
+
+    #widget-input {
+      flex: 1;
+      padding: 10px 12px;
+      background: rgba(20, 20, 30, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #ddd;
+      font-size: 14px;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    #widget-input::placeholder {
+      color: #666;
+    }
+
+    #widget-input:focus {
+      border-color: #f5c542;
+      box-shadow: 0 0 8px rgba(245, 197, 66, 0.2);
+    }
+
+    .widget-send-btn {
+      background: linear-gradient(135deg, #f5c542 0%, #ff914d 100%);
+      border: none;
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .widget-send-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(245, 197, 66, 0.4);
+    }
+
+    .widget-send-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 480px) {
+      .chatbot-widget-container {
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .chatbot-widget-panel {
+        width: calc(100vw - 40px);
+        height: 400px;
+        max-width: 380px;
+      }
+
+      .widget-toggle {
+        width: 56px;
+        height: 56px;
+        font-size: 24px;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <!-- JavaScript for Floating Chatbot Widget -->
+  <script>
+    // Toggle chatbot widget
+    function toggleChatbotWidget() {
+      const panel = document.getElementById("chatbot-widget-panel");
+      panel.classList.toggle("active");
+      
+      if (panel.classList.contains("active")) {
+        setTimeout(() => {
+          document.getElementById("widget-input").focus();
+        }, 100);
+      }
+    }
+
+    // Send message from widget
+    async function sendWidgetMessage() {
+      const input = document.getElementById("widget-input");
+      const message = input.value.trim();
+
+      if (!message) return;
+
+      // Add user message
+      addWidgetMessage(message, "user");
+      input.value = "";
+
+      try {
+        // Fetch bot response
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message })
+        }).catch(() => {
+          // Fallback to gemini endpoint
+          return fetch('/api/gemini', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message: message })
+          });
+        });
+
+        const data = await response.json();
+        const botMessage = data.reply || "Sorry, I couldn't process that.";
+        addWidgetMessage(botMessage, "ai");
+      } catch (error) {
+        console.error('Error:', error);
+        addWidgetMessage("Sorry, I'm having trouble connecting. Please try again.", "ai");
+      }
+    }
+
+    // Add message to widget chat
+    function addWidgetMessage(text, sender) {
+      const messagesContainer = document.getElementById("widget-messages");
+      const messageDiv = document.createElement("div");
+      messageDiv.className = `widget-message ${sender}`;
+      
+      const avatarIcon = sender === "ai" ? "fa-robot" : "fa-user";
+      messageDiv.innerHTML = `
+        <div class="message-avatar">
+          <i class="fas ${avatarIcon}"></i>
+        </div>
+        <div class="message-content">${text}</div>
+      `;
+      
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    // Allow Enter key to send message
+    document.addEventListener("DOMContentLoaded", () => {
+      const widgetInput = document.getElementById("widget-input");
+      if (widgetInput) {
+        widgetInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            sendWidgetMessage();
+          }
+        });
+      }
+    });
+  </script>
 
 </body>
 
