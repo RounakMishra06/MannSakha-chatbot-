@@ -1,11 +1,13 @@
 # 🧠 MannSakha - Complete Setup Guide
 
 <p align="center"> 
-  <img  src="https://img.shields.io/github/stars/RounakMishra06/MannSakha-chatbot-?style=social" />
+  <img src="https://img.shields.io/github/stars/RounakMishra06/MannSakha-chatbot-?style=social" />
   <img src="https://img.shields.io/github/forks/RounakMishra06/MannSakha-chatbot-?style=social" />
   <img src="https://img.shields.io/github/issues/RounakMishra06/MannSakha-chatbot-" />  
-  <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" /> 
-</p> 
+  <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" />
+  <img src="https://visitor-badge.laobi.icu/badge?page_id=RounakMishra06.MannSakha-chatbot-" />
+</p>
+
   
 <!-- GSSoC Banner -->  
 <p align="center">   
