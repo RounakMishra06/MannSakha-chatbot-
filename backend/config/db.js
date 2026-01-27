@@ -4,6 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const connectDB = async () => {
+  if (!process.env.MONGO_URI) {
+    console.log("⚠️ MONGO_URI not found. Running without database connection.");
+    return;
+  }
   try {
     await mongoose.connect(process.env.MONGO_URI, {
       dbName: "MannSakhaAI",
@@ -13,7 +17,8 @@ const connectDB = async () => {
     console.log("✅ Connected to MongoDB");
   } catch (err) {
     console.error("❌ MongoDB connection error:", err);
-    process.exit(1);
+    console.log("⚠️ Running without database connection due to error.");
+    // process.exit(1); // Don't exit, allow running in demo mode
   }
 };
 
