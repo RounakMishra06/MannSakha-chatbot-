@@ -74,6 +74,7 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ 
           response: text,
+          reply: text,
           timestamp: new Date().toISOString(),
           source: 'gemini'
         });
@@ -84,6 +85,18 @@ export default async function handler(req, res) {
     }
 
     // Use fallback response
+    const contributorAnswer = getContributorResponse(message);
+    if (contributorAnswer) {
+      return res.status(200).json({
+        response: contributorAnswer,
+        reply: contributorAnswer,
+        topic: 'contributor-help',
+        fallback: true,
+        timestamp: new Date().toISOString(),
+        source: 'fallback'
+      });
+    }
+
     return getSmartFallback(message, res);
 
   } catch (error) {
@@ -126,8 +139,49 @@ function getSmartFallback(message, res) {
 
   return res.status(200).json({ 
     response: fallbackResponse,
+    reply: fallbackResponse,
     fallback: true,
     timestamp: new Date().toISOString(),
     source: 'fallback'
   });
+}
+
+function getContributorResponse(message) {
+  const lowerMessage = message.toLowerCase();
+
+  // Issue assignment
+  if (lowerMessage.includes('assign') && lowerMessage.includes('issue')) {
+    return 'To get an issue assigned: 1) Comment on the issue asking to be assigned. 2) Wait for a maintainer to confirm/assign you. 3) Only start coding after assignment. If someone is already assigned, ask if you can be a backup or pick another issue.';
+  }
+
+  // Fork visibility and forking steps
+  if (lowerMessage.includes('fork') && (lowerMessage.includes('button') || lowerMessage.includes('visible') || lowerMessage.includes('not showing'))) {
+    return 'Fork button hidden? Make sure you are logged in. If you already forked, GitHub hides the fork button—use your existing fork instead. On mobile view switch to desktop view. Otherwise permissions may restrict forking; you can still clone read-only.';
+  }
+
+  if (lowerMessage.includes('fork') && (lowerMessage.includes('how') || lowerMessage.includes('steps'))) {
+    return 'Forking workflow: 1) Click Fork on the repo. 2) Clone your fork: git clone <your-fork-url>. 3) Create a branch: git checkout -b feature-name. 4) Commit and push to your fork. 5) Open a PR from your branch to the main repo.';
+  }
+
+  // Good first issue guidance
+  if (lowerMessage.includes('good first issue') || (lowerMessage.includes('write') && lowerMessage.includes('issue'))) {
+    return 'Good first issue tips: keep scope small, describe the problem clearly, add reproduction steps, expected vs actual behavior, and acceptance criteria. Link related files/screens and add labels like good first issue, bug, or documentation so newcomers know it is approachable.';
+  }
+
+  // Pull request basics
+  if (lowerMessage.includes('pull request') || lowerMessage.includes('pr')) {
+    return 'Pull request checklist: 1) Sync your branch with main. 2) Keep changes focused. 3) Add tests or screenshots when relevant. 4) Write a clear title and summary of what/why. 5) Link the issue (Fixes #123). 6) Address review comments and keep conversations resolved.';
+  }
+
+  // Labels meaning
+  if (lowerMessage.includes('label') || lowerMessage.includes('labels')) {
+    return 'Common label meanings: good first issue (beginner-friendly), help wanted (maintainers welcome contributions), bug (fix a defect), enhancement/feature (new capability), documentation (docs-only), question (needs clarification). Ask maintainers if unsure which label applies.';
+  }
+
+  // Contribution guidelines reminder
+  if (lowerMessage.includes('contribute') || lowerMessage.includes('contributing')) {
+    return 'General contribution flow: read README and CONTRIBUTING, pick or request assignment on an issue, create a branch from main, make focused changes with clear commits, run tests/linters, then open a PR with a concise summary and issue link. Follow the Code of Conduct and respond to reviews politely.';
+  }
+
+  return null;
 }
