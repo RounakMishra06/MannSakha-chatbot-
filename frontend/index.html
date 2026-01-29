@@ -23,12 +23,14 @@
         <li><a href="#services">SERVICES</a></li>
         <li><a href="#careers">CAREERS</a></li>
         <li><a href="#blog">BLOG</a></li>
-        <li><a href="#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
-        <li><a href="/signup.html" class="btn-signup">Signup</a></li>
-        <li id="userProfile" class="user-profile">
-          <span id="userEmail"></span>
-          <a href="#" onclick="logout()" class="logout-link">Get Started</a>
+        <li id="authButton">
+          <a href="/signup.html" class="btn-signup">GET STARTED</a>
         </li>
+        <li id="userProfile" class="user-profile" style="display: none;">
+          <span id="userEmail"></span>
+          <a href="#" onclick="logout()" class="logout-link">Logout</a>
+        </li>
+        <li><a href="#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
       </ul>
     </nav>
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
@@ -165,16 +167,19 @@
           </div>
         </div>
       </section>
-      <section id="about" class="neo-section">
-        <div class="floating-element element-1 pulse"></div>
-        <div class="floating-element element-2"></div>
 
-        <div class="section-header">
-          <div class="section-icon">
-            <i class="fas fa-brain"></i>
+      <!-- Info Sections Container -->
+      <div class="info-sections-container">
+        <section id="about" class="neo-section">
+          <div class="floating-element element-1 pulse"></div>
+          <div class="floating-element element-2"></div>
+
+          <div class="section-header">
+            <div class="section-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <h2 class="section-title">About Us</h2>
           </div>
-          <h2 class="section-title">About Us</h2>
-        </div>
 
         <div class="section-content">
           <p>
@@ -311,6 +316,8 @@
           </p>
         </div>
       </section>
+      </div>
+      <!-- End Info Sections Container -->
 
       <script>
         // Add interactive effects
