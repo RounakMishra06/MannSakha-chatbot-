@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" /> 
 </p>  
    
-<!-- GSSoC Banner -->  
+<!-- GSSoC Banner -->   
 <p align="center">    
   <img src="https://user-images.githubusercontent.com/92252895/259034403-7ad22f22-60f9-4c7f-b817-a5012bae4bb9.png" width="100%" />
 </p> 
