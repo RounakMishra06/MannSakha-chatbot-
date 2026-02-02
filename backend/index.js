@@ -12,6 +12,8 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import connectDB from "./config/db.js";
 import newsletterRoutes from "./routes/newsletter.js";
 import User from "./models/User.js";
+import crypto from "crypto";
+import { sendResetEmail } from "./services/email.js";
 
 dotenv.config();
 const app = express();
@@ -31,8 +33,8 @@ connectDB();
 
 // ---------------- MIDDLEWARE ----------------
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-domain.vercel.app', 'https://your-domain.com'] 
+  origin: process.env.NODE_ENV === 'production'
+    ? ['https://your-domain.vercel.app', 'https://your-domain.com']
     : ['http://localhost:3051', 'http://localhost:3000'],
   credentials: true
 }));
@@ -177,6 +179,66 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+// Forgot Password
+app.post("/api/forgot-password", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      // For security, do not reveal if user exists
+      return res.json({ message: "If an account with that email exists, a reset link has been sent." });
+    }
+
+    // Generate token
+    const token = crypto.randomBytes(20).toString("hex");
+
+    // Set token and expiry (1 hour)
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    // Send email
+    const emailSent = await sendResetEmail(user.email, token);
+
+    if (emailSent) {
+      res.json({ message: "If an account with that email exists, a reset link has been sent." });
+    } else {
+      res.status(500).json({ message: "Error sending email" });
+    }
+  } catch (error) {
+    console.error("Forgot password error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Reset Password
+app.post("/api/reset-password", async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    const user = await User.findOne({
+      resetPasswordToken: token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Password reset token is invalid or has expired." });
+    }
+
+    // Hash new password
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({ message: "Password has been reset successfully." });
+  } catch (error) {
+    console.error("Reset password error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Google login
 app.get(
   "/auth/google",
@@ -204,7 +266,7 @@ async function tryOpenAIAPI(message) {
     console.log("⚪ OpenAI: No API key configured");
     return null;
   }
-  
+
   try {
     console.log("🤖 Trying OpenAI API...");
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -229,9 +291,9 @@ async function tryOpenAIAPI(message) {
         temperature: 0.7
       })
     });
-    
+
     console.log("📨 OpenAI API response status:", response.status);
-    
+
     if (response.ok) {
       const data = await response.json();
       const reply = data.choices[0]?.message?.content;
@@ -267,9 +329,9 @@ async function tryHuggingFaceAPI(message) {
         }
       })
     });
-    
+
     console.log("📨 Hugging Face API response status:", response.status);
-    
+
     if (response.ok) {
       const data = await response.json();
       let reply = data[0]?.generated_text || null;
@@ -293,7 +355,7 @@ async function tryHuggingFaceAPI(message) {
 async function tryCoHereAPI(message) {
   const cohereKey = process.env.COHERE_API_KEY;
   if (!cohereKey || cohereKey === 'your_cohere_key_here') return null;
-  
+
   try {
     const response = await fetch('https://api.cohere.ai/v1/generate', {
       method: 'POST',
@@ -308,7 +370,7 @@ async function tryCoHereAPI(message) {
         temperature: 0.7
       })
     });
-    
+
     if (response.ok) {
       const data = await response.json();
       return data.generations[0]?.text?.trim();
@@ -322,37 +384,37 @@ async function tryCoHereAPI(message) {
 // Smart response system with keyword matching
 function getSmartFallbackResponse(message) {
   const lowerMessage = message.toLowerCase();
-  
+
   // Anxiety-related keywords
   if (lowerMessage.includes('anxious') || lowerMessage.includes('anxiety') || lowerMessage.includes('worried') || lowerMessage.includes('nervous')) {
     return "I understand you're feeling anxious. Anxiety is very common and manageable. Try taking slow, deep breaths - inhale for 4 counts, hold for 4, exhale for 6. Focus on things you can control right now. Would you like to talk about what's making you feel this way?";
   }
-  
+
   // Depression-related keywords
   if (lowerMessage.includes('depressed') || lowerMessage.includes('sad') || lowerMessage.includes('down') || lowerMessage.includes('hopeless')) {
     return "I hear that you're going through a difficult time. Your feelings are valid, and it's brave of you to reach out. Remember that depression is treatable, and you don't have to face this alone. Small steps count - even talking to me right now is a positive step. What's one small thing that usually brings you comfort?";
   }
-  
+
   // Stress-related keywords
   if (lowerMessage.includes('stress') || lowerMessage.includes('overwhelmed') || lowerMessage.includes('pressure') || lowerMessage.includes('burden')) {
     return "Stress can feel overwhelming, but you're taking the right step by acknowledging it. Let's break this down - what's the most pressing thing causing your stress right now? Sometimes writing down your worries or talking through them can help you see solutions more clearly.";
   }
-  
+
   // Sleep-related keywords
   if (lowerMessage.includes('sleep') || lowerMessage.includes('insomnia') || lowerMessage.includes('tired') || lowerMessage.includes('exhausted')) {
     return "Sleep issues can really affect how we feel and think. Good sleep hygiene can help - try to keep a consistent sleep schedule, avoid screens before bed, and create a calming bedtime routine. If sleep problems persist, it might be worth talking to a healthcare provider. How long have you been having trouble sleeping?";
   }
-  
+
   // Work-related stress
   if (lowerMessage.includes('work') || lowerMessage.includes('job') || lowerMessage.includes('boss') || lowerMessage.includes('career')) {
     return "Work-related stress is very common. Remember that your worth isn't defined by your job performance. Setting boundaries, taking breaks, and practicing self-care are important. Is there a specific aspect of work that's bothering you most?";
   }
-  
+
   // Relationship issues
   if (lowerMessage.includes('relationship') || lowerMessage.includes('family') || lowerMessage.includes('friend') || lowerMessage.includes('partner')) {
     return "Relationships can be challenging, and it's normal to have difficulties sometimes. Communication, empathy, and setting healthy boundaries are key. Remember, you can only control your own actions and responses. What aspect of this relationship is troubling you most?";
   }
-  
+
   // General positive responses
   const positiveResponses = [
     `Thank you for sharing "${message}" with me. Your mental health matters, and I'm here to support you. What would be most helpful for you right now?`,
@@ -360,7 +422,7 @@ function getSmartFallbackResponse(message) {
     `You've shared something important: "${message}". Remember that it's okay to not be okay sometimes. Every step toward better mental health, including talking to me, is valuable. What's on your mind?`,
     `I hear you saying "${message}". Your feelings and experiences are valid. Mental health is a journey, and you don't have to walk it alone. What support would be most helpful right now?`
   ];
-  
+
   return positiveResponses[Math.floor(Math.random() * positiveResponses.length)];
 }
 
@@ -372,14 +434,14 @@ const MAX_REQUESTS_PER_MINUTE = 10; // Conservative limit
 function checkRateLimit(clientId) {
   const now = Date.now();
   const clientData = rateLimitMap.get(clientId) || { requests: [], lastReset: now };
-  
+
   // Remove old requests outside the window
   clientData.requests = clientData.requests.filter(time => now - time < RATE_LIMIT_WINDOW);
-  
+
   if (clientData.requests.length >= MAX_REQUESTS_PER_MINUTE) {
     return false; // Rate limited
   }
-  
+
   clientData.requests.push(now);
   rateLimitMap.set(clientId, clientData);
   return true; // OK to proceed
@@ -403,7 +465,7 @@ async function listGeminiModels(apiKey) {
 app.post("/api/gemini", async (req, res) => {
   console.log("🔍 Received request to /api/gemini");
   console.log("📝 Request body:", req.body);
-  
+
   const { message } = req.body;
   if (!message || typeof message !== "string") {
     console.log("❌ Invalid message format");
@@ -426,7 +488,7 @@ app.post("/api/gemini", async (req, res) => {
 
   const apiKey = process.env.GEMINI_API_KEY;
   console.log("🔑 API Key:", apiKey ? `${apiKey.substring(0, 10)}...` : "Not found");
-  
+
   if (!apiKey) {
     console.log("❌ API key not configured");
     return res.status(500).json({ reply: "API key not configured" });
@@ -450,29 +512,29 @@ app.post("/api/gemini", async (req, res) => {
     console.log("📡 Checking available models...");
     const availableModels = await listGeminiModels(apiKey);
     console.log("📋 Available models:", availableModels?.length || 0);
-    
+
     if (!availableModels?.length) {
       console.log("❌ No Gemini models available - trying alternative APIs");
-      
+
       // Try alternative APIs when Gemini is completely unavailable
       let altResponse = await tryOpenAIAPI(message);
       if (altResponse) {
         console.log("✅ Using OpenAI as primary backup");
         return res.json({ reply: altResponse });
       }
-      
+
       altResponse = await tryHuggingFaceAPI(message);
       if (altResponse) {
         console.log("✅ Using Hugging Face as primary backup");
         return res.json({ reply: altResponse });
       }
-      
+
       altResponse = await tryCoHereAPI(message);
       if (altResponse) {
         console.log("✅ Using Cohere as primary backup");
         return res.json({ reply: altResponse });
       }
-      
+
       // Use smart fallback if all APIs fail
       console.log("✅ Using smart fallback - all APIs unavailable");
       const smartResponse = getSmartFallbackResponse(message);
@@ -481,7 +543,7 @@ app.post("/api/gemini", async (req, res) => {
 
     const selectedModel = "models/gemini-1.5-flash";
     const prompt = `You are MannSakha AI, a compassionate mental health support chatbot. Respond empathetically and helpfully to: ${message}`;
-    
+
     console.log("🚀 Making request to Gemini API...");
     const geminiResponse = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/${selectedModel}:generateContent?key=${apiKey}`,
@@ -501,42 +563,42 @@ app.post("/api/gemini", async (req, res) => {
     );
 
     console.log("📨 Gemini API response status:", geminiResponse.status);
-    
+
     if (!geminiResponse.ok) {
       const errorData = await geminiResponse.json();
       console.log("❌ Gemini API Error:", errorData);
-      
+
       // Handle rate limiting with multiple backup options
       if (geminiResponse.status === 429) {
         console.log("⚠️ Rate limited - trying alternative APIs");
-        
+
         // Try OpenAI first
         let altResponse = await tryOpenAIAPI(message);
         if (altResponse) {
           console.log("✅ Using OpenAI backup response");
           return res.json({ reply: altResponse });
         }
-        
+
         // Try Hugging Face
         altResponse = await tryHuggingFaceAPI(message);
         if (altResponse) {
           console.log("✅ Using Hugging Face backup response");
           return res.json({ reply: altResponse });
         }
-        
+
         // Try Cohere
         altResponse = await tryCoHereAPI(message);
         if (altResponse) {
           console.log("✅ Using Cohere backup response");
           return res.json({ reply: altResponse });
         }
-        
+
         // Use smart fallback system
         console.log("✅ Using smart fallback response");
         const smartResponse = getSmartFallbackResponse(message);
         return res.json({ reply: smartResponse });
       }
-      
+
       return res
         .status(geminiResponse.status)
         .json({ reply: "I'm having some technical difficulties right now. Please try again in a moment.", error: errorData });
@@ -544,7 +606,7 @@ app.post("/api/gemini", async (req, res) => {
 
     const geminiData = await geminiResponse.json();
     console.log("📦 Gemini response structure:", JSON.stringify(geminiData, null, 2));
-    
+
     const reply = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
     console.log("💬 Extracted reply:", reply);
 
