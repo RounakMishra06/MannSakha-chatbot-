@@ -253,30 +253,31 @@
 
 <body>
   <!-- Header -->
-  <header>
+   <header>
     <div class="logo">MannSakha AI</div>
     <nav>
       <ul>
-        <li><a href="/">HOME</a></li>
-        <li><a href="index.html#about">ABOUT</a></li>
-        <li><a href="index.html#services">SERVICES</a></li>
-        <li><a href="index.html#careers">CAREERS</a></li>
-        <li><a href="index.html#blog">BLOG</a></li>
-        <li><a href="index.html#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
-        <li><a href="#" class="profile-icon"><img src="https://img.icons8.com/ios-filled/50/ffffff/user.png"
-              alt="profile" width="24"></a></li>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#careers">CAREERS</a></li>
+        <li><a href="#blog">BLOG</a></li>
+        <li><a href="#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
+        <li><a href="/signup.html" class="btn-signup">Signup</a></li>
+        <li id="userProfile" class="user-profile">
+          <span id="userEmail"></span>
+          <a href="#" onclick="logout()" class="logout-link">Get Started</a>
+        </li>
       </ul>
     </nav>
-    <div>
-      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-        <i class="fas fa-moon"></i>
-      </button>
-      <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" title="Toggle Mobile Menu">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+      <i class="fas fa-moon"></i>
+      <span>Auto</span>
+    </button>
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" title="Toggle Mobile Menu">
+      <i class="fas fa-bars"></i>
+    </button>
   </header>
-
   <canvas id="particles"></canvas>
   <div class="content">
 
