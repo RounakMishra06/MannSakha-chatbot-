@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy | MannSakha AI</title>
+    <style>
+      /* Import the same fonts */
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+      
+      /* Base styles matching the main site */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      
+      body.dark-mode {
+        background-color: #0d0d0d;
+        color: #e5e7eb;
+      }
+
+            /* Floating decorative elements */
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.floating-element {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 15s infinite linear;
+  filter: blur(1px);
+}
+
+.floating-element:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #f59e0b, #ff6b6b);
+  top: 10%;
+  left: 5%;
+  animation-duration: 20s;
+  animation-delay: 0s;
+}
+
+.floating-element:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  top: 70%;
+  left: 80%;
+  animation-duration: 25s;
+  animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #fbd025, #ff9a3d);
+  top: 30%;
+  left: 85%;
+  animation-duration: 18s;
+  animation-delay: 4s;
+}
+
+.floating-element:nth-child(4) {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  top: 80%;
+  left: 10%;
+  animation-duration: 22s;
+  animation-delay: 1s;
+}
+
+.floating-element:nth-child(5) {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ff9a9e, #cfaca2);
+  top: 15%;
+  left: 70%;
+  animation-duration: 16s;
+  animation-delay: 3s;
+}
+
+.floating-element:nth-child(6) {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #97eeea, #f8aec5);
+  top: 60%;
+  left: 15%;
+  animation-duration: 19s;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-40px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-20px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+  }
+}
+
+/* Dark mode adjustments for floating elements */
+body.dark-mode .floating-element {
+  opacity: 0.2;
+  filter: blur(0.5px);
+}
+
+/* Responsive adjustments for floating elements */
+@media (max-width: 768px) {
+  .floating-element {
+    display: none;
+  }
+  
+  .floating-element:nth-child(1),
+  .floating-element:nth-child(2) {
+    display: block;
+    width: 60px;
+    height: 60px;
+  }
+}
+      
+      /* Header styles */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      
+      body.dark-mode header {
+        background: rgba(13, 13, 13, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 1.5rem;
+      }
+      
+      nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+      
+      body.dark-mode nav a {
+        color: #e5e7eb;
+      }
+      
+      nav a:hover {
+        color: #f59e0b;
+      }
+      
+      .try-btn {
+        background: linear-gradient(135deg, #f59e0b, #cc8304);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      
+      .btn-signup {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .logout-link {
+        color: #f59e0b;
+        font-size: 0.9rem;
+      }
+      
+      .theme-toggle {
+        background: #f0f0f0;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      body.dark-mode .theme-toggle {
+        background: #2d2d2d;
+        color: #e5e7eb;
+      }
+      
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      
+      /* Main content styles */
+      .privacy-container {
+        max-width: 1200px;
+        margin: 100px auto 50px;
+        padding: 0 2rem;
+      }
+      
+      .privacy-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      
+      .privacy-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #f59e0b;
+      }
+      
+      .privacy-header p {
+        font-size: 1.1rem;
+        color: #666;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      
+      body.dark-mode .privacy-header p {
+        color: #9ca3af;
+      }
+      
+      .privacy-content {
+        background: white;
+        border-radius: 10px;
+        padding: 3rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      
+      body.dark-mode .privacy-content {
+        background: #1a1a1a;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      
+      .privacy-section {
+        margin-bottom: 2.5rem;
+      }
+      
+      .privacy-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #f59e0b;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+      }
+      
+      body.dark-mode .privacy-section h2 {
+        border-bottom-color: #2d2d2d;
+      }
+      
+      .privacy-section h3 {
+        font-size: 1.3rem;
+        margin: 1.5rem 0 0.8rem;
+        color: #333;
+      }
+      
+      body.dark-mode .privacy-section h3 {
+        color: #e5e7eb;
+      }
+      
+      .privacy-section p {
+        margin-bottom: 1rem;
+        color: #555;
+      }
+      
+      body.dark-mode .privacy-section p {
+        color: #9ca3af;
+      }
+      
+      .privacy-section ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .privacy-section li {
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+      
+      body.dark-mode .privacy-section li {
+        color: #9ca3af;
+      }
+      
+      .highlight {
+        background: #fff9e6;
+        padding: 1rem;
+        border-left: 4px solid #f59e0b;
+        margin: 1.5rem 0;
+        border-radius: 0 5px 5px 0;
+      }
+      
+      body.dark-mode .highlight {
+        background: #2d2d2d;
+      }
+      
+      .contact-info {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin-top: 2rem;
+      }
+      
+      body.dark-mode .contact-info {
+        background: #2d2d2d;
+      }
+      
+      .contact-info h3 {
+        margin-top: 0;
+      }
+      
+      /* Footer styles */
+      .footer {
+        background: #0d0d0d;
+        color: #e5e7eb;
+        padding: 3rem 0 1.5rem;
+        margin-top: 3rem;
+      }
+      
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      
+      .footer-tagline {
+        color: #9ca3af;
+        font-size: 0.9rem;
+      }
+      
+      .footer-socials {
+        display: flex;
+        gap: 1rem;
+      }
+      
+      .footer-socials a {
+        color: #e5e7eb;
+        font-size: 1.2rem;
+        transition: color 0.3s;
+      }
+      
+      .footer-socials a:hover {
+        color: #f59e0b;
+      }
+      
+      .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      
+      .footer-links {
+        list-style: none;
+      }
+      
+      .footer-links li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-links a {
+        color: #9ca3af;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      
+      .footer-links a:hover {
+        color: #f59e0b;
+      }
+      
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid #2d2d2d;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .footer-legal {
+        display: flex;
+        gap: 1.5rem;
+      }
+      
+      .footer-legal a {
+        color: #9ca3af;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+      }
+      
+      .footer-legal a:hover {
+        color: #f59e0b;
+      }
+      
+      /* Back to top button */
+      #backToTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 1000;
+        border: none;
+        outline: none;
+        background: linear-gradient(135deg, #f59e0b, #cc8304);
+        color: white;
+        cursor: pointer;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        font-size: 22px;
+        font-weight: 700;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      #backToTopBtn:hover {
+        background: linear-gradient(135deg, #cc8304, #f59e0b);
+        transform: scale(1.2);
+        box-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.35);
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        50% {
+          transform: scale(1.1);
+          box-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 8px 16px rgba(0,0,0,0.35);
+        }
+      }
+      
+      #backToTopBtn {
+        animation: pulse 4.5s infinite ease-in-out;
+        transition: all 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        nav ul {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(10px);
+          padding: 1rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode nav ul {
+          background: rgba(13, 13, 13, 0.98);
+        }
+        
+        nav ul.mobile-open {
+          display: flex;
+        }
+        
+        .mobile-menu-toggle {
+          display: block;
+        }
+        
+        .privacy-container {
+          margin-top: 80px;
+          padding: 0 1rem;
+        }
+        
+        .privacy-content {
+          padding: 2rem 1.5rem;
+        }
+        
+        .privacy-header h1 {
+          font-size: 2rem;
+        }
+        
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .footer-legal {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="floating-elements">
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+</div>
+    <!-- Header -->
+    <header>
+      <div class="logo">MannSakha AI</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="index.html#about">ABOUT</a></li>
+          <li><a href="index.html#services">SERVICES</a></li>
+          <li><a href="index.html#careers">CAREERS</a></li>
+          <li><a href="index.html#blog">BLOG</a></li>
+          <li><a href="index.html#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
+          <li><a href="/signup" class="btn-signup">Signup</a></li>
+          <li id="userProfile" class="user-profile">
+            <span id="userEmail"></span>
+            <a href="#" onclick="logout()" class="logout-link">Logout</a>
+          </li>
+        </ul>
+      </nav>
+      <button
+        class="theme-toggle"
+        onclick="toggleTheme()"
+        title="Toggle Dark/Light Mode"
+      >
+        <i class="fas fa-moon"></i>
+        <span>Auto</span>
+      </button>
+      <button
+        class="mobile-menu-toggle"
+        onclick="toggleMobileMenu()"
+        title="Toggle Mobile Menu"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </header>
+
+    <!-- Privacy Policy Content -->
+    <main class="privacy-container">
+      <div class="privacy-header">
+        <h1>Privacy Policy</h1>
+        <p id="last-updated"></p>
+
+        <script>
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date();
+        document.getElementById('last-updated').textContent = `Last updated: ${today.toLocaleDateString('en-IN', options)}`;
+        </script>
+
+      </div>
+      
+      <div class="privacy-content">
+        <div class="privacy-section">
+          <p>At MannSakha AI, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our website and services.</p>
+          
+          <div class="highlight">
+            <p><strong>Note:</strong> MannSakha AI is designed as a wellness companion, not a medical device. We do not provide medical advice, diagnosis, or treatment.</p>
+          </div>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>1. Information We Collect</h2>
+          
+          <h3>Personal Information</h3>
+          <p>When you register for an account, we may collect:</p>
+          <ul>
+            <li>Name and email address</li>
+            <li>Account credentials</li>
+            <li>Profile information you choose to provide</li>
+          </ul>
+          
+          <h3>Usage Data</h3>
+          <p>We automatically collect information about how you interact with our services, including:</p>
+          <ul>
+            <li>Mood tracking data and journal entries</li>
+            <li>Meditation session logs</li>
+            <li>Chatbot interactions</li>
+            <li>Device information and IP address</li>
+            <li>Cookies and similar tracking technologies</li>
+          </ul>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>2. How We Use Your Information</h2>
+          <p>We use the information we collect to:</p>
+          <ul>
+            <li>Provide, maintain, and improve our services</li>
+            <li>Personalize your experience and provide relevant content</li>
+            <li>Generate insights and trends based on your wellness journey</li>
+            <li>Communicate with you about updates, security alerts, and support messages</li>
+            <li>Ensure the security and integrity of our services</li>
+            <li>Comply with legal obligations</li>
+          </ul>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>3. Data Sharing and Disclosure</h2>
+          <p>We do not sell your personal information to third parties. We may share your information in the following circumstances:</p>
+          <ul>
+            <li><strong>Service Providers:</strong> With trusted third parties who assist us in operating our website and services</li>
+            <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+            <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets</li>
+            <li><strong>With Your Consent:</strong> When you explicitly authorize us to share your information</li>
+          </ul>
+          
+          <div class="highlight">
+            <p><strong>Important:</strong> Your mood data, journal entries, and meditation logs are private by default. We use aggregated, anonymized data for analytics and research purposes.</p>
+          </div>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>4. Data Security</h2>
+          <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. These measures include:</p>
+          <ul>
+            <li>Encryption of data in transit and at rest</li>
+            <li>Regular security assessments and monitoring</li>
+            <li>Access controls and authentication mechanisms</li>
+            <li>Employee training on data protection</li>
+          </ul>
+          <p>While we strive to protect your information, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>5. Your Rights and Choices</h2>
+          <p>You have certain rights regarding your personal information:</p>
+          <ul>
+            <li><strong>Access:</strong> You can request a copy of the personal information we hold about you</li>
+            <li><strong>Correction:</strong> You can update or correct inaccurate information</li>
+            <li><strong>Deletion:</strong> You can request deletion of your personal information, subject to certain exceptions</li>
+            <li><strong>Export:</strong> You can request an export of your data in a machine-readable format</li>
+            <li><strong>Objection:</strong> You can object to certain processing activities</li>
+          </ul>
+          <p>To exercise these rights, please contact us using the information provided below.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>6. Data Retention</h2>
+          <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. When you delete your account, we will securely delete or anonymize your personal information within 30 days.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>7. International Data Transfers</h2>
+          <p>Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place to protect your information in accordance with this Privacy Policy.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>8. Children's Privacy</h2>
+          <p>Our services are not intended for individuals under the age of 16. We do not knowingly collect personal information from children under 16. If we become aware that we have collected personal information from a child under 16, we will take steps to delete such information.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>9. Cookies and Tracking Technologies</h2>
+          <p>We use cookies and similar technologies to enhance your experience, analyze usage, and deliver personalized content. You can control cookies through your browser settings, but disabling cookies may affect certain features of our services.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>10. Changes to This Privacy Policy</h2>
+          <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the new Privacy Policy on this page and updating the "Last updated" date. We encourage you to review this Privacy Policy periodically.</p>
+        </div>
+        
+        <div class="privacy-section">
+          <h2>11. Contact Us</h2>
+          <p>If you have any questions about this Privacy Policy or our data practices, please contact us:</p>
+          <div class="contact-info">
+            <p><strong>MannSakha AI</strong></p>
+            <p>Email: privacy@mannsakha.ai</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <!-- Brand Column -->
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="logo-text">MannSakha AI</span>
+            </div>
+            <p class="footer-tagline">Your AI companion for mental wellness</p>
+            <div class="footer-socials">
+              <a
+                href="https://github.com/RounakMishra06/MannSakha-chatbot-"
+                aria-label="GitHub"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+
+          <!-- Navigation Column -->
+          <div class="footer-column">
+            <h3 class="footer-heading">Navigation</h3>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="index.html#about">About Us</a></li>
+              <li><a href="index.html#services">Services</a></li>
+              <li><a href="index.html#careers">Careers</a></li>
+              <li><a href="index.html#blog">Blog</a></li>
+            </ul>
+          </div>
+
+          <!-- Resources Column -->
+          <div class="footer-column">
+            <h3 class="footer-heading">Resources</h3>
+            <ul class="footer-links">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="cookie.html">Cookie Policy</a></li>
+              <li><a href="#">GDPR</a></li>
+            </ul>
+          </div>
+
+          <!-- Company Column -->
+          <div class="footer-column">
+            <h3 class="footer-heading">Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Investors</a></li>
+              <li><a href="#">Press Kit</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="index.html#careers">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="footer-copyright">
+            © <span id="current-year"></span> MannSakha AI. All rights reserved.
+          </div>
+          <div class="footer-legal">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="cookie.html">Cookie Settings</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top">↑</button>
+
+    <script>
+      // Set current year in footer
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Theme toggle functionality
+      function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        const span = themeToggle.querySelector('span');
+        
+        if (document.body.classList.contains('dark-mode')) {
+          icon.className = 'fas fa-sun';
+          span.textContent = 'Light';
+        } else {
+          icon.className = 'fas fa-moon';
+          span.textContent = 'Dark';
+        }
+      }
+      
+      // Mobile menu toggle
+      function toggleMobileMenu() {
+        const navUl = document.querySelector('nav ul');
+        navUl.classList.toggle('mobile-open');
+      }
+      
+      // Back to top button functionality
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      
+      window.addEventListener("scroll", () => {
+        if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+          backToTopBtn.style.display = "block";
+          backToTopBtn.style.opacity = "1";
+        } else {
+          backToTopBtn.style.opacity = "0";
+          setTimeout(() => {
+            if (backToTopBtn.style.opacity === "0") {
+              backToTopBtn.style.display = "none";
+            }
+          }, 300);
+        }
+      });
+      
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      
+      // Simple logout function (placeholder)
+      function logout() {
+        alert('Logout functionality would be implemented here.');
+        // In a real implementation, this would clear session data and redirect
+      }
+      
+      // Check if user is logged in (placeholder)
+      window.onload = function() {
+        // This is a placeholder - in a real implementation, you would check authentication status
+        const userEmail = localStorage.getItem('userEmail');
+        if (userEmail) {
+          document.getElementById('userEmail').textContent = userEmail;
+        } else {
+          document.getElementById('userProfile').style.display = 'none';
+        }
+      };
+    </script>
+  </body>
+</html>
