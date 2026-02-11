@@ -8,11 +8,11 @@ import bcrypt from "bcrypt";
 import session from "express-session";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-
+import authRouter from "./routes/auth.route.js"
 import connectDB from "./config/db.js";
 import newsletterRoutes from "./routes/newsletter.js";
 import User from "./models/User.js";
-
+import authRouter from "./routes/auth.route.js";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3051;
@@ -28,7 +28,7 @@ const __dirname = path.dirname(__filename);
 
 // ---------------- CONNECT DATABASE ----------------
 connectDB();
-
+app.use("/api/auth", authRouter);
 // ---------------- MIDDLEWARE ----------------
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
@@ -51,7 +51,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use("/api/auth", authRouter )
 // ---------------- STATIC FILES ----------------
 app.use(express.static(path.join(__dirname, "../frontend")));
 
@@ -567,3 +567,4 @@ app.post("/api/gemini", async (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
+
