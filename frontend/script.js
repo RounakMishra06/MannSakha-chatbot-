@@ -1,37 +1,37 @@
 // login.js
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm");
-  const errorMessage = document.getElementById("errorMessage");
+    const loginForm = document.getElementById("loginForm");
+    const errorMessage = document.getElementById("errorMessage");
 
-  loginForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
 
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      });
+        try {
+            const res = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-      const data = await res.json();
+            const data = await res.json();
 
-      if (res.ok) {
-        // ✅ Login successful
-        window.location.href = data.redirect || "/index.html";
-      } else {
-        // ❌ Show error message
-        errorMessage.textContent = data.message || "Login failed";
-      }
-    } catch (err) {
-      console.error("Error:", err);
-      errorMessage.textContent = "Something went wrong. Try again later.";
-    }
-  });
+            if (res.ok) {
+                // ✅ Login successful
+                window.location.href = data.redirect || "/index.html";
+            } else {
+                // ❌ Show error message
+                errorMessage.textContent = data.message || "Login failed";
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            errorMessage.textContent = "Something went wrong. Try again later.";
+        }
+    });
 });
 
 
@@ -45,30 +45,30 @@ let currentTheme = localStorage.getItem("theme") || "auto";
 
 // Function to get system theme preference
 function getSystemTheme() {
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches 
-        ? "dark" 
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
         : "light";
 }
 
 // Function to set theme
 function setTheme(theme) {
     let actualTheme = theme;
-    
+
     // Handle auto theme
     if (theme === "auto") {
         actualTheme = getSystemTheme();
     }
-    
+
     currentTheme = theme;
     document.documentElement.setAttribute("data-theme", actualTheme);
     localStorage.setItem("theme", theme);
-    
+
     // Update toggle button
     const toggleBtn = document.querySelector(".theme-toggle");
     if (toggleBtn) {
         const icon = toggleBtn.querySelector("i");
         const text = toggleBtn.querySelector("span");
-        
+
         if (actualTheme === "dark") {
             icon.className = "fas fa-sun";
             text.textContent = theme === "auto" ? "Auto" : "Light";
@@ -95,7 +95,7 @@ function toggleTheme() {
 // Initialize theme on page load
 function initializeTheme() {
     setTheme(currentTheme);
-    
+
     // Listen for system theme changes
     if (window.matchMedia) {
         window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
@@ -111,14 +111,14 @@ function showToast(message, type = "success") {
     const toast = document.getElementById("toast");
     const toastIcon = toast.querySelector(".toast-icon");
     const toastMessage = toast.querySelector(".toast-message");
-    
+
     // Set content and style based on type
     toastMessage.textContent = message;
     toast.className = "toast";
     toast.classList.add(type);
-    
+
     // Update icon based on type
-    switch(type) {
+    switch (type) {
         case "success":
             toastIcon.className = "fas fa-check-circle toast-icon";
             break;
@@ -131,10 +131,10 @@ function showToast(message, type = "success") {
         default:
             toastIcon.className = "fas fa-info-circle toast-icon";
     }
-    
+
     // Show toast
     toast.classList.add("show");
-    
+
     // Hide after 5 seconds
     setTimeout(() => {
         toast.classList.remove("show");
@@ -147,69 +147,69 @@ class AuthSystem {
         this.users = JSON.parse(localStorage.getItem("users")) || [];
         this.currentUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
     }
-    
+
     signUp(email, password, confirmPassword) {
         // Validate inputs
         if (!email || !password || !confirmPassword) {
             showToast("All fields are required", "error");
             return false;
         }
-        
+
         if (password !== confirmPassword) {
             showToast("Passwords do not match", "error");
             return false;
         }
-        
+
         // Check if user already exists
         if (this.users.some(user => user.email === email)) {
             showToast("Email already exists", "error");
             return false;
         }
-        
+
         // Add new user
         this.users.push({ email, password });
         localStorage.setItem("users", JSON.stringify(this.users));
-        
+
         // Log in the new user
         this.login(email, password);
-        
+
         showToast("Account created successfully!", "success");
         return true;
     }
-    
+
     login(email, password) {
         // Validate inputs
         if (!email || !password) {
             showToast("Email and password are required", "error");
             return false;
         }
-        
+
         // Check credentials
         const user = this.users.find(user => user.email === email && user.password === password);
         if (!user) {
             showToast("Invalid email or password", "error");
             return false;
         }
-        
+
         // Set current user
         this.currentUser = { email };
         localStorage.setItem("loggedInUser", JSON.stringify(this.currentUser));
-        
+
         showToast("Logged in successfully!", "success");
         return true;
     }
-    
+
     logout() {
         this.currentUser = null;
         localStorage.removeItem("loggedInUser");
         showToast("Logged out successfully", "success");
         return true;
     }
-    
+
     isLoggedIn() {
         return !!this.currentUser;
     }
-    
+
     getCurrentUser() {
         return this.currentUser;
     }
@@ -230,7 +230,7 @@ function checkAuthState() {
         if (userEmailElement) {
             userEmailElement.textContent = auth.getCurrentUser().email;
         }
-        
+
         // Hide login/signup pages if user is logged in
         const currentPage = window.location.pathname.split("/").pop();
         if (currentPage === "login.html" || currentPage === "signup.html") {
@@ -248,11 +248,11 @@ function checkAuthState() {
 // Handle signup form submission
 function handleSignup(event) {
     event.preventDefault();
-    
+
     const email = document.getElementById("signupEmail").value;
     const password = document.getElementById("signupPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
-    
+
     if (auth.signUp(email, password, confirmPassword)) {
         window.location.href = "index.html";
     }
@@ -263,10 +263,10 @@ function handleLogin(event) {
     event.preventDefault();
 
     console.log("inside login handle");
-    
+
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    
+
     if (auth.login(email, password)) {
         window.location.href = "index.html";
     }
@@ -288,19 +288,19 @@ function toggleMobileMenu() {
 }
 
 // Close mobile menu when clicking outside
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     const navMenu = document.querySelector("nav");
     const mobileToggle = document.querySelector(".mobile-menu-toggle");
-    
-    if (navMenu && navMenu.classList.contains("active") && 
-        !navMenu.contains(event.target) && 
+
+    if (navMenu && navMenu.classList.contains("active") &&
+        !navMenu.contains(event.target) &&
         !mobileToggle.contains(event.target)) {
         navMenu.classList.remove("active");
     }
 });
 
 // Close mobile menu when clicking on a link
-document.addEventListener("click", function(event) {
+document.addEventListener("click", function (event) {
     if (event.target.tagName === "A" && event.target.href) {
         const navMenu = document.querySelector("nav");
         if (navMenu && navMenu.classList.contains("active")) {
@@ -310,7 +310,7 @@ document.addEventListener("click", function(event) {
 });
 
 // Redirect to Chatbot Section
-document.getElementById("chatRedirect")?.addEventListener("click", function() {
+document.getElementById("chatRedirect")?.addEventListener("click", function () {
     document.getElementById("chatbot")?.scrollIntoView({ behavior: "smooth" });
 });
 
@@ -323,7 +323,7 @@ async function sendMessage() {
     }
 
     const chatArea = document.getElementById("chatArea");
-    
+
     // Add user message to chat
     const userMessage = document.createElement("div");
     userMessage.className = "chat-bubble user-message";
@@ -338,10 +338,10 @@ async function sendMessage() {
         </div>
     `;
     chatArea.appendChild(userMessage);
-    
+
     // Clear input
     document.getElementById("userInput").value = "";
-    
+
     // Show typing indicator
     const typingIndicator = document.createElement("div");
     typingIndicator.className = "chat-bubble ai-message";
@@ -358,7 +358,7 @@ async function sendMessage() {
     `;
     chatArea.appendChild(typingIndicator);
     chatArea.scrollTop = chatArea.scrollHeight;
-    
+
     try {
         // Try the new chat API endpoint first, fallback to gemini
         let response;
@@ -381,18 +381,18 @@ async function sendMessage() {
                 body: JSON.stringify({ message: userInput })
             });
         }
-        
+
         // Remove typing indicator
         chatArea.removeChild(typingIndicator);
-        
-        let aiResponseText;
+
         if (response.ok) {
             const data = await response.json();
             aiResponseText = data.reply || "I'm having trouble understanding. Could you try rephrasing that?";
         } else {
-            aiResponseText = "I'm experiencing some technical difficulties. Please try again in a moment.";
+            const data = await response.json().catch(() => ({}));
+            aiResponseText = data.reply || data.message || "I'm experiencing some technical difficulties. Please try again in a moment.";
         }
-        
+
         // Add AI response
         const aiMessage = document.createElement("div");
         aiMessage.className = "chat-bubble ai-message";
@@ -413,7 +413,7 @@ async function sendMessage() {
         if (typingIndicator.parentNode) {
             chatArea.removeChild(typingIndicator);
         }
-        
+
         // Add error message
         const errorMessage = document.createElement("div");
         errorMessage.className = "chat-bubble ai-message";
@@ -429,14 +429,14 @@ async function sendMessage() {
         `;
         chatArea.appendChild(errorMessage);
         chatArea.scrollTop = chatArea.scrollHeight;
-        
+
         showToast("Failed to get AI response", "error");
         console.error("Chat error:", error);
     }
 }
 
 // Handle Enter key in chat input
-document.getElementById("userInput")?.addEventListener("keypress", function(e) {
+document.getElementById("userInput")?.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
         sendMessage();
     }
@@ -465,7 +465,7 @@ function logMood() {
 
     const intensity = document.getElementById("moodIntensity").value;
     const date = new Date();
-    
+
     // Create mood entry
     const moodEntry = {
         mood: selectedMood,
@@ -473,14 +473,14 @@ function logMood() {
         date: date.toISOString(),
         timestamp: date.getTime()
     };
-    
+
     // Add to history
     moodHistory.push(moodEntry);
     localStorage.setItem("moodHistory", JSON.stringify(moodHistory));
-    
+
     // Show confirmation
     showToast(`Your ${selectedMood} mood (intensity: ${intensity}) has been logged!`);
-    
+
     // Update mood chart
     updateMoodChart();
 }
@@ -515,7 +515,7 @@ function saveJournal() {
 
     const prompt = document.getElementById("journalPrompt").textContent;
     const date = new Date();
-    
+
     // Create journal entry
     const journalEntry = {
         prompt,
@@ -524,17 +524,17 @@ function saveJournal() {
         timestamp: date.getTime(),
         wordCount: entry.trim() ? entry.trim().split(/\s+/).length : 0
     };
-    
+
     // Add to entries
     journalEntries.push(journalEntry);
     localStorage.setItem("journalEntries", JSON.stringify(journalEntries));
-    
+
     // Show confirmation
     showToast("Your journal entry has been saved!");
-    
+
     // Clear the textarea
     document.getElementById("journalEntry").value = "";
-    
+
     // Update word count
     updateWordCount();
 }
@@ -553,16 +553,16 @@ let moodChart;
 
 function updateMoodChart() {
     const ctx = document.getElementById("moodChart").getContext("2d");
-    
+
     // Process mood data - in a real app, this would come from your database
     const last7Days = moodHistory.slice(-7);
     const labels = last7Days.map(entry => {
         const date = new Date(entry.date);
         return date.toLocaleDateString('en-US', { weekday: 'short' });
     });
-    
+
     const data = last7Days.map(entry => entry.intensity);
-    
+
     // Fill with default data if not enough entries
     while (labels.length < 7) {
         const date = new Date();
@@ -570,7 +570,7 @@ function updateMoodChart() {
         labels.unshift(date.toLocaleDateString('en-US', { weekday: 'short' }));
         data.unshift(5); // Default neutral mood
     }
-    
+
     const moodData = {
         labels: labels,
         datasets: [{
@@ -609,7 +609,7 @@ function updateMoodChart() {
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             return `Mood level: ${context.raw}`;
                         }
                     }
@@ -620,7 +620,7 @@ function updateMoodChart() {
 }
 
 // Time range selector
-document.getElementById("timeRange")?.addEventListener("change", function() {
+document.getElementById("timeRange")?.addEventListener("change", function () {
     // In a real app, this would fetch different data based on the time range
     updateMoodChart();
     showToast(`Showing data for ${this.value}`, "success");
@@ -674,12 +674,12 @@ function playMeditation(type) {
         isPlaying = false;
         updatePlayButton(currentAudioType, false);
     }
-    
+
     // Determine which audio file to play based on the type
     let audioFile;
     let meditationName;
-    
-    switch(type) {
+
+    switch (type) {
         case "stress":
             audioFile = "./calm-music.mp3";
             meditationName = "Stress Relief";
@@ -704,33 +704,33 @@ function playMeditation(type) {
             showToast("Invalid meditation type", "error");
             return;
     }
-    
+
     currentAudioType = type;
-    
+
     // Create new audio element and play
     currentAudio = new Audio(audioFile);
-    
+
     // Add error handling for audio
-    currentAudio.onerror = function() {
+    currentAudio.onerror = function () {
         console.error(`Failed to load audio: ${audioFile}`);
         showToast(`Unable to load ${meditationName} audio. Please check your connection.`, "error");
         isPlaying = false;
         updatePlayButton(type, false);
         currentAudio = null;
     };
-    
-    currentAudio.onloadstart = function() {
+
+    currentAudio.onloadstart = function () {
         showToast(`Loading ${meditationName}...`, "info");
     };
-    
+
     currentAudio.play()
         .then(() => {
             isPlaying = true;
             updatePlayButton(type, true);
             showToast(`Now playing: ${meditationName}`, "success");
-            
+
             // Update UI when audio ends
-            currentAudio.onended = function() {
+            currentAudio.onended = function () {
                 isPlaying = false;
                 updatePlayButton(type, false);
                 currentAudio = null;
@@ -758,7 +758,7 @@ function updatePlayButton(type, playing) {
 }
 
 // Add click handler to stop button if you have one
-document.getElementById("stopMeditation")?.addEventListener("click", function() {
+document.getElementById("stopMeditation")?.addEventListener("click", function () {
     if (currentAudio) {
         currentAudio.pause();
         currentAudio.currentTime = 0;
@@ -782,13 +782,13 @@ function updateStatsDisplay() {
     document.getElementById("points").textContent = userStats.points;
     document.getElementById("streak").textContent = userStats.streak;
     document.getElementById("activities").textContent = userStats.activities;
-    
+
     // Update progress bar
     const progressFill = document.querySelector(".progress-fill");
     const progressPercent = Math.min(Math.floor((userStats.activities % 10) * 10), 100);
     progressFill.style.width = `${progressPercent}%`;
     document.querySelector(".progress-header span").textContent = `${progressPercent}% completed`;
-    
+
     // Update badges
     document.querySelectorAll(".badge").forEach(badge => {
         const badgeName = badge.querySelector("h4").textContent.toLowerCase();
@@ -803,13 +803,13 @@ function updateStatsDisplay() {
 function completeActivity() {
     const today = new Date().toDateString();
     const lastActivityDate = new Date(userStats.lastActivityDate).toDateString();
-    
+
     // Update streak if not already completed today
     if (today !== lastActivityDate) {
         // Check if streak should continue (within 24 hours)
         const timeDiff = new Date() - new Date(userStats.lastActivityDate);
         const hoursDiff = timeDiff / (1000 * 60 * 60);
-        
+
         if (hoursDiff <= 48) {
             // Continue streak
             userStats.streak++;
@@ -818,21 +818,21 @@ function completeActivity() {
             userStats.streak = 1;
         }
     }
-    
+
     // Update points and activities
     userStats.points += 10;
     userStats.activities++;
     userStats.lastActivityDate = new Date().toISOString();
-    
+
     // Check for new badges
     checkBadges();
-    
+
     // Save to localStorage
     localStorage.setItem("userStats", JSON.stringify(userStats));
-    
+
     // Update display
     updateStatsDisplay();
-    
+
     // Show confirmation
     showToast("Activity completed! +10 points", "success");
 }
@@ -840,19 +840,19 @@ function completeActivity() {
 function checkBadges() {
     // Check for new badges based on stats
     const newBadges = [];
-    
+
     if (userStats.streak >= 30 && !userStats.badges.includes("streak")) {
         newBadges.push("streak");
     }
-    
+
     if (userStats.points >= 500 && !userStats.badges.includes("dedicated")) {
         newBadges.push("dedicated");
     }
-    
+
     if (newBadges.length > 0) {
         userStats.badges = [...userStats.badges, ...newBadges];
         localStorage.setItem("userStats", JSON.stringify(userStats));
-        
+
         newBadges.forEach(badge => {
             showToast(`Congratulations! You earned the ${badge.replace("-", " ")} badge!`, "success");
         });
@@ -860,41 +860,41 @@ function checkBadges() {
 }
 
 // Initialize the page
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     // Initialize theme
     initializeTheme();
-    
+
     // Check auth state
     checkAuthState();
-    
+
     // Set current year in footer
     document.getElementById("current-year").textContent = new Date().getFullYear();
-    
+
     // Set initial journal prompt
     if (document.getElementById("journalPrompt")) {
         newPrompt();
     }
-    
+
     // Initialize mood chart
     if (document.getElementById("moodChart")) {
         updateMoodChart();
     }
-    
+
     // Set up mood intensity slider
     if (document.getElementById("moodIntensity")) {
-        document.getElementById("moodIntensity").addEventListener("input", function() {
+        document.getElementById("moodIntensity").addEventListener("input", function () {
             document.getElementById("intensityValue").textContent = this.value;
         });
     }
-    
+
     // Initialize user stats
     if (document.getElementById("points")) {
         updateStatsDisplay();
     }
-    
+
     // Add animation to sections when they come into view
     const sections = document.querySelectorAll(".feature-section, .info-section");
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -903,22 +903,22 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }, { threshold: 0.1 });
-    
+
     sections.forEach(section => {
         section.style.opacity = 0;
         section.style.transform = "translateY(20px)";
         section.style.transition = "opacity 0.5s ease, transform 0.5s ease";
         observer.observe(section);
     });
-    
+
     // Handle newsletter form submission
     const newsletterForm = document.querySelector(".newsletter-form");
     if (newsletterForm) {
-        newsletterForm.addEventListener("submit", function(e) {
+        newsletterForm.addEventListener("submit", function (e) {
             e.preventDefault();
             const emailInput = this.querySelector('input[type="email"]');
             const email = emailInput.value.trim();
-            
+
             if (email) {
                 // In a real app, you would send this to your backend
                 showToast("Thank you for subscribing to our newsletter!", "success");
@@ -926,21 +926,21 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-    
+
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function(e) {
+        anchor.addEventListener("click", function (e) {
             e.preventDefault();
             const targetId = this.getAttribute("href");
             if (targetId === "#") return;
-            
+
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 targetElement.scrollIntoView({
                     behavior: "smooth",
                     block: "start"
                 });
-                
+
                 // Update URL without page jump
                 history.pushState(null, null, targetId);
             }
@@ -949,15 +949,15 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 window.onload = function () {
-  window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
 };
 
 // Prevent scroll restoration
 if (history.scrollRestoration) {
-  history.scrollRestoration = "manual";
+    history.scrollRestoration = "manual";
 }
 
 // Also ensure no anchor is in the URL
 if (window.location.hash) {
-  window.location.hash = "";
+    window.location.hash = "";
 }
