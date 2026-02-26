@@ -37,6 +37,34 @@ async function fetchBotResponse(userMessage) {
     }
 }
 
+// Function to show typing indicator
+function showTypingIndicator() {
+    const indicator = document.createElement('div');
+    indicator.classList.add('chat-message', 'bot');
+    indicator.id = 'typing-indicator';
+    
+    const container = document.createElement('div');
+    container.classList.add('typing-indicator-container');
+    
+    for (let i = 0; i < 3; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('typing-dot');
+        container.appendChild(dot);
+    }
+    
+    indicator.appendChild(container);
+    chatContainer.appendChild(indicator);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// Function to remove typing indicator
+function removeTypingIndicator() {
+    const indicator = document.getElementById('typing-indicator');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
 // Handle chat input
 sendBtn.addEventListener('click', async () => {
     const userMessage = chatInput.value.trim();
@@ -44,14 +72,20 @@ sendBtn.addEventListener('click', async () => {
         // Add user message to chat
         addMessage(userMessage, 'user');
         
+        // Clear input immediately after sending
+        chatInput.value = '';
+
+        // Show typing indicator
+        showTypingIndicator();
+        
         // Get bot response from API
         const botResponse = await fetchBotResponse(userMessage);
         
+        // Remove typing indicator
+        removeTypingIndicator();
+        
         // Add bot response to chat
         addMessage(botResponse, 'bot');
-
-        // Clear input
-        chatInput.value = '';
     }
 });
 

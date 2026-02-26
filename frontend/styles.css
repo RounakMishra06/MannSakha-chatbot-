@@ -434,7 +434,7 @@ nav ul li a:hover {
   margin-bottom: 30px;
   text-shadow: 0 0 20px rgba(245, 197, 66, 0.3);
   transition: transform 0.3s ease;
-  color:#e9e1e1
+  color: #e9e1e1
 }
 
 .ai-highlight {
@@ -2439,4 +2439,44 @@ textarea:focus {
   height: 100%;
   z-index: -1;
   background: #0d0d0d;
+}
+
+/* Typing Indicator Animation */
+.chat-content.typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  min-height: 24px;
+}
+
+.chat-content.typing span {
+  width: 8px;
+  height: 8px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  display: inline-block;
+  animation: typingBounce 1.4s infinite ease-in-out both;
+  opacity: 0.7;
+}
+
+.chat-content.typing span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.chat-content.typing span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes typingBounce {
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+
+  40% {
+    transform: scale(1);
+  }
 }
