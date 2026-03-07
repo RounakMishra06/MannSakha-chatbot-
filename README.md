@@ -1,17 +1,17 @@
 # 🧠 MannSakha - Complete Setup Guide
-
+ 
 <p align="center"> 
   <img  src="https://img.shields.io/github/stars/RounakMishra06/MannSakha-chatbot-?style=social" />
-  <img src="https://img.shields.io/github/forks/RounakMishra06/MannSakha-chatbot-?style=social" />
-  <img src="https://img.shields.io/github/issues/RounakMishra06/MannSakha-chatbot-" />  
+  <img src="https://img.shields.io/github/forks/RounakMishra06/MannSakha-chatbot-?style=social" /> 
+  <img src="https://img.shields.io/github/issues/RounakMishra06/MannSakha-chatbot-" />    
   <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" /> 
-</p> 
-  
-<!-- GSSoC Banner -->  
-<p align="center">  
+</p>     
+         
+<!-- GSSoC Banner -->    
+<p align="center">    
   <img src="https://user-images.githubusercontent.com/92252895/259034403-7ad22f22-60f9-4c7f-b817-a5012bae4bb9.png" width="100%" />
-</p> 
-
+</p>    
+ 
 ## Project Overview
 **MannSakha** is an AI-powered chatbot designed to help users manage their busy schedules efficiently while incorporating stress management features. Unlike therapy-based mental health chatbots, MannSakha focuses on productivity, time management, and workload balance. 
 

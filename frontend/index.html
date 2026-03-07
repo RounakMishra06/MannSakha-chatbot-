@@ -63,6 +63,7 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
+
         let particlesArray = [];
         const colors = ["#ff6600", "#ff8533", "#ff944d", "#ffaa66"];
 
@@ -75,6 +76,68 @@
             this.speedY = Math.random() * 1 - 0.5;
             this.color = colors[Math.floor(Math.random() * colors.length)];
           }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MannSakha AI - Your Wellness Companion</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">MannSakha AI</div>
+    <nav>
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#services">SERVICES</a></li>
+        <li><a href="#careers">CAREERS</a></li>
+        <li><a href="#blog">BLOG</a></li>
+        <li><a href="#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
+        <li><a href="/signup.html" class="btn-signup">Signup</a></li>
+        <li id="userProfile" class="user-profile">
+          <span id="userEmail"></span>
+          <a href="#" onclick="logout()" class="logout-link">Get Started</a>
+        </li>
+      </ul>
+    </nav>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+      <i class="fas fa-moon"></i>
+      <span>Auto</span>
+    </button>
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" title="Toggle Mobile Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+  </header>
+
+  <canvas id="particles"></canvas>
+  <div class="content">
+
+    <script>
+      const canvas = document.getElementById("particles");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      let particlesArray = [];
+      const colors = ["#ff6600", "#ff8533", "#ff944d", "#ffaa66"];
+
+      class Particle {
+        constructor() {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.size = Math.random() * 4 + 2; // size: 2px - 6px
+          this.speedX = Math.random() * 1 - 0.5;
+          this.speedY = Math.random() * 1 - 0.5;
+          this.color = colors[Math.floor(Math.random() * colors.length)];
+        }
+
 
           update() {
             this.x += this.speedX;
@@ -148,6 +211,45 @@
           <div class="scroll-indicator">
             <i class="fas fa-chevron-down"></i>
           </div>
+      });
+    </script>
+
+
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1 class="main-title">
+          MannSakha<span class="ai-highlight">.AI</span>
+        </h1>
+        <button class="ask-button" id="chatRedirect">
+          Ask MannSakha AI Anything... <span class="arrow">→</span>
+        </button>
+        <p class="hero-subtitle">
+          Your AI-powered companion for mental wellness and productivity
+        </p>
+        <div class="cta-buttons">
+          <a href="javascript:void(0)" class="primary-btn" onclick="openTeaser()">MANNSAKHA+ Coming Soon</a>
+          <a href="#features" class="secondary-btn">Explore Features</a>
+
+          <!-- New CTA Button -->
+          <a href="signup.html" class="cta-btn">Try MannSakha</a>
+        </div>
+        <div class="scroll-indicator">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+      <div class="hero-pattern"></div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- AI Chatbot Section -->
+      <section id="chatbot" class="section">
+        <div class="section-header">
+          <h2><i class="fas fa-robot"></i> AI-Powered Chatbot</h2>
+          <div class="section-underline"></div>
+
         </div>
         <div class="hero-pattern"></div>
       </section>
