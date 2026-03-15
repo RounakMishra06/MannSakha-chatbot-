@@ -363,7 +363,7 @@ async function sendMessage() {
         // Try the new chat API endpoint first, fallback to gemini
         let response;
         try {
-            response = await fetch('/api/chat', {
+            response = await fetch('/api/gemini', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

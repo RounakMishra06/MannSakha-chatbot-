@@ -14,6 +14,7 @@ import newsletterRoutes from "./routes/newsletter.js";
 import User from "./models/User.js";
 
 dotenv.config();
+console.log("Gemini Key:", process.env.GEMINI_API_KEY);
 const app = express();
 const port = process.env.PORT || 3051;
 
@@ -446,60 +447,66 @@ app.post("/api/gemini", async (req, res) => {
     return res.json({ reply: randomResponse });
   }
 
-  try {
-    console.log("📡 Checking available models...");
-    const availableModels = await listGeminiModels(apiKey);
-    console.log("📋 Available models:", availableModels?.length || 0);
+   try {
+  //   console.log("📡 Checking available models...");
+  //   const availableModels = await listGeminiModels(apiKey);
+  //   console.log("📋 Available models:", availableModels?.length || 0);
     
-    if (!availableModels?.length) {
-      console.log("❌ No Gemini models available - trying alternative APIs");
+  //   if (!availableModels?.length) {
+  //     console.log("❌ No Gemini models available - trying alternative APIs");
       
-      // Try alternative APIs when Gemini is completely unavailable
-      let altResponse = await tryOpenAIAPI(message);
-      if (altResponse) {
-        console.log("✅ Using OpenAI as primary backup");
-        return res.json({ reply: altResponse });
-      }
+  //     // Try alternative APIs when Gemini is completely unavailable
+  //     let altResponse = await tryOpenAIAPI(message);
+  //     if (altResponse) {
+  //       console.log("✅ Using OpenAI as primary backup");
+  //       return res.json({ reply: altResponse });
+  //     }
       
-      altResponse = await tryHuggingFaceAPI(message);
-      if (altResponse) {
-        console.log("✅ Using Hugging Face as primary backup");
-        return res.json({ reply: altResponse });
-      }
+  //     altResponse = await tryHuggingFaceAPI(message);
+  //     if (altResponse) {
+  //       console.log("✅ Using Hugging Face as primary backup");
+  //       return res.json({ reply: altResponse });
+  //     }
       
-      altResponse = await tryCoHereAPI(message);
-      if (altResponse) {
-        console.log("✅ Using Cohere as primary backup");
-        return res.json({ reply: altResponse });
-      }
+  //     altResponse = await tryCoHereAPI(message);
+  //     if (altResponse) {
+  //       console.log("✅ Using Cohere as primary backup");
+  //       return res.json({ reply: altResponse });
+  //     }
       
-      // Use smart fallback if all APIs fail
-      console.log("✅ Using smart fallback - all APIs unavailable");
-      const smartResponse = getSmartFallbackResponse(message);
-      return res.json({ reply: smartResponse });
-    }
+  //     // Use smart fallback if all APIs fail
+  //     console.log("✅ Using smart fallback - all APIs unavailable");
+  //     const smartResponse = getSmartFallbackResponse(message);
+  //     return res.json({ reply: smartResponse });
+  //   }
 
-    const selectedModel = "models/gemini-1.5-flash";
-    const prompt = `You are MannSakha AI, a compassionate mental health support chatbot. Respond empathetically and helpfully to: ${message}`;
-    
-    console.log("🚀 Making request to Gemini API...");
-    const geminiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/${selectedModel}:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.9,
-            topK: 1,
-            topP: 1,
-            maxOutputTokens: 2048,
-          },
-        }),
-      }
-    );
 
+
+const prompt = `You are MannSakha AI, a compassionate mental health support chatbot. Respond empathetically and helpfully to: ${message}`;
+
+const selectedModel = "gemini-2.0-flash";
+
+const geminiResponse = await fetch(
+  `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`,
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 512
+      }
+    })
+  }
+);
     console.log("📨 Gemini API response status:", geminiResponse.status);
     
     if (!geminiResponse.ok) {
