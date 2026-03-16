@@ -14,7 +14,6 @@ import newsletterRoutes from "./routes/newsletter.js";
 import User from "./models/User.js";
 
 dotenv.config();
-console.log("Gemini Key:", process.env.GEMINI_API_KEY);
 const app = express();
 const port = process.env.PORT || 3051;
 
