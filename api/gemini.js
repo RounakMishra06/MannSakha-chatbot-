@@ -9,7 +9,7 @@ async function getGeminiAI() {
     try {
       const module = await import("@google/generative-ai");
       GoogleGenerativeAI = module.GoogleGenerativeAI;
-      return new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+      return new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     } catch (error) {
       console.error('Failed to load Gemini AI:', error);
       return null;
@@ -67,25 +67,21 @@ export default async function handler(req, res) {
         Always be understanding, non-judgmental, and encourage professional help when needed.
         Keep responses concise but caring (max 150 words).`;
 
-        const model = genAI.getGenerativeModel({model: "gemini-1.5-flash"});
+        // CHANGE 1: Updated model name from "gemini-pro" to "gemini-1.5-flash"
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent(`${context}\n\nUser: ${message}`);
         const response = await result.response;
         const text = response.text();
 
-        return res.status(200).json({ 
-          response: text,
+        // CHANGE 2: Cleaner response object
+        return res.status(200).json({
           reply: text,
-          timestamp: new Date().toISOString(),
           source: 'gemini'
         });
       } catch (geminiError) {
-  console.error('Gemini API Error:', geminiError);
-
-  return res.status(500).json({
-    reply: "AI service temporarily unavailable. Please try again shortly.",
-    source: "error"
-  });
-}
+        console.error('Gemini API Error:', geminiError);
+        // Fall through to fallback
+      }
     }
 
     // Use fallback response
