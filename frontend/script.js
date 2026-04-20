@@ -225,11 +225,18 @@ if (!localStorage.getItem("users")) {
 
 // Display logged-in user email in header and handle redirects
 function checkAuthState() {
+    const authButton = document.getElementById("authButton");
+    const userProfile = document.getElementById("userProfile");
+    
     if (auth.isLoggedIn()) {
         const userEmailElement = document.getElementById("userEmail");
         if (userEmailElement) {
             userEmailElement.textContent = auth.getCurrentUser().email;
         }
+        
+        // Show user profile, hide auth button
+        if (authButton) authButton.style.display = "none";
+        if (userProfile) userProfile.style.display = "flex";
         
         // Hide login/signup pages if user is logged in
         const currentPage = window.location.pathname.split("/").pop();
@@ -237,6 +244,10 @@ function checkAuthState() {
             window.location.href = "index.html";
         }
     } else {
+        // Show auth button, hide user profile
+        if (authButton) authButton.style.display = "block";
+        if (userProfile) userProfile.style.display = "none";
+        
         // Redirect to login if not logged in (except for login/signup pages)
         const currentPage = window.location.pathname.split("/").pop();
         if (currentPage === "index.html") {
@@ -279,11 +290,17 @@ function logout() {
     }
 }
 
-// Mobile Menu Toggle Function
+// Enhanced Mobile Menu Toggle Function
 function toggleMobileMenu() {
     const navMenu = document.querySelector("nav");
+    const mobileToggle = document.querySelector(".mobile-menu-toggle");
+    
     if (navMenu) {
         navMenu.classList.toggle("active");
+    }
+    
+    if (mobileToggle) {
+        mobileToggle.classList.toggle("active");
     }
 }
 
@@ -943,6 +960,70 @@ document.addEventListener("DOMContentLoaded", function() {
                 
                 // Update URL without page jump
                 history.pushState(null, null, targetId);
+            }
+        });
+    });
+    
+    // Enhanced Navbar: Scroll Effect
+    let lastScrollTop = 0;
+    const header = document.querySelector("header");
+    
+    window.addEventListener("scroll", function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        // Add 'scrolled' class when user scrolls down
+        if (scrollTop > 50) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
+        }
+        
+        lastScrollTop = scrollTop;
+    });
+    
+    // Enhanced Navbar: Active Link Highlighting
+    const navLinks = document.querySelectorAll("nav ul li a");
+    const pageSections = document.querySelectorAll("section[id]");
+    
+    // Function to update active link based on scroll position
+    function updateActiveLink() {
+        let currentSection = "";
+        
+        pageSections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (window.pageYOffset >= sectionTop - 100) {
+                currentSection = section.getAttribute("id");
+            }
+        });
+        
+        navLinks.forEach(link => {
+            link.classList.remove("active");
+            
+            if (link.getAttribute("href") === `#${currentSection}`) {
+                link.classList.add("active");
+            }
+        });
+    }
+    
+    // Update active link on scroll
+    window.addEventListener("scroll", updateActiveLink);
+    
+    // Set initial active link
+    updateActiveLink();
+    
+    // Close mobile menu when clicking on a nav link
+    navLinks.forEach(link => {
+        link.addEventListener("click", function() {
+            const navMenu = document.querySelector("nav");
+            const mobileToggle = document.querySelector(".mobile-menu-toggle");
+            
+            if (navMenu && navMenu.classList.contains("active")) {
+                navMenu.classList.remove("active");
+                if (mobileToggle) {
+                    mobileToggle.classList.remove("active");
+                }
             }
         });
     });
