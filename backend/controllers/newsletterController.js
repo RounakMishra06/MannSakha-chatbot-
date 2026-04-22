@@ -8,11 +8,18 @@ import {
 // ✅ Subscribe
 export const subscribe = async (req, res) => {
   try {
-    const { email } = req.body;
+    console.log("[NEWSLETTER] subscribe req.body:", req.body);
+    const email = req.body?.email?.trim().toLowerCase();
 
     if (!email) return res.status(400).json({ error: "Email is required" });
 
+    console.log("[NEWSLETTER] normalized email:", email);
     let subscriber = await Newsletter.findOne({ email });
+    console.log("[NEWSLETTER] existing subscriber:", subscriber ? {
+      id: subscriber._id,
+      email: subscriber.email,
+      isSubscribed: subscriber.isSubscribed,
+    } : null);
 
     if (subscriber) {
       if (subscriber.isSubscribed) {
@@ -34,15 +41,20 @@ export const subscribe = async (req, res) => {
 
     const emailSent = await sendConfirmationEmail(email, unsubscribeLink);
     if (!emailSent) {
-      return res
-        .status(500)
-        .json({ error: "Failed to send confirmation email" });
+      console.error("[NEWSLETTER] confirmation email failed for:", email);
+      return res.status(500).json({
+        success: false,
+        error: "Subscription saved, but confirmation email could not be sent",
+      });
     }
 
-    res.json({ message: "Successfully subscribed to newsletter" });
+    res.status(201).json({
+      success: true,
+      message: "Successfully subscribed to newsletter",
+    });
   } catch (error) {
     console.error("Subscription error:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ success: false, error: "Internal server error" });
   }
 };
 

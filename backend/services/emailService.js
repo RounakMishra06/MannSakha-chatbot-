@@ -1,13 +1,44 @@
 import nodemailer from "nodemailer";
 import crypto from "crypto";
 
+const emailUser = process.env.EMAIL_USERNAME;
+const emailPass = process.env.EMAIL_PASSWORD;
+let transporterVerified = false;
+
 const transporter = nodemailer.createTransport({
-  service: "gmail", // or your SMTP
+  service: "gmail",
   auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
+    user: emailUser,
+    pass: emailPass,
   },
 });
+
+const verifyTransporter = async () => {
+  if (!emailUser || !emailPass) {
+    console.error("[NEWSLETTER][EMAIL] Missing EMAIL_USERNAME or EMAIL_PASSWORD in backend .env");
+    return false;
+  }
+
+  if (transporterVerified) {
+    return true;
+  }
+
+  try {
+    await transporter.verify();
+    transporterVerified = true;
+    console.log("[NEWSLETTER][EMAIL] Gmail transporter verified successfully");
+    return true;
+  } catch (err) {
+    console.error("[NEWSLETTER][EMAIL] Transporter verification failed:", {
+      message: err?.message,
+      code: err?.code,
+      response: err?.response,
+      command: err?.command,
+    });
+    console.error("[NEWSLETTER][EMAIL] Gmail SMTP requires a 16-character App Password, not your normal Gmail password");
+    return false;
+  }
+};
 
 // ✅ Token generator
 export const generateUnsubscribeToken = (email) => {
@@ -19,8 +50,17 @@ export const generateUnsubscribeToken = (email) => {
 // ✅ Confirmation email
 export const sendConfirmationEmail = async (email, unsubscribeLink) => {
   try {
-    await transporter.sendMail({
-      from: `"MannSakha AI" <${process.env.EMAIL_USER}>`,
+    console.log("[NEWSLETTER][EMAIL] Incoming subscription email:", email);
+
+    const isTransporterReady = await verifyTransporter();
+    if (!isTransporterReady) {
+      return false;
+    }
+
+    console.log("[NEWSLETTER][EMAIL] Sending confirmation email to:", email);
+
+    const info = await transporter.sendMail({
+      from: `"MannSakha AI" <${emailUser}>`,
       to: email,
       subject: "Welcome to MannSakha AI Newsletter",
       html: `
@@ -40,9 +80,23 @@ export const sendConfirmationEmail = async (email, unsubscribeLink) => {
 
       `,
     });
+
+    console.log("[NEWSLETTER][EMAIL] Confirmation email sent successfully:", {
+      to: email,
+      messageId: info?.messageId,
+      response: info?.response,
+      accepted: info?.accepted,
+      rejected: info?.rejected,
+    });
     return true;
   } catch (err) {
-    console.error("❌ Email sending failed:", err);
+    console.error("[NEWSLETTER][EMAIL] Email sending failed:", {
+      message: err?.message,
+      code: err?.code,
+      response: err?.response,
+      command: err?.command,
+    });
+    console.error("[NEWSLETTER][EMAIL] Ensure EMAIL_PASSWORD is a Gmail App Password (16 chars)");
     return false;
   }
 };
@@ -55,11 +109,16 @@ export const sendBulkNewsletter = async (
   generateUnsubscribeLink
 ) => {
   try {
+    const isTransporterReady = await verifyTransporter();
+    if (!isTransporterReady) {
+      return false;
+    }
+
     for (const subscriber of subscribers) {
       const unsubscribeLink = generateUnsubscribeLink(subscriber.email);
 
-      await transporter.sendMail({
-        from: `"MannSakha AI" <${process.env.EMAIL_USER}>`,
+      const info = await transporter.sendMail({
+        from: `"MannSakha AI" <${emailUser}>`,
         to: subscriber.email,
         subject,
         html: `
@@ -71,10 +130,22 @@ export const sendBulkNewsletter = async (
           </p>
         `,
       });
+
+      console.log("[NEWSLETTER][EMAIL] Bulk send success:", {
+        to: subscriber.email,
+        messageId: info?.messageId,
+      });
     }
+
+    console.log("[NEWSLETTER][EMAIL] Bulk email sent to subscribers:", subscribers.length);
     return true;
   } catch (err) {
-    console.error("❌ Bulk email sending failed:", err);
+    console.error("[NEWSLETTER][EMAIL] Bulk email sending failed:", {
+      message: err?.message,
+      code: err?.code,
+      response: err?.response,
+      command: err?.command,
+    });
     return false;
   }
 };

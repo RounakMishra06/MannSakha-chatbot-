@@ -259,16 +259,43 @@ function handleSignup(event) {
 }
 
 // Handle login form submission
-function handleLogin(event) {
+async function handleLogin(event) {
     event.preventDefault();
 
-    console.log("inside login handle");
-    
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    
-    if (auth.login(email, password)) {
-        window.location.href = "index.html";
+    const email = document.getElementById("email")?.value.trim().toLowerCase();
+    const password = document.getElementById("password")?.value;
+    const errorMessage = document.getElementById("errorMessage");
+
+    if (errorMessage) {
+        errorMessage.textContent = "";
+    }
+
+    try {
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            if (errorMessage) {
+                errorMessage.textContent = data.message || "Invalid credentials";
+            }
+            return;
+        }
+
+        // Keep existing frontend gate working for index page access checks.
+        localStorage.setItem("loggedInUser", JSON.stringify({ email }));
+        window.location.href = data.redirect || "index.html";
+    } catch (error) {
+        console.error("Login request failed:", error);
+        if (errorMessage) {
+            errorMessage.textContent = "Unable to login right now. Please try again.";
+        }
     }
 }
 

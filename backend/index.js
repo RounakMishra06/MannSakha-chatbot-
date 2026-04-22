@@ -116,6 +116,7 @@ app.use("/api/newsletter", newsletterRoutes);
 app.post("/api/signup", async (req, res) => {
   try {
     const { name, email, password, gender, dob, provider } = req.body;
+    const normalizedEmail = email?.trim().toLowerCase();
 
     if (provider === "local") {
       if (!name || !email || !password || !gender || !dob) {
@@ -125,7 +126,11 @@ app.post("/api/signup", async (req, res) => {
       }
     }
 
-    const existingUser = await User.findOne({ email });
+    if (!normalizedEmail) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    const existingUser = await User.findOne({ email: normalizedEmail });
     if (existingUser) {
       return res.status(400).json({ message: "Email already exists" });
     }
@@ -134,7 +139,7 @@ app.post("/api/signup", async (req, res) => {
 
     const newUser = new User({
       name,
-      email,
+      email: normalizedEmail,
       password: hashedPassword,
       gender,
       dob,
@@ -156,16 +161,33 @@ app.post("/api/signup", async (req, res) => {
 // Local login
 app.post("/api/login", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    console.log("[LOGIN] req.body:", req.body);
+
+    const email = req.body?.email?.trim().toLowerCase();
+    const password = req.body?.password;
 
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
     const user = await User.findOne({ email });
+    console.log("[LOGIN] fetched user:", user ? {
+      id: user._id,
+      email: user.email,
+      provider: user.provider,
+    } : null);
+
     if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
-    const isMatch = await bcrypt.compare(password, user.password || "");
+    console.log("[LOGIN] stored password:", user.password);
+
+    if (!user.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log("[LOGIN] bcrypt.compare result:", isMatch);
+
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
@@ -484,7 +506,7 @@ app.post("/api/gemini", async (req, res) => {
 
 const prompt = `You are MannSakha AI, a compassionate mental health support chatbot. Respond empathetically and helpfully to: ${message}`;
 
-const selectedModel = "gemini-2.0-flash";
+const selectedModel = "gemini-2.5-flash";
 
 const geminiResponse = await fetch(
   `https://generativelanguage.googleapis.com/v1beta/models/${selectedModel}:generateContent?key=${apiKey}`,

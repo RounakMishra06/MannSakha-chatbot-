@@ -125,10 +125,6 @@
         </p>
         <div class="cta-buttons">
           <a href="javascript:void(0)" class="primary-btn" onclick="openTeaser()">MANNSAKHA+ Coming Soon</a>
-          <a href="#features" class="secondary-btn">Explore Features</a>
-
-          <!-- New CTA Button -->
-          <a href="signup.html" class="cta-btn">Try MannSakha</a>
         </div>
         <div class="scroll-indicator">
           <i class="fas fa-chevron-down"></i>
@@ -778,14 +774,11 @@
           }
 
           try {
-            const response = await fetch(
-              "http://127.0.0.1:5000/api/newsletter/subscribe",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
-              }
-            );
+            const response = await fetch("/api/newsletter/subscribe", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
+            });
 
             // Check if response is JSON
             const contentType = response.headers.get("content-type");
@@ -795,14 +788,17 @@
 
             const data = await response.json();
 
-            if (response.ok) {
+            if (response.ok && data.success) {
               messageElement.innerHTML =
                 '<p style="color: #10b981;">Success! Please check your email to confirm your subscription.</p>';
               messageElement.classList.add("success");
               document.getElementById("index-newsletter-form").reset();
             } else {
-              messageElement.innerHTML = `<p style="color: #ef4444;">${data.error || "Subscription failed"
-                }</p>`;
+              const errorText =
+                data.error === "Subscription saved, but confirmation email could not be sent"
+                  ? "This feature will be available in an upcoming release."
+                  : data.error || data.message || "Subscription failed";
+              messageElement.innerHTML = `<p style="color: #ef4444;">${errorText}</p>`;
               messageElement.classList.add("error");
             }
           } catch (error) {

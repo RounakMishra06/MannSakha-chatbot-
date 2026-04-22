@@ -1,5 +1,6 @@
 /* Dark Mode CSS Variables */
 :root {
+  --header-height: 92px;
   /* Maroon and Black Color Scheme */
   --maroon-primary: #800020;
   --maroon-secondary: #5c0018;
@@ -105,6 +106,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
+  /* Reserve space for fixed header so first section is never hidden */
+  padding-top: var(--header-height);
 }
 
 /* Page transition effect */
@@ -395,18 +398,22 @@ nav ul li a:hover {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: auto;
   text-align: center;
   position: relative;
   overflow: hidden;
-  padding-top: 100px;
+  padding-top: 24px;
   padding-bottom: 120px;
   overflow: visible;
+}
+
+section[id] {
+  scroll-margin-top: calc(var(--header-height) + 12px);
 }
 
 .hero-content {
@@ -528,7 +535,7 @@ nav ul li a:hover {
   box-shadow: 0 8px 25px var(--shadow-color);
 }
 
-/* Secondary Button (Explore Features) */
+/* Secondary Button */
 .secondary-btn {
   background: rgba(255, 255, 255, 0.08);
   border: 2px solid #fff;
@@ -1872,29 +1879,6 @@ textarea:focus {
 .tertiary-btn:hover {
   background: rgba(255, 145, 77, 0.1);
   transform: translateY(-2px);
-}
-
-/* CTA Button */
-.cta-btn {
-  display: inline-block;
-  background-color: #ff5722; /* contrasting color */
-  color: #fff;
-  padding: 14px 28px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  margin-top: 1rem;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.cta-btn:hover {
-  background-color: #e64a19;
-  transform: scale(1.05);
-}
-
-.cta-btn:active {
-  background-color: #d84315;
 }
 
 /* Footer */

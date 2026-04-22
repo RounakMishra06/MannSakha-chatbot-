@@ -421,8 +421,8 @@
       function handleSignup(event) {
         event.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim().toLowerCase();
         const password = document.getElementById('password').value;
         const gender = document.getElementById('gender').value;
         const dob = document.getElementById('dob').value;
@@ -447,28 +447,27 @@
           return;
         }
 
-        // If all validations pass
+        // If all validations pass, create the user in backend DB.
         errorMessage.textContent = '';
-        alert('Sign up successful!'); // Replace with actual signup logic
 
-        // Here you would typically send the data to your backend
-        // For example:
-        // fetch('/api/signup', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({ name, email, password, gender, dob })
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //   if (data.success) {
-        //     window.location.href = '/dashboard';
-        //   } else {
-        //     errorMessage.textContent = data.message;
-        //   }
-        // })
-        // .catch(error => {
-        //   errorMessage.textContent = 'An error occurred. Please try again.';
-        // });
+        fetch('/api/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, gender, dob, provider: 'local' })
+        })
+          .then(async (response) => {
+            const data = await response.json();
+
+            if (!response.ok) {
+              throw new Error(data.message || data.error || 'Signup failed');
+            }
+
+            alert('Sign up successful!');
+            window.location.href = data.redirect || '/login.html';
+          })
+          .catch((error) => {
+            errorMessage.textContent = error.message || 'An error occurred. Please try again.';
+          });
       }
     </script>
   </div>
