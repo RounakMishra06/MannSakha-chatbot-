@@ -7,11 +7,13 @@
   <img src="https://img.shields.io/github/license/RounakMishra06/MannSakha-chatbot-" /> 
 </p>     
          
-<!-- GSSoC Banner -->    
-<p align="center">    
-  <img src="https://user-images.githubusercontent.com/92252895/259034403-7ad22f22-60f9-4c7f-b817-a5012bae4bb9.png" width="100%" />
-</p>    
- 
+<p align="center">
+  <img src="https://img.shields.io/badge/GSSoC-2025-orange?style=for-the-badge&logo=github" />
+  <img src="https://img.shields.io/badge/DSCWoC-2026-blue?style=for-the-badge&logo=google" />
+</p>
+
+---
+
 ## Project Overview
 **MannSakha** is an AI-powered chatbot designed to help users manage their busy schedules efficiently while incorporating stress management features. Unlike therapy-based mental health chatbots, MannSakha focuses on productivity, time management, and workload balance. 
 
@@ -34,6 +36,42 @@
 - **Persistent Preferences**: Your theme choice is saved and persists across sessions
 - **Smooth Transitions**: Beautiful animations when switching between themes
 - **Brand-Aligned Colors**: Carefully crafted color palette that maintains your brand identity
+
+---
+
+## System Architecture
+
+To help contributors understand the internal logic of MannSakha, here is the high-level architecture and AI interaction flow.
+
+### 1. High-Level Logic Flow
+```mermaid
+graph TD
+    User((User)) --> FE[React Frontend]
+    FE <-->|REST API / Auth| BE[Node.js / Express]
+    subgraph AI_Engine
+        BE <-->|Payload| G[Gemini API]
+    end
+    subgraph Data_Layer
+        BE <-->|Mongoose| DB[(MongoDB)]
+    end
+    BE -->|Feature| SM[Stress Management]
+    BE -->|Feature| DR[Doctor Recommendation]
+```
+
+### 2. Task Scheduling Sequence
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant BE as MannSakha Backend
+    participant AI as Gemini AI
+    participant DB as MongoDB
+
+    U->>BE: Input Busy Schedule & Tasks
+    BE->>AI: Analyze Workload & Stress Levels
+    AI-->>BE: Generate Optimized Schedule + Relaxation Tips
+    BE->>DB: Persist Task Data
+    BE-->>U: Display Smart Schedule + AI Insights
+```
 
 ---
 
@@ -194,20 +232,25 @@ This project is licensed under the **MIT License**.
 
 ---
 
+## Open Source Programs
+MannSakha is proud to be part of the following programs. We welcome all contributors!
+- **GSSoC'25** (GirlScript Summer of Code)
+- **DSCWoC'26** (Devshowcase Winter of Code)
+
 ## Contribution Guidelines
-Want to contribute? Follow these steps:
+Want to contribute? Whether you are here for **GSSoC** or **DSCWoC**, follow these steps:
 1. Fork the repository.
 2. Create a new branch (`git checkout -b feature-name`).
-3. Commit changes (`git commit -m 'Add new feature'`).
+3. Commit changes (`git commit -m 'feat: add description'`).
 4. Push to the branch (`git push origin feature-name`).
-5. Open a Pull Request.
+5. Open a Pull Request and fill out the PR template.
 
 ---
 
-## Contributors
-We appreciate your efforts in making **MannSakha** better. Your contributions help us build a more productive and stress-free experience for everyone!
+## Acknowledgements
+- Special thanks to the **DSCWoC** and **GSSoC** mentors for their support.
+- Built with dedication to help users maintain a balanced, stress-free lifestyle.
 
----
 <a href="https://github.com/RounakMishra06/MannSakha-chatbot-/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=RounakMishra06/MannSakha-chatbot-" />
 </a>
