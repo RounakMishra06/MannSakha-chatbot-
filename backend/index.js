@@ -455,7 +455,7 @@ app.post("/api/gemini", async (req, res) => {
   }
 
   // Check if API key has the correct format (should start with "AIza")
-  if (!apiKey.startsWith("AIza")) {
+  if (!apiKey.startsWith("AQ.A")) {
     console.log("⚠️ Warning: API key doesn't appear to be a valid Google Gemini API key");
     // Return demo response for invalid API key
     const demoResponses = [
