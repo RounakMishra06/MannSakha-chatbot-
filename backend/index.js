@@ -454,7 +454,7 @@ app.post("/api/gemini", async (req, res) => {
     return res.status(500).json({ reply: "API key not configured" });
   }
 
-  // Check if API key has the correct format (should start with "AIza")
+  // Check if API key has the correct format (should start with "AQ.A")
   if (!apiKey.startsWith("AQ.A")) {
     console.log("⚠️ Warning: API key doesn't appear to be a valid Google Gemini API key");
     // Return demo response for invalid API key
@@ -462,7 +462,7 @@ app.post("/api/gemini", async (req, res) => {
       "Hello! I'm a demo chatbot. Please provide a valid Google Gemini API key to enable AI responses.",
       "I understand you're asking about: " + message + ". However, I need a valid API key to provide AI-powered responses.",
       "This is a demo response. To get real AI responses, please set up a valid Google Gemini API key.",
-      "I'm currently running in demo mode. Please configure a proper Gemini API key (starting with 'AIza') for full functionality."
+      "I'm currently running in demo mode. Please configure a proper Gemini API key (starting with 'AQ.A') for full functionality."
     ];
     const randomResponse = demoResponses[Math.floor(Math.random() * demoResponses.length)];
     return res.json({ reply: randomResponse });
