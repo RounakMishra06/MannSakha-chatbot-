@@ -28,7 +28,7 @@ export default async function handler(req, res) {
       try {
         const context = `You are MannSakha, a compassionate AI mental health support assistant. Provide empathetic, supportive responses to users seeking mental health guidance. Always be understanding, non-judgmental, and encourage professional help when needed. Keep responses concise but caring (max 150 words).`;
         
-        const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+        const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
 
         if (geminiResponse.ok) {
           const data = await geminiResponse.json();
-          const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
           
           if (text) {
             return res.status(200).json({
