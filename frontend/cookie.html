@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookie Policy | MannSakha AI</title>
+    <style>
+      /* Import the same fonts */
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+      
+      /* Base styles matching the main site */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+        transition: background-color 0.3s, color 0.3s;
+      }
+      
+      body.dark-mode {
+        background-color: #0d0d0d;
+        color: #e5e7eb;
+      }
+
+      /* Floating decorative elements */
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.floating-element {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 15s infinite linear;
+  filter: blur(1px);
+}
+
+.floating-element:nth-child(1) {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #f59e0b, #ff6b6b);
+  top: 10%;
+  left: 5%;
+  animation-duration: 20s;
+  animation-delay: 0s;
+}
+
+.floating-element:nth-child(2) {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  top: 70%;
+  left: 80%;
+  animation-duration: 25s;
+  animation-delay: 2s;
+}
+
+.floating-element:nth-child(3) {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #fbd025, #ff9a3d);
+  top: 30%;
+  left: 85%;
+  animation-duration: 18s;
+  animation-delay: 4s;
+}
+
+.floating-element:nth-child(4) {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  top: 80%;
+  left: 10%;
+  animation-duration: 22s;
+  animation-delay: 1s;
+}
+
+.floating-element:nth-child(5) {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #ff9a9e, #cfaca2);
+  top: 15%;
+  left: 70%;
+  animation-duration: 16s;
+  animation-delay: 3s;
+}
+
+.floating-element:nth-child(6) {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(135deg, #97eeea, #f8aec5);
+  top: 60%;
+  left: 15%;
+  animation-duration: 19s;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(-40px) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-20px) rotate(270deg);
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+  }
+}
+
+/* Dark mode adjustments for floating elements */
+body.dark-mode .floating-element {
+  opacity: 0.2;
+  filter: blur(0.5px);
+}
+
+/* Responsive adjustments for floating elements */
+@media (max-width: 768px) {
+  .floating-element {
+    display: none;
+  }
+  
+  .floating-element:nth-child(1),
+  .floating-element:nth-child(2) {
+    display: block;
+    width: 60px;
+    height: 60px;
+  }
+}
+      
+      /* Header styles */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+      
+      body.dark-mode header {
+        background: rgba(13, 13, 13, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+      
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 1.5rem;
+      }
+      
+      nav a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+      
+      body.dark-mode nav a {
+        color: #e5e7eb;
+      }
+      
+      nav a:hover {
+        color: #f59e0b;
+      }
+      
+      .try-btn {
+        background: linear-gradient(135deg, #f59e0b, #cc8304);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      
+      .btn-signup {
+        background: #f59e0b;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      
+      .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .logout-link {
+        color: #f59e0b;
+        font-size: 0.9rem;
+      }
+      
+      .theme-toggle {
+        background: #f0f0f0;
+        border: none;
+        padding: 0.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      body.dark-mode .theme-toggle {
+        background: #2d2d2d;
+        color: #e5e7eb;
+      }
+      
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+      
+      /* Main content styles */
+      .cookie-container {
+        max-width: 1200px;
+        margin: 100px auto 50px;
+        padding: 0 2rem;
+      }
+      
+      .cookie-header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+      
+      .cookie-header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #f59e0b;
+      }
+      
+      .cookie-header p {
+        font-size: 1.1rem;
+        color: #666;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      
+      body.dark-mode .cookie-header p {
+        color: #9ca3af;
+      }
+      
+      .cookie-content {
+        background: white;
+        border-radius: 10px;
+        padding: 3rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+      
+      body.dark-mode .cookie-content {
+        background: #1a1a1a;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+      
+      .cookie-section {
+        margin-bottom: 2.5rem;
+      }
+      
+      .cookie-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: #f59e0b;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 0.5rem;
+      }
+      
+      body.dark-mode .cookie-section h2 {
+        border-bottom-color: #2d2d2d;
+      }
+      
+      .cookie-section h3 {
+        font-size: 1.3rem;
+        margin: 1.5rem 0 0.8rem;
+        color: #333;
+      }
+      
+      body.dark-mode .cookie-section h3 {
+        color: #e5e7eb;
+      }
+      
+      .cookie-section p {
+        margin-bottom: 1rem;
+        color: #555;
+      }
+      
+      body.dark-mode .cookie-section p {
+        color: #9ca3af;
+      }
+      
+      .cookie-section ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      .cookie-section li {
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+      
+      body.dark-mode .cookie-section li {
+        color: #9ca3af;
+      }
+      
+      .highlight {
+        background: #fff9e6;
+        padding: 1rem;
+        border-left: 4px solid #f59e0b;
+        margin: 1.5rem 0;
+        border-radius: 0 5px 5px 0;
+      }
+      
+      body.dark-mode .highlight {
+        background: #2d2d2d;
+      }
+      
+      .contact-info {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin-top: 2rem;
+      }
+      
+      body.dark-mode .contact-info {
+        background: #2d2d2d;
+      }
+      
+      .contact-info h3 {
+        margin-top: 0;
+      }
+      
+      /* Cookie table styles */
+      .cookie-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+      }
+      
+      .cookie-table th, .cookie-table td {
+        padding: 0.75rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .cookie-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+      }
+      
+      body.dark-mode .cookie-table th {
+        background-color: #2d2d2d;
+        color: #e5e7eb;
+      }
+      
+      body.dark-mode .cookie-table td {
+        border-bottom-color: #444;
+      }
+      
+      .cookie-category {
+        font-weight: 600;
+        color: #f59e0b;
+      }
+      
+      /* Cookie settings styles */
+      .cookie-settings {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 5px;
+        margin: 2rem 0;
+      }
+      
+      body.dark-mode .cookie-settings {
+        background: #2d2d2d;
+      }
+      
+      .cookie-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 5px;
+      }
+      
+      body.dark-mode .cookie-toggle {
+        background: #1a1a1a;
+      }
+      
+      .toggle-switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 24px;
+      }
+      
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: .4s;
+        border-radius: 24px;
+      }
+      
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .4s;
+        border-radius: 50%;
+      }
+      
+      input:checked + .slider {
+        background-color: #f59e0b;
+      }
+      
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
+      
+      .save-settings {
+        background: #f59e0b;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+      
+      /* Footer styles */
+      .footer {
+        background: #0d0d0d;
+        color: #e5e7eb;
+        padding: 3rem 0 1.5rem;
+        margin-top: 3rem;
+      }
+      
+      .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+      
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #f59e0b;
+      }
+      
+      .footer-tagline {
+        color: #9ca3af;
+        font-size: 0.9rem;
+      }
+      
+      .footer-socials {
+        display: flex;
+        gap: 1rem;
+      }
+      
+      .footer-socials a {
+        color: #e5e7eb;
+        font-size: 1.2rem;
+        transition: color 0.3s;
+      }
+      
+      .footer-socials a:hover {
+        color: #f59e0b;
+      }
+      
+      .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: #f9fafb;
+      }
+      
+      .footer-links {
+        list-style: none;
+      }
+      
+      .footer-links li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .footer-links a {
+        color: #9ca3af;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      
+      .footer-links a:hover {
+        color: #f59e0b;
+      }
+      
+      .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1.5rem;
+        border-top: 1px solid #2d2d2d;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      
+      .footer-legal {
+        display: flex;
+        gap: 1.5rem;
+      }
+      
+      .footer-legal a {
+        color: #9ca3af;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+      }
+      
+      .footer-legal a:hover {
+        color: #f59e0b;
+      }
+      
+      /* Back to top button */
+      #backToTopBtn {
+        display: none;
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 1000;
+        border: none;
+        outline: none;
+        background: linear-gradient(135deg, #f59e0b, #cc8304);
+        color: white;
+        cursor: pointer;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        font-size: 22px;
+        font-weight: 700;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      #backToTopBtn:hover {
+        background: linear-gradient(135deg, #cc8304, #f59e0b);
+        transform: scale(1.2);
+        box-shadow: 0 0 15px rgba(255, 165, 0, 0.8), 0 8px 16px rgba(0, 0, 0, 0.35);
+      }
+      
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+          box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        50% {
+          transform: scale(1.1);
+          box-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 8px 16px rgba(0,0,0,0.35);
+        }
+      }
+      
+      #backToTopBtn {
+        animation: pulse 4.5s infinite ease-in-out;
+        transition: all 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        nav ul {
+          display: none;
+          flex-direction: column;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(10px);
+          padding: 1rem;
+          box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode nav ul {
+          background: rgba(13, 13, 13, 0.98);
+        }
+        
+        nav ul.mobile-open {
+          display: flex;
+        }
+        
+        .mobile-menu-toggle {
+          display: block;
+        }
+        
+        .cookie-container {
+          margin-top: 80px;
+          padding: 0 1rem;
+        }
+        
+        .cookie-content {
+          padding: 2rem 1.5rem;
+        }
+        
+        .cookie-header h1 {
+          font-size: 2rem;
+        }
+        
+        .cookie-table {
+          display: block;
+          overflow-x: auto;
+        }
+        
+        .footer-bottom {
+          flex-direction: column;
+          text-align: center;
+        }
+        
+        .footer-legal {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating decorative elements -->
+<div class="floating-elements">
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+</div>
+    <!-- Header -->
+    <header>
+      <div class="logo">MannSakha AI</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li><a href="index.html#about">ABOUT</a></li>
+          <li><a href="index.html#services">SERVICES</a></li>
+          <li><a href="index.html#careers">CAREERS</a></li>
+          <li><a href="index.html#blog">BLOG</a></li>
+          <li><a href="index.html#chatbot" class="try-btn">TRY MANNSAKHA</a></li>
+          <li><a href="/signup" class="btn-signup">Signup</a></li>
+          <li id="userProfile" class="user-profile">
+            <span id="userEmail"></span>
+            <a href="#" onclick="logout()" class="logout-link">Logout</a>
+          </li>
+        </ul>
+      </nav>
+      <button
+        class="theme-toggle"
+        onclick="toggleTheme()"
+        title="Toggle Dark/Light Mode"
+      >
+        <i class="fas fa-moon"></i>
+        <span>Auto</span>
+      </button>
+      <button
+        class="mobile-menu-toggle"
+        onclick="toggleMobileMenu()"
+        title="Toggle Mobile Menu"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+    </header>
+
+    <!-- Cookie Policy Content -->
+    <main class="cookie-container">
+      <div class="cookie-header">
+        <h1>Cookie Policy</h1>
+        <p id="last-updated"></p>
+
+        <script>
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date();
+        document.getElementById('last-updated').textContent = `Last updated: ${today.toLocaleDateString('en-IN', options)}`;
+        </script>
+
+      </div>
+      
+      <div class="cookie-content">
+        <div class="cookie-section">
+          <p>This Cookie Policy explains how MannSakha AI ("we", "us", or "our") uses cookies and similar technologies to recognize you when you visit our website at <a href="index.html">mannsakha.ai</a>. It explains what these technologies are and why we use them, as well as your rights to control our use of them.</p>
+          
+          <div class="highlight">
+            <p><strong>What are cookies?</strong> Cookies are small data files that are placed on your computer or mobile device when you visit a website. Cookies are widely used by website owners to make their websites work, or to work more efficiently, as well as to provide reporting information.</p>
+          </div>
+          
+          <p>By using our website, you consent to the use of cookies and similar technologies as described in this policy.</p>
+        </div>
+        
+        <div class="cookie-section">
+          <h2>1. Types of Cookies We Use</h2>
+          
+          <h3>Essential Cookies</h3>
+          <p>These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in, or filling in forms.</p>
+          
+          <h3>Performance and Analytics Cookies</h3>
+          <p>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site.</p>
+          
+          <h3>Functionality Cookies</h3>
+          <p>These cookies enable the website to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.</p>
+          
+          <h3>Targeting Cookies</h3>
+          <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant advertisements on other sites.</p>
+        </div>
+        
+        <div class="cookie-section">
+          <h2>2. Cookie Details</h2>
+          <p>The table below provides more information about the cookies we use and why:</p>
+          
+          <table class="cookie-table">
+            <thead>
+              <tr>
+                <th>Cookie Name</th>
+                <th>Category</th>
+                <th>Purpose</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>session_id</td>
+                <td><span class="cookie-category">Essential</span></td>
+                <td>Maintains your session state across page requests</td>
+                <td>Session</td>
+              </tr>
+              <tr>
+                <td>user_preferences</td>
+                <td><span class="cookie-category">Essential</span></td>
+                <td>Stores your site preferences (e.g., theme, language)</td>
+                <td>1 year</td>
+              </tr>
+              <tr>
+                <td>_ga</td>
+                <td><span class="cookie-category">Analytics</span></td>
+                <td>Google Analytics cookie used to distinguish users</td>
+                <td>2 years</td>
+              </tr>
+              <tr>
+                <td>_gid</td>
+                <td><span class="cookie-category">Analytics</span></td>
+                <td>Google Analytics cookie used to distinguish users</td>
+                <td>24 hours</td>
+              </tr>
+              <tr>
+                <td>_gat</td>
+                <td><span class="cookie-category">Analytics</span></td>
+                <td>Google Analytics cookie used to throttle request rate</td>
+                <td>1 minute</td>
+              </tr>
+              <tr>
+                <td>cookie_consent</td>
+                <td><span class="cookie-category">Functionality</span></td>
+                <td>Remembers your cookie consent preferences</td>
+                <td>1 year</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="cookie-section">
+          <h2>3. How to Control Cookies</h2>
+          <p>You can set or amend your web browser controls to accept or refuse cookies. If you choose to reject cookies, you may still use our website though your access to some functionality and areas of our website may be restricted.</p>
+          
+          <h3>Browser Controls</h3>
+          <p>Most web browsers allow you to control cookies through their settings preferences. However, if you limit the ability of websites to set cookies, you may worsen your overall user experience.</p>
+          
+          <h3>Cookie Settings</h3>
+          <p>You can manage your cookie preferences using the tool below:</p>
+          
+          <div class="cookie-settings">
+            <h3>Cookie Preferences</h3>
+            <p>Select the types of cookies you want to allow:</p>
+            
+            <div class="cookie-toggle">
+              <div>
+                <strong>Essential Cookies</strong>
+                <p>Required for the website to function properly</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" checked disabled>
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <div class="cookie-toggle">
+              <div>
+                <strong>Performance and Analytics Cookies</strong>
+                <p>Help us improve our website by collecting usage information</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="analyticsCookies" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <div class="cookie-toggle">
+              <div>
+                <strong>Functionality Cookies</strong>
+                <p>Enable enhanced features and personalization</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="functionalityCookies" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <div class="cookie-toggle">
+              <div>
+                <strong>Targeting Cookies</strong>
+                <p>Used to deliver relevant advertisements</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="targetingCookies">
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <button class="save-settings" onclick="saveCookiePreferences()">Save Preferences</button>
+          </div>
+        </div>
+        
+        <div class="cookie-section">
+          <h2>4. Third-Party Cookies</h2>
+          <p>In addition to our own cookies, we may also use various third-party cookies to report usage statistics of the Service, deliver advertisements on and through the Service, and so on.</p>
+          
+          <h3>Google Analytics</h3>
+          <p>We use Google Analytics to help us understand how our customers use the Site. You can read more about how Google uses your Personal Information here: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a>. You can also opt-out of Google Analytics here: <a href="https://tools.google.com/dlpage/gaoptout" target="_blank">https://tools.google.com/dlpage/gaoptout</a>.</p>
+        </div>
+        
+        <div class="cookie-section">
+          <h2>5. Changes to This Cookie Policy</h2>
+          <p>We may update this Cookie Policy from time to time in order to reflect, for example, changes to the cookies we use or for other operational, legal, or regulatory reasons. Please therefore re-visit this Cookie Policy regularly to stay informed about our use of cookies and related technologies.</p>
+        </div>
+        
+        <div class="cookie-section">
+          <h2>6. Contact Us</h2>
+          <p>If you have any questions about our use of cookies or other technologies, please contact us:</p>
+          <div class="contact-info">
+            <p><strong>MannSakha AI</strong></p>
+            <p>Email: privacy@mannsakha.ai</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <!-- Brand Column -->
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <span class="logo-text">MannSakha AI</span>
+            </div>
+            <p class="footer-tagline">Your AI companion for mental wellness</p>
+            <div class="footer-socials">
+              <a
+                href="https://github.com/RounakMishra06/MannSakha-chatbot-"
+                aria-label="GitHub"
+                ><i class="fab fa-github"></i
+              ></a>
+              <a href="#" aria-label="LinkedIn"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+              <a href="#" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+
+          <!-- Navigation Column -->
+          <div class="footer-column">
+            <h3 class="footer-heading">Navigation</h3>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="index.html#about">About Us</a></li>
+              <li><a href="index.html#services">Services</a></li>
+              <li><a href="index.html#careers">Careers</a></li>
+              <li><a href="index.html#blog">Blog</a></li>
+            </ul>
+          </div>
+
+          <!-- Resources Column -->
+          <div class="footer-column">
+            <h3 class="footer-heading">Resources</h3>
+            <ul class="footer-links">
+              <li><a href="#">Help Center</a></li>
+              <li><a href="privacy.html">Privacy Policy</a></li>
+              <li><a href="terms.html">Terms of Service</a></li>
+              <li><a href="cookie.html">Cookie Policy</a></li>
+              <li><a href="#">GDPR</a></li>
+            </ul>
+          </div>
+
+          <!-- Company Column -->
+          <div class="footer-column">
+            <h3 class="footer-heading">Company</h3>
+            <ul class="footer-links">
+              <li><a href="#">Our Team</a></li>
+              <li><a href="#">Investors</a></li>
+              <li><a href="#">Press Kit</a></li>
+              <li><a href="#">Contact Us</a></li>
+              <li><a href="index.html#careers">Careers</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+          <div class="footer-copyright">
+            © <span id="current-year"></span> MannSakha AI. All rights reserved.
+          </div>
+          <div class="footer-legal">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="cookie.html">Cookie Settings</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTopBtn" title="Go to top">↑</button>
+
+    <script>
+      // Set current year in footer
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Theme toggle functionality
+      function toggleTheme() {
+        document.body.classList.toggle('dark-mode');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        const span = themeToggle.querySelector('span');
+        
+        if (document.body.classList.contains('dark-mode')) {
+          icon.className = 'fas fa-sun';
+          span.textContent = 'Light';
+        } else {
+          icon.className = 'fas fa-moon';
+          span.textContent = 'Dark';
+        }
+      }
+      
+      // Mobile menu toggle
+      function toggleMobileMenu() {
+        const navUl = document.querySelector('nav ul');
+        navUl.classList.toggle('mobile-open');
+      }
+      
+      // Back to top button functionality
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      
+      window.addEventListener("scroll", () => {
+        if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+          backToTopBtn.style.display = "block";
+          backToTopBtn.style.opacity = "1";
+        } else {
+          backToTopBtn.style.opacity = "0";
+          setTimeout(() => {
+            if (backToTopBtn.style.opacity === "0") {
+              backToTopBtn.style.display = "none";
+            }
+          }, 300);
+        }
+      });
+      
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+      
+      // Simple logout function (placeholder)
+      function logout() {
+        alert('Logout functionality would be implemented here.');
+        // In a real implementation, this would clear session data and redirect
+      }
+      
+      // Check if user is logged in (placeholder)
+      window.onload = function() {
+        // This is a placeholder - in a real implementation, you would check authentication status
+        const userEmail = localStorage.getItem('userEmail');
+        if (userEmail) {
+          document.getElementById('userEmail').textContent = userEmail;
+        } else {
+          document.getElementById('userProfile').style.display = 'none';
+        }
+        
+        // Load saved cookie preferences
+        loadCookiePreferences();
+      };
+      
+      // Cookie preference functions
+      function loadCookiePreferences() {
+        const preferences = JSON.parse(localStorage.getItem('cookiePreferences') || '{}');
+        
+        if (preferences.analyticsCookies !== undefined) {
+          document.getElementById('analyticsCookies').checked = preferences.analyticsCookies;
+        }
+        
+        if (preferences.functionalityCookies !== undefined) {
+          document.getElementById('functionalityCookies').checked = preferences.functionalityCookies;
+        }
+        
+        if (preferences.targetingCookies !== undefined) {
+          document.getElementById('targetingCookies').checked = preferences.targetingCookies;
+        }
+      }
+      
+      function saveCookiePreferences() {
+        const preferences = {
+          analyticsCookies: document.getElementById('analyticsCookies').checked,
+          functionalityCookies: document.getElementById('functionalityCookies').checked,
+          targetingCookies: document.getElementById('targetingCookies').checked
+        };
+        
+        localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+        
+        // Show confirmation message
+        alert('Your cookie preferences have been saved!');
+      }
+    </script>
+  </body>
+</html>
