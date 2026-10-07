@@ -67,15 +67,15 @@ export default async function handler(req, res) {
         Always be understanding, non-judgmental, and encourage professional help when needed.
         Keep responses concise but caring (max 150 words).`;
 
-        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        // CHANGE 1: Updated model name from "gemini-pro" to "gemini-1.5-flash"
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const result = await model.generateContent(`${context}\n\nUser: ${message}`);
         const response = await result.response;
         const text = response.text();
 
-        return res.status(200).json({ 
-          response: text,
+        // CHANGE 2: Cleaner response object
+        return res.status(200).json({
           reply: text,
-          timestamp: new Date().toISOString(),
           source: 'gemini'
         });
       } catch (geminiError) {
